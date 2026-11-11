@@ -3,262 +3,344 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مكتب الثقة | عقارات اليمن</title>
+  <title>سوق اليمن المفتوح | عقارات، سيارات، ومستلزمات</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f766e">
+  <!-- مكتبة توليد PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
     :root {
-      --bg: #f3f4f6; --surface: #ffffff; --text: #1f2937; --text-muted: #6b7280;
+      --bg: #f8fafc; --surface: #ffffff; --text: #0f172a; --text-muted: #64748b;
       --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b;
-      --border: #e5e7eb; --shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+      --border: #e2e8f0; --shadow: 0 4px 20px -2px rgba(0,0,0,0.05); 
       --radius: 20px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
     }
     
     [data-theme="dark"] {
-      --bg: #111827; --surface: #1f2937; --text: #f9fafb; --text-muted: #9ca3af;
-      --primary: #14b8a6; --primary-light: #5eead4; --accent: #fbbf24;
-      --border: #374151; --shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+      --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8;
+      --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24;
+      --border: #334155; --shadow: 0 4px 20px -2px rgba(0,0,0,0.3);
     }
     
     [data-theme="royal"] {
       --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9;
       --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899;
-      --border: #ddd6fe; --shadow: 0 10px 25px -5px rgba(124,58,237,0.1);
+      --border: #ddd6fe; --shadow: 0 4px 20px -2px rgba(124,58,237,0.1);
     }
 
     [data-theme="sunset"] {
       --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412;
       --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626;
-      --border: #fed7aa; --shadow: 0 10px 25px -5px rgba(234,88,12,0.15);
+      --border: #fed7aa; --shadow: 0 4px 20px -2px rgba(234,88,12,0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; }
 
-    /* ====== شريط الإعلانات ====== */
-    .marquee-bar { background: linear-gradient(90deg, var(--primary), var(--primary-light)); color: #fff; padding: 10px 0; font-weight: 600; font-size: 0.95rem; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; z-index: 101; }
+    /* ====== الشريط الإعلاني ====== */
+    .marquee-bar { background: linear-gradient(90deg, #1e293b, #0f172a); color: #fff; padding: 8px 0; font-weight: 600; font-size: 0.9rem; overflow: hidden; white-space: nowrap; position: relative; z-index: 101; }
     .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
     /* ====== الهيدر ====== */
-    header { position: sticky; top: 0; z-index: 100; background: rgba(var(--surface), 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+    [data-theme="dark"] header { background: rgba(30, 41, 59, 0.9); }
+    .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
     .header-actions { display: flex; gap: 10px; align-items: center; }
     
-    .theme-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
-    .theme-btn:hover { transform: scale(1.15); box-shadow: 0 0 10px rgba(0,0,0,0.2); }
-    .theme-btn[data-theme="light"] { background: #f3f4f6; }
-    .theme-btn[data-theme="dark"] { background: #111827; }
+    .theme-btn { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
+    .theme-btn:hover { transform: scale(1.15); }
+    .theme-btn[data-theme="light"] { background: #f8fafc; }
+    .theme-btn[data-theme="dark"] { background: #0f172a; }
     .theme-btn[data-theme="royal"] { background: #7c3aed; }
     .theme-btn[data-theme="sunset"] { background: #ea580c; }
 
-    .btn { padding: 10px 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-family: var(--font); font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn { padding: 10px 20px; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-family: var(--font); font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 15px rgba(15,118,110,0.3); }
     .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); }
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
     .btn-outline:hover { background: var(--primary); color: #fff; }
     .btn-danger { background: #ef4444; color: #fff; }
-    .btn-accent { background: var(--accent); color: #fff; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
+    .btn-accent { background: var(--accent); color: #1e293b; }
 
-    /* زر إضافة عرض عائم */
-    .fab { position: fixed; bottom: 30px; left: 30px; width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #f97316); color: #fff; font-size: 2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(245,158,11,0.4); cursor: pointer; z-index: 100; border: none; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    .fab:hover { transform: scale(1.1) rotate(90deg); }
-    @media (min-width: 768px) { .fab { display: none; } } /* إخفاء الزر العائم في الشاشات الكبيرة */
+    /* أزرار الأقسام الرئيسية */
+    .main-tabs { display: flex; justify-content: center; gap: 15px; margin-top: -30px; position: relative; z-index: 10; padding: 0 20px; flex-wrap: wrap; }
+    .tab-btn { background: var(--surface); color: var(--text); border: 2px solid var(--border); padding: 15px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 10px; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(15,118,110,0.3); }
+    .tab-btn:hover:not(.active) { background: var(--bg); }
 
-    /* ====== الصورة العملاقة (Hero) ====== */
-    .hero { position: relative; height: 60vh; min-height: 450px; background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)); }
-    .hero-content { position: relative; z-index: 2; color: #fff; padding: 20px; max-width: 800px; }
-    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-    .hero p { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.9; }
-    @media (max-width: 600px) { .hero h1 { font-size: 1.6rem; } }
+    main { max-width: 1400px; margin: 30px auto 0; padding: 0 20px 60px; position: relative; z-index: 10; }
 
-    main { max-width: 1200px; margin: -50px auto 0; padding: 0 20px 40px; position: relative; z-index: 10; }
-
-    /* ====== بطاقة الفلاتر ====== */
-    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 30px; }
-    .filters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; align-items: end; }
-    .filter-group { display: flex; flex-direction: column; gap: 8px; }
-    .filter-group label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-right: 5px; }
-    .filter-group select { padding: 12px 15px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 0.9rem; outline: none; transition: border 0.3s; cursor: pointer; }
-    .filter-group select:focus { border-color: var(--primary); }
+    /* ====== بطاقة البحث ====== */
+    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 20px 30px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 40px; }
+    .filters-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; justify-content: space-between; }
+    .filter-group { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 8px; }
+    .filter-group label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); }
+    .filter-group select, .filter-group input { padding: 12px 15px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 0.95rem; outline: none; width: 100%; }
+    .filter-group select:focus, .filter-group input:focus { border-color: var(--primary); }
+    .filter-group button { width: 100%; padding: 12px; }
 
     /* ====== البطاقات الأفقية ====== */
-    .cards-grid { display: flex; flex-direction: column; gap: 20px; }
-    .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(0,0,0,0.15); }
-    .card-img-wrapper { width: 35%; position: relative; min-height: 250px; }
+    .cards-grid { display: flex; flex-direction: column; gap: 25px; }
+    .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); transition: transform 0.3s; width: 100%; min-height: 280px; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); }
+    .card-img-wrapper { width: 35%; position: relative; }
     .card-img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-    .card-badge { position: absolute; top: 15px; right: 15px; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; color: #fff; z-index: 2; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .card-badge { position: absolute; top: 20px; right: 20px; padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 800; color: #fff; z-index: 2; }
     .badge-rent { background: #3b82f6; }
     .badge-sale { background: #10b981; }
     
-    .card-body { width: 65%; padding: 24px; display: flex; flex-direction: column; }
-    .card-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--text); }
-    .card-meta { display: flex; gap: 15px; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; flex-wrap: wrap; }
-    .card-meta span { display: flex; align-items: center; gap: 5px; }
-    .card-price { font-weight: 800; color: var(--primary); font-size: 1.4rem; margin-top: auto; margin-bottom: 15px; }
+    .card-body { width: 65%; padding: 30px; display: flex; flex-direction: column; }
+    .card-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: var(--text); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 15px; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; background:var(--bg); padding:10px; border-radius:10px; }
+    .card-price { font-weight: 800; color: var(--primary); font-size: 1.6rem; margin-bottom: 20px; }
     
-    .card-actions { display: flex; gap: 10px; margin-top: auto; }
-    @media (max-width: 768px) {
+    .card-actions { display: flex; gap: 10px; margin-top: auto; flex-wrap: wrap; }
+    @media (max-width: 900px) {
       .card { flex-direction: column; }
-      .card-img-wrapper { width: 100%; height: 220px; min-height: 220px; }
-      .card-body { width: 100%; padding: 15px; }
-      .card-title { font-size: 1.1rem; }
-      .card-price { font-size: 1.2rem; }
+      .card-img-wrapper { width: 100%; height: 250px; }
+      .card-body { width: 100%; padding: 20px; }
+      .card-title { font-size: 1.2rem; }
+      .card-price { font-size: 1.4rem; }
     }
 
-    /* ====== قسم عن المكتب ====== */
-    .about-section { background: var(--surface); border-radius: var(--radius); padding: 40px; margin-top: 40px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; }
-    .about-section h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 20px; }
-    .about-section p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 15px; }
+    /* ====== القسم النصي ====== */
+    .about-section { background: var(--surface); border-radius: var(--radius); padding: 50px; margin-top: 50px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; }
+    .about-section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
+    .about-section p { color: var(--text-muted); font-size: 1.1rem; line-height: 2; margin-bottom: 15px; max-width: 900px; margin-inline: auto; }
 
-    /* ====== القائمة الجانبية والمودالات ====== */
-    .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 200; padding: 24px; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
+    /* ====== المودالات والقائمة ====== */
+    .sidebar { position: fixed; top: 0; right: -350px; width: 320px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 200; padding: 25px; transition: right 0.4s; overflow-y: auto; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
     .sidebar.open { right: 0; }
-    .sidebar a { display: block; padding: 14px; color: var(--text); text-decoration: none; border-radius: 12px; margin-bottom: 5px; font-weight: 600; transition: all 0.2s; }
-    .sidebar a:hover { background: var(--primary); color: #fff; }
+    .sidebar a { display: block; padding: 15px; color: var(--text); text-decoration: none; border-radius: 12px; margin-bottom: 5px; font-weight: 600; transition: all 0.2s; border-bottom: 1px solid var(--border); }
+    .sidebar a:hover { background: var(--bg); color: var(--primary); padding-right: 20px; }
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(3px); }
     .sidebar-overlay.show { opacity: 1; pointer-events: all; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
     .modal-overlay.show { display: flex; }
     .modal { background: var(--surface); border-radius: var(--radius); padding: 30px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; animation: modalIn 0.3s ease; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 0.95rem; outline: none; }
     .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
     
-    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1f2937; color: #fff; padding: 15px 30px; border-radius: 50px; font-weight: 700; z-index: 400; opacity: 0; transition: all 0.4s; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: #fff; padding: 15px 30px; border-radius: 50px; font-weight: 700; z-index: 400; opacity: 0; transition: all 0.4s; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* تصميم العقود للطباعة */
+    #pdf-container { display: none; padding: 40px; background: #fff; color: #000; font-family: 'Cairo', sans-serif; direction: rtl; border: 2px solid #000; border-radius: 10px; }
+    .pdf-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 20px; }
+    .pdf-header h1 { font-size: 24px; margin-bottom: 10px; }
+    .pdf-body { font-size: 16px; line-height: 2; }
+    .pdf-footer { margin-top: 50px; display: flex; justify-content: space-between; font-weight: bold; }
   </style>
 </head>
 <body data-theme="light">
 
-  <!-- شريط الإعلانات -->
   <div class="marquee-bar">
     <div class="marquee-content" id="marqueeText">
-      مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين | اللهم اغفر لنا وارحمنا | تذكر أن الصدق والأمانة أساس التجارة
+      مرحباً بكم في سوق اليمن المفتوح | عقارات، سيارات، وأجهزة إلكترونية | تصفح الآن وأضف عرضك بضغطة زر
     </div>
   </div>
 
   <header>
-    <div class="logo"><span>🏛️</span> مكتب الثقة</div>
+    <div class="logo"><span>🏛️</span> سوق اليمن المفتوح</div>
     <div class="header-actions">
-      <button class="theme-btn" data-theme="light" title="فاتح"></button>
-      <button class="theme-btn" data-theme="dark" title="داكن"></button>
-      <button class="theme-btn" data-theme="royal" title="ملكي"></button>
-      <button class="theme-btn" data-theme="sunset" title="غروب"></button>
-      <button class="btn btn-accent" id="addPropertyBtn" style="display:none;">➕ عرض جديد</button>
+      <button class="theme-btn" data-theme="light"></button>
+      <button class="theme-btn" data-theme="dark"></button>
+      <button class="theme-btn" data-theme="royal"></button>
+      <button class="theme-btn" data-theme="sunset"></button>
       <button class="btn btn-outline" id="loginBtn">🔐 دخول</button>
       <button class="btn btn-primary" id="menuBtn" style="padding: 10px 15px;">☰</button>
     </div>
   </header>
 
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
-  <aside class="sidebar" id="sidebar">
-    <h3 style="color:var(--primary); margin-bottom:20px; font-size:1.4rem;">القائمة الرئيسية</h3>
-    <a href="#" onclick="showPage('about'); closeSidebar();">ℹ️ عن المكتب</a>
-    <a href="#" onclick="showPage('how'); closeSidebar();">⚙️ آلية العمل</a>
-    <a href="#" onclick="showPage('trust'); closeSidebar();">🛡️ الثقة والأمان</a>
-    <a href="#" onclick="showPage('guidelines'); closeSidebar();">📜 إرشادات النشر</a>
-    <hr style="margin:15px 0; border-color:var(--border);">
-    <a href="#" onclick="showDashboard(); closeSidebar();">📊 لوحة التحكم</a>
-    <a href="#" onclick="logout(); closeSidebar();" style="color:#ef4444;">🚪 تسجيل الخروج</a>
-  </aside>
-
-  <!-- صورة الهيرو -->
-  <div class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>مكتب الثقة لعروض إيجار وبيع البيوت والأراضي</h1>
-      <p>وجهتك الأولى للعثور على العقار المثالي في جميع محافظات اليمن بكل سهولة وموثوقية.</p>
-      <button class="btn btn-primary" onclick="openAddModal()" style="font-size: 1.1rem; padding: 15px 30px; border-radius: 50px;">🚀 أضف عرضك الآن مجاناً</button>
+  <!-- شريط الصور (Slider) -->
+  <div class="slider-container" id="slider">
+    <div class="slide active">
+      <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+      <div class="slide-content">
+        <h1>سوق اليمن المفتوح</h1>
+        <p>كل ما تحتاجه في مكان واحد: عقارات، سيارات، أجهزة إلكترونية، وأكثر.</p>
+        <button class="btn btn-primary" onclick="openAddModal()" style="font-size: 1.1rem; padding: 15px 30px; border-radius: 50px;">🚀 أضف عرضك الآن</button>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+      <div class="slide-content">
+        <h1>عالم العقارات</h1>
+        <p>اكتشف أفضل الفيلات والشقق والأراضي المتاحة الآن للبيع والإيجار.</p>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+      <div class="slide-content">
+        <h1>عالم السيارات</h1>
+        <p>أحدث الموديلات وأفضل الأسعار، ابحث عن سيارتك القادمة بسهولة.</p>
+      </div>
     </div>
   </div>
 
+  <!-- أزرار الأقسام الثلاثة -->
+  <div class="main-tabs">
+    <button class="tab-btn active" onclick="switchTab('realestate')" id="tab-realestate">🏠 العقارات</button>
+    <button class="tab-btn" onclick="switchTab('electronics')" id="tab-electronics">📱 المستلزمات والأجهزة</button>
+    <button class="tab-btn" onclick="switchTab('cars')" id="tab-cars">🚗 السيارات</button>
+  </div>
+
   <main>
-    <!-- بطاقة الفلاتر -->
-    <div class="filters-card">
-      <div class="filters-grid">
-        <div class="filter-group">
-          <label>المحافظة</label>
-          <select id="filterGovernorate"><option value="">كل المحافظات</option></select>
-        </div>
-        <div class="filter-group">
-          <label>المديرية</label>
-          <select id="filterDistrict"><option value="">كل المديريات</option></select>
-        </div>
-        <div class="filter-group">
-          <label>نوع الطلب</label>
-          <select id="filterType">
-            <option value="">الكل</option>
-            <option value="rent">إيجار</option>
-            <option value="sale">بيع</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>نوع العقار</label>
-          <select id="filterProperty">
-            <option value="">الكل</option>
-            <option value="apartment">شقة</option>
-            <option value="house">بيت مستقل</option>
-            <option value="villa">فيلا</option>
-            <option value="land">أرضية</option>
-            <option value="hangar">هنجر</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <button class="btn btn-primary" id="searchBtn" style="width:100%; padding:12px;">🔍 بحث</button>
+    <!-- قسم العقارات -->
+    <div id="section-realestate">
+      <div class="filters-card">
+        <h3 style="margin-bottom:15px; color:var(--primary);">🔍 بحث في العقارات</h3>
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="filterGov"><option value="">كل المحافظات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="filterDist"><option value="">كل المديريات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>نوع الطلب</label>
+            <select id="filterType">
+              <option value="">الكل</option>
+              <option value="rent">إيجار</option>
+              <option value="sale">بيع</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>نوع العقار</label>
+            <select id="filterPropType">
+              <option value="">الكل</option>
+              <option value="apartment">شقة</option>
+              <option value="house">بيت مستقل</option>
+              <option value="villa">فيلا</option>
+              <option value="land">أرضية</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-primary" onclick="searchItems('realestate')">بحث</button>
+          </div>
         </div>
       </div>
+      <div id="cards-realestate" class="cards-grid"></div>
     </div>
 
-    <!-- العروض -->
-    <div id="cardsContainer" class="cards-grid">
-      <p style="text-align:center; color:var(--text-muted); padding:40px;">جاري تحميل العروض...</p>
+    <!-- قسم الإلكترونيات -->
+    <div id="section-electronics" style="display:none;">
+      <div class="filters-card">
+        <h3 style="margin-bottom:15px; color:var(--primary);">🔍 بحث في المستلزمات والأجهزة</h3>
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="eGov"><option value="">كل المحافظات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="eDist"><option value="">كل المديريات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>نوع الجهاز/المستلزم</label>
+            <select id="eType">
+              <option value="">الكل</option>
+              <option value="phone">هاتف</option>
+              <option value="laptop">لابتوب</option>
+              <option value="furniture">أثاث</option>
+              <option value="other">أخرى</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-primary" onclick="searchItems('electronics')">بحث</button>
+          </div>
+        </div>
+      </div>
+      <div id="cards-electronics" class="cards-grid"></div>
     </div>
 
-    <!-- عن المكتب -->
+    <!-- قسم السيارات -->
+    <div id="section-cars" style="display:none;">
+      <div class="filters-card">
+        <h3 style="margin-bottom:15px; color:var(--primary);">🔍 بحث في السيارات</h3>
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="cGov"><option value="">كل المحافظات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="cDist"><option value="">كل المديريات</option></select>
+          </div>
+          <div class="filter-group">
+            <label>الماركة</label>
+            <input type="text" id="cBrand" placeholder="تويوتا، هيونداي...">
+          </div>
+          <div class="filter-group">
+            <button class="btn btn-primary" onclick="searchItems('cars')">بحث</button>
+          </div>
+        </div>
+      </div>
+      <div id="cards-cars" class="cards-grid"></div>
+    </div>
+
     <div class="about-section">
-      <h2>لماذا تختار مكتب الثقة؟</h2>
-      <p>نحن في <strong>مكتب الثقة</strong> نؤمن بأن العقار ليس مجرد جدران، بل هو مستقبل وطمأنينة. لذلك، بنينا منصتنا لتكون الجسر الآمن الذي يربط بين الباحثين عن منزل أحلامهم وأصحاب العقارات الموثوقين في جميع أنحاء اليمن.</p>
-      <p>نلتزم بالشفافية التامة، والصدق في العرض والطلب، والأمانة في التعامل. هدفنا تسهيل عمليات الإيجار والبيع والشراء بخطوات بسيطة، مع توفير بيئة آمنة تمنع الاحتيال وتضمن حقوق جميع الأطراف.</p>
-      <p style="font-weight:700; color:var(--primary);">مكتب الثقة.. حيث تبدأ رحلة الاستقرار.</p>
-    </div>
-
-    <!-- بطاقة المصمم -->
-    <div class="designer-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; box-shadow: var(--shadow);">
-      <div style="display:flex; align-items:center; gap:15px;">
-        <div style="font-size:2.5rem;">👨‍💻</div>
-        <div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 4px; color:var(--text);">م. نشوان البدري</h4>
-          <p style="opacity: 0.8; font-size: 0.85rem; color:var(--text-muted);">دعم وتطوير المنصة</p>
-        </div>
-      </div>
-      <a href="https://wa.me/967771713275" target="_blank" class="btn btn-primary" style="text-decoration:none;">💬 واتساب 771713275</a>
+      <h2>سوق اليمن المفتوح.. بوابتك الآمنة</h2>
+      <p>نحن في <strong>سوق اليمن المفتوح</strong> نجمع لك كل ما تحتاجه في منصة واحدة. سواء كنت تبحث عن عقار، سيارة، أو جهاز إلكتروني، نوفر لك بيئة آمنة وموثوقة للتواصل المباشر بين البائع والمشتري.</p>
+      <p>نلتزم بالشفافية، ونسهل عليك إتمام صفقاتك بسرعة وأمان مع خيارات توثيق ذكية (عقود إيجار وبيع بصيغة PDF).</p>
     </div>
   </main>
 
-  <!-- زر إضافة عرض عائم للجوال -->
+  <!-- زر إضافة عرض عائم -->
   <button class="fab" onclick="openAddModal()" title="إضافة عرض">+</button>
 
-  <!-- مودال إضافة عرض -->
+  <!-- مودال إضافة عرض (ذكي - يتغير حسب القسم) -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
-      <h2 style="margin-bottom: 20px; color: var(--primary); text-align:center;">➕ إضافة عرض جديد</h2>
+      <h2 id="addModalTitle" style="margin-bottom: 20px; color: var(--primary); text-align:center;">➕ إضافة عرض جديد</h2>
       <form id="addForm">
-        <div class="form-group"><label>نوع الطلب</label><select id="addType" required><option value="rent">عرض إيجار</option><option value="sale">عرض بيع</option></select></div>
-        <div class="form-group"><label>نوع العقار</label><select id="addProperty" required><option value="apartment">شقة</option><option value="house">بيت مستقل</option><option value="villa">فيلا</option><option value="land">أرضية</option><option value="hangar">هنجر</option></select></div>
-        <div class="form-group"><label>المحافظة</label><select id="addGovernorate" required></select></div>
-        <div class="form-group"><label>المديرية</label><select id="addDistrict" required></select></div>
-        <div class="form-group"><label>العنوان / الوصف</label><input type="text" id="addTitle" placeholder="مثال: شقة 3 غرف في حي السنينة" required></div>
-        <div class="form-group"><label>السعر (ريال يمني)</label><input type="number" id="addPrice" placeholder="500000" required></div>
+        <!-- حقول مشتركة -->
+        <div class="form-group">
+          <label>القسم</label>
+          <select id="addCategory" required onchange="toggleAddFields()">
+            <option value="realestate">🏠 عقارات</option>
+            <option value="electronics">📱 مستلزمات وأجهزة</option>
+            <option value="cars">🚗 سيارات</option>
+          </select>
+        </div>
+        <div class="form-group"><label>المحافظة</label><select id="addGov" required></select></div>
+        <div class="form-group"><label>المديرية</label><select id="addDist" required></select></div>
+        <div class="form-group"><label>العنوان / الوصف</label><input type="text" id="addTitle" required></div>
+        <div class="form-group"><label>السعر (ريال يمني)</label><input type="number" id="addPrice" required></div>
+
+        <!-- حقول العقارات -->
+        <div id="fields-realestate">
+          <div class="form-group"><label>نوع الطلب</label><select id="addType" required><option value="rent">عرض إيجار</option><option value="sale">عرض بيع</option></select></div>
+          <div class="form-group"><label>نوع العقار</label><select id="addPropType" required><option value="apartment">شقة</option><option value="house">بيت مستقل</option><option value="villa">فيلا</option><option value="land">أرضية</option></select></div>
+          <div class="form-group"><label>تفاصيل إضافية (مدة الإيجار / طريقة الدفع)</label><input type="text" id="addExtraDetail" placeholder="مثال: سنة / كاش"></div>
+        </div>
+
+        <!-- حقول الإلكترونيات -->
+        <div id="fields-electronics" style="display:none;">
+          <div class="form-group"><label>نوع المستلزم</label><select id="addElecType"><option value="phone">هاتف</option><option value="laptop">لابتوب</option><option value="furniture">أثاث</option><option value="other">أخرى</option></select></div>
+        </div>
+
+        <!-- حقول السيارات -->
+        <div id="fields-cars" style="display:none;">
+          <div class="form-group"><label>الماركة والموديل</label><input type="text" id="addCarBrand" placeholder="تويوتا كامري 2020"></div>
+          <div class="form-group"><label>السرعة القصوى (كم/س)</label><input type="number" id="addCarSpeed" placeholder="200"></div>
+          <div class="form-group"><label>الممشى (كم)</label><input type="number" id="addCarMileage" placeholder="50000"></div>
+          <div class="form-group"><label>الحالة</label><select id="addCarCondition"><option value="new">جديد</option><option value="used">مستعمل</option></select></div>
+        </div>
+
         <div class="form-group"><label>رقم هاتفك</label><input type="tel" id="addPhone" placeholder="7xxxxxxxx" required></div>
-        <div class="form-group"><label>صورة العقار (صورة واحدة فقط)</label><input type="file" id="addImages" accept="image/*"></div>
+        <div class="form-group"><label>صورة (صورة واحدة)</label><input type="file" id="addImage" accept="image/*"></div>
+        
         <div style="display:flex; gap:10px; margin-top:25px;">
           <button type="submit" class="btn btn-primary" style="flex:1;" id="saveBtn">💾 حفظ ونشر</button>
           <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">إلغاء</button>
@@ -283,35 +365,84 @@
     </div>
   </div>
 
-  <!-- مودال لوحة التحكم -->
-  <div class="modal-overlay" id="dashboardModal">
-    <div class="modal">
-      <h2 style="margin-bottom: 20px; text-align:center;">📊 لوحة التحكم</h2>
-      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
-        <button class="btn btn-accent" onclick="generateDummyData(event)" style="width:100%;">✨ توليد 20 عرض تجريبي (مع صور)</button>
-        <button class="btn btn-danger" onclick="deleteAllMyProps()" style="width:100%;">🗑️ حذف كل عروضي</button>
+  <!-- مودال لوحة تحكم الإدارة -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal" style="max-width: 800px;">
+      <h2 style="margin-bottom: 20px; text-align:center; color:var(--primary);">👑 لوحة الإدارة</h2>
+      
+      <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <button class="btn btn-outline" onclick="switchAdminTab('props')" id="atabProps" style="flex:1; background:var(--primary); color:#fff;">العروض</button>
+        <button class="btn btn-outline" onclick="switchAdminTab('users')" id="atabUsers" style="flex:1;">المستخدمين</button>
+        <button class="btn btn-outline" onclick="switchAdminTab('locations')" id="atabLoc" style="flex:1;">المواقع</button>
       </div>
-      <div id="dashboardContent" style="max-height: 300px; overflow-y:auto;"><p>جاري التحميل...</p></div>
-      <button class="btn btn-outline" style="margin-top:20px; width:100%;" onclick="closeModal('dashboardModal')">إغلاق</button>
+
+      <div id="adminContent" style="max-height: 400px; overflow-y:auto; background:var(--bg); border-radius:10px; padding:10px;">
+        <p style="text-align:center;">جاري التحميل...</p>
+      </div>
+      
+      <button class="btn btn-outline" style="margin-top:20px; width:100%;" onclick="closeModal('adminModal')">إغلاق</button>
     </div>
   </div>
+
+  <!-- القائمة الجانبية -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <h3 style="color:var(--primary); margin-bottom:20px; font-size:1.3rem;">القائمة</h3>
+    <a href="#" onclick="showPage('how'); closeSidebar();">⚙️ تعليمات وآلية النشر</a>
+    <a href="#" onclick="showPage('trust'); closeSidebar();">🛡️ الثقة والأمان</a>
+    
+    <div id="adminMenu" style="display:none;">
+      <hr style="margin:20px 0; border-color:var(--border);">
+      <a href="#" onclick="showAdminDashboard(); closeSidebar();" style="color:var(--accent); font-weight:800;">👑 لوحة الإدارة</a>
+    </div>
+
+    <hr style="margin:20px 0; border-color:var(--border);">
+    <a href="#" onclick="logout(); closeSidebar();" style="color:#ef4444;">🚪 تسجيل الخروج</a>
+  </aside>
 
   <!-- مودال الصفحات -->
   <div class="modal-overlay" id="pageModal">
     <div class="modal">
       <h2 id="pageTitle" style="margin-bottom: 20px; color:var(--primary);"></h2>
-      <div id="pageBody" style="line-height:1.8; color:var(--text-muted);"></div>
+      <div id="pageBody" style="line-height:1.9; color:var(--text-muted); font-size:1.05rem;"></div>
       <button class="btn btn-outline" style="margin-top:25px; width:100%;" onclick="closeModal('pageModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- حاوية العقود للطباعة -->
+  <div id="pdf-container">
+    <div class="pdf-header">
+      <h1 id="pdfTitle">عقد - سوق اليمن المفتوح</h1>
+      <p>تاريخ التحرير: <span id="pdfDate"></span></p>
+    </div>
+    <div class="pdf-body">
+      <p>تم الاتفاق بين كل من:</p>
+      <p><strong>الطرف الأول (المكتب):</strong> سوق اليمن المفتوح (هاتف: 771713275)</p>
+      <p><strong>الطرف الثاني (المشتري/المستأجر):</strong> ....................................................</p>
+      <br>
+      <p>على <span id="pdfActionText">إيجار</span> العقار الموصوف أدناه:</p>
+      <ul style="margin-right: 20px; margin-top: 10px;">
+        <li><strong>نوع العقار:</strong> <span id="pdfPropType"></span></li>
+        <li><strong>الموقع:</strong> <span id="pdfPropLoc"></span></li>
+        <li><strong>الوصف:</strong> <span id="pdfPropTitle"></span></li>
+        <li><strong>المبلغ:</strong> <span id="pdfPropPrice"></span> ريال يمني</li>
+        <li><strong>تفاصيل إضافية:</strong> <span id="pdfExtraDetail"></span></li>
+      </ul>
+      <br>
+      <p id="pdfTermsText"></p>
+    </div>
+    <div class="pdf-footer">
+      <div>توقيع الطرف الأول: ....................</div>
+      <div>توقيع الطرف الثاني: ....................</div>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
 
-  <!-- Firebase v10 SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAZ1iTXO00mxNnoT2xmXfumCtMs0JkLfdc",
@@ -326,44 +457,68 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const yemenData = {
-      "أمانة العاصمة": ["صنعاء القديمة","شعوب","آزال","الصافية","السبعين","التحرير","الوحدة","معين","الثورة","بني الحارث"],
-      "صنعاء": ["همدان","أرحب","نهم","بني حشيش","خولان","سنحان وبني بهلول"],
-      "عدن": ["كريتر","المنصورة","الشيخ عثمان","خور مكسر","التواهي","المعلا","البريقة","دار سعد"],
-      "تعز": ["القاهرة","المظفر","صالة","التربة","الحوبان","مقبنة"],
-      "الحديدة": ["الحوك","الميناء","الحالي","باجل","بيت الفقيه","زبيد"],
-      "حضرموت": ["المكلا","الشحر","تريم","سيئون","شبام"],
-      "إب": ["المشنة","الظهار","الحوارث","يريم","النادرة"]
+    const ADMIN_EMAIL = "sgeanashwan@gmail.com"; 
+
+    let yemenData = {
+      "أمانة العاصمة": ["صنعاء القديمة","شعوب","آزال","الصافية","السبعين"],
+      "صنعاء": ["همدان","أرحب","نهم","بني حشيش","خولان"],
+      "عدن": ["كريتر","المنصورة","الشيخ عثمان","خور مكسر"],
+      "تعز": ["القاهرة","المظفر","صالة","التربة"],
+      "الحديدة": ["الحوك","الميناء","الحالي","باجل"],
+      "حضرموت": ["المكلا","الشحر","تريم","سيئون"]
     };
 
-    const cardsContainer = document.getElementById('cardsContainer');
-    const filterGov = document.getElementById('filterGovernorate');
-    const filterDist = document.getElementById('filterDistrict');
     const toastEl = document.getElementById('toast');
     let currentUser = null;
-    let allProperties = []; // لتخزين البيانات لفلترتها بسهولة
+    let allData = []; 
+    let currentAdminTab = 'props';
 
-    // صور جاهزة للعروض التجريبية
-    const dummyImages = [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    ];
+    // صور للبيانات التجريبية
+    const dummyImages = {
+      realestate: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500", "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500"],
+      electronics: ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500", "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500"],
+      cars: ["https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=500", "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500"]
+    };
 
-    // شريط الاعلانات
-    const ads = [
-      "مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين",
-      "اللهم اغفر لنا وارحمنا واهدنا الصراط المستقيم",
-      "أستغفر الله العظيم وأتوب إليه | تذكر أن الصدق والأمانة أساس التجارة"
-    ];
-    let adIndex = 0;
+    // إعداد البيانات التجريبية إذا كانت القاعدة فارغة
+    async function seedData() {
+      const snap = await getDocs(collection(db, 'items'));
+      if(snap.empty) {
+        const samples = [
+          // عقارات 10
+          {category:'realestate', type:'rent', title:'شقة 3 غرف السنينة', price:150000, gov:'أمانة العاصمة', dist:'السبعين', propType:'apartment', phone:'770000001', img: dummyImages.realestate[0]},
+          {category:'realestate', type:'sale', title:'فيلا فخمة حدة', price:80000000, gov:'أمانة العاصمة', dist:'شعوب', propType:'villa', phone:'770000002', img: dummyImages.realestate[1]},
+          {category:'realestate', type:'rent', title:'بيت مستقل حي الجامعة', price:200000, gov:'صنعاء', dist:'همدان', propType:'house', phone:'770000003', img: dummyImages.realestate[0]},
+          {category:'realestate', type:'sale', title:'أرضية تجارية', price:40000000, gov:'عدن', dist:'كريتر', propType:'land', phone:'770000004', img: dummyImages.realestate[1]},
+          // مستلزمات 10
+          {category:'electronics', title:'ايفون 14 برو ماكس', price:800000, gov:'أمانة العاصمة', dist:'التحرير', elecType:'phone', phone:'770000005', img: dummyImages.electronics[0]},
+          {category:'electronics', title:'لابتوب ديل i7', price:500000, gov:'تعز', dist:'القاهرة', elecType:'laptop', phone:'770000006', img: dummyImages.electronics[1]},
+          // سيارات 10
+          {category:'cars', title:'تويوتا كامري 2020', price:15000000, gov:'صنعاء', dist:'شعوب', carBrand:'تويوتا', carSpeed:220, carMileage:50000, carCondition:'used', phone:'770000007', img: dummyImages.cars[0]},
+          {category:'cars', title:'هيونداي توسان 2022', price:20000000, gov:'عدن', dist:'المنصورة', carBrand:'هيونداي', carSpeed:200, carMileage:10000, carCondition:'used', phone:'770000008', img: dummyImages.cars[1]},
+        ];
+        // إضافة 10 لكل قسم
+        for(let i=0; i<10; i++) {
+          const base = samples[i % samples.length];
+          await addDoc(collection(db, 'items'), {
+            ...base, 
+            title: base.title + " - " + (i+1),
+            ownerId: 'system', ownerEmail: 'system@yemen.com', createdAt: serverTimestamp()
+          });
+        }
+      }
+    }
+
+    // تشغيل السلايدر
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
     setInterval(() => {
-      adIndex = (adIndex + 1) % ads.length;
-      document.getElementById('marqueeText').innerText = ads[adIndex];
-    }, 1000 * 60 * 30);
+      slides[slideIndex].classList.remove('active');
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add('active');
+    }, 4000);
 
+    // الثيمات
     document.querySelectorAll('.theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.dataset.theme = btn.dataset.theme;
@@ -372,36 +527,42 @@
     });
     document.body.dataset.theme = localStorage.getItem('theme') || 'light';
 
+    // القائمة
     document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('show'); };
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); }
     document.getElementById('sidebarOverlay').onclick = closeSidebar;
 
-    function populateGovernorates(selectEl, includeEmpty = true) {
-      if (includeEmpty) selectEl.innerHTML = '<option value="">كل المحافظات</option>';
-      Object.keys(yemenData).sort().forEach(gov => selectEl.appendChild(new Option(gov, gov)));
+    // تعبئة المحافظات
+    function populateGovs() {
+      const selects = ['filterGov', 'eGov', 'cGov', 'addGov'];
+      selects.forEach(id => {
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.innerHTML = '<option value="">اختر المحافظة</option>';
+        Object.keys(yemenData).sort().forEach(g => el.appendChild(new Option(g, g)));
+      });
     }
-    populateGovernorates(filterGov);
-    const addGov = document.getElementById('addGovernorate');
-    addGov.innerHTML = '<option value="">اختر المحافظة</option>';
-    populateGovernorates(addGov, false);
 
-    filterGov.onchange = () => {
-      filterDist.innerHTML = '<option value="">كل المديريات</option>';
-      if (filterGov.value && yemenData[filterGov.value]) yemenData[filterGov.value].forEach(dist => filterDist.appendChild(new Option(dist, dist)));
-    };
-    addGov.onchange = () => {
-      const addDist = document.getElementById('addDistrict');
-      addDist.innerHTML = '<option value="">اختر المديرية</option>';
-      if (addGov.value && yemenData[addGov.value]) yemenData[addGov.value].forEach(dist => addDist.appendChild(new Option(dist, dist)));
+    document.getElementById('addGov').onchange = function() {
+      const distEl = document.getElementById('addDist');
+      distEl.innerHTML = '<option value="">اختر المديرية</option>';
+      if(this.value && yemenData[this.value]) yemenData[this.value].forEach(d => distEl.appendChild(new Option(d, d)));
     };
 
+    document.getElementById('filterGov').onchange = function() {
+      const distEl = document.getElementById('filterDist');
+      distEl.innerHTML = '<option value="">كل المديريات</option>';
+      if(this.value && yemenData[this.value]) yemenData[this.value].forEach(d => distEl.appendChild(new Option(d, d)));
+    };
+
+    // تسجيل الدخول
     let authMode = 'login';
     document.getElementById('loginBtn').onclick = () => { authMode='login'; updateAuthUI(); openModal('authModal'); };
     document.getElementById('toggleAuthMode').onclick = (e) => { e.preventDefault(); authMode = authMode === 'login' ? 'signup' : 'login'; updateAuthUI(); };
     function updateAuthUI() {
       document.getElementById('authTitle').textContent = authMode === 'login' ? '🔐 تسجيل الدخول' : '📝 إنشاء حساب';
       document.getElementById('authSubmitBtn').textContent = authMode === 'login' ? 'دخول' : 'إنشاء';
-      document.getElementById('toggleAuthMode').textContent = authMode === 'login' ? 'إنشاء حساب جديد' : 'لدي حساب بالفعل';
+      document.getElementById('toggleAuthMode').textContent = authMode === 'login' ? 'إنشاء حساب جديد' : 'لدي حساب';
     }
 
     document.getElementById('authForm').onsubmit = async (e) => {
@@ -418,19 +579,18 @@
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
       const btn = document.getElementById('loginBtn');
-      const addBtn = document.getElementById('addPropertyBtn');
       if(user) {
         btn.textContent = '👤 ' + user.email.split('@')[0];
-        addBtn.style.display = 'inline-flex'; // إظهار زر الإضافة في الهيدر
+        if (user.email === ADMIN_EMAIL) document.getElementById('adminMenu').style.display = 'block';
       } else {
         btn.textContent = '🔐 دخول';
-        addBtn.style.display = 'none';
+        document.getElementById('adminMenu').style.display = 'none';
       }
     });
     window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); };
 
-    // ضغط الصور
-    async function convertImageToText(file) {
+    // تحويل الصورة لنص
+    async function imgToText(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -446,46 +606,63 @@
               else { width = Math.round((width * MAX_DIM) / height); height = MAX_DIM; }
             }
             canvas.width = width; canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', 0.5)); 
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.4)); 
           };
         };
       });
     }
 
     window.openAddModal = () => {
-      if (!currentUser) { showToast('سجل الدخول أولاً'); openModal('authModal'); return; }
+      if (!currentUser) { showToast('يجب تسجيل الدخول أولاً'); openModal('authModal'); return; }
       openModal('addModal');
     };
-    document.getElementById('addPropertyBtn').onclick = openAddModal;
+
+    window.toggleAddFields = () => {
+      const cat = document.getElementById('addCategory').value;
+      document.getElementById('fields-realestate').style.display = cat === 'realestate' ? 'block' : 'none';
+      document.getElementById('fields-electronics').style.display = cat === 'electronics' ? 'block' : 'none';
+      document.getElementById('fields-cars').style.display = cat === 'cars' ? 'block' : 'none';
+    };
+
     document.getElementById('addForm').onsubmit = async (e) => {
       e.preventDefault();
       const btn = document.getElementById('saveBtn');
       btn.disabled = true; btn.textContent = '⏳ جاري المعالجة...';
 
       try {
-        const files = document.getElementById('addImages').files;
-        let imageText = '';
-        
-        if (files.length > 0) {
-          showToast(`جاري معالجة الصورة...`);
-          imageText = await convertImageToText(files[0]);
-        }
+        const file = document.getElementById('addImage').files[0];
+        let imgText = '';
+        if (file) imgText = await imgToText(file);
 
-        await addDoc(collection(db, 'properties'), {
-          type: document.getElementById('addType').value,
-          property: document.getElementById('addProperty').value,
-          gov: document.getElementById('addGovernorate').value,
-          dist: document.getElementById('addDistrict').value,
+        const cat = document.getElementById('addCategory').value;
+        const data = {
+          category: cat,
           title: document.getElementById('addTitle').value,
           price: parseFloat(document.getElementById('addPrice').value),
+          gov: document.getElementById('addGov').value,
+          dist: document.getElementById('addDist').value,
           phone: document.getElementById('addPhone').value,
-          images: imageText ? [imageText] : [],
+          image: imgText,
           ownerId: currentUser.uid,
+          ownerEmail: currentUser.email,
           createdAt: serverTimestamp()
-        });
+        };
 
+        if (cat === 'realestate') {
+          data.type = document.getElementById('addType').value;
+          data.propType = document.getElementById('addPropType').value;
+          data.extraDetail = document.getElementById('addExtraDetail').value;
+        } else if (cat === 'electronics') {
+          data.elecType = document.getElementById('addElecType').value;
+        } else if (cat === 'cars') {
+          data.carBrand = document.getElementById('addCarBrand').value;
+          data.carSpeed = document.getElementById('addCarSpeed').value;
+          data.carMileage = document.getElementById('addCarMileage').value;
+          data.carCondition = document.getElementById('addCarCondition').value;
+        }
+
+        await addDoc(collection(db, 'items'), data);
         showToast('✅ تم النشر بنجاح');
         closeModal('addModal');
         e.target.reset();
@@ -496,46 +673,56 @@
       }
     };
 
-    function listenToProperties() {
-      const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'));
-      onSnapshot(q, (snapshot) => {
-        allProperties = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        renderCards(allProperties); // عرض الكل في البداية
-      }, (err) => {
-        cardsContainer.innerHTML = `<p style="text-align:center; color:#ef4444; font-weight:bold;">⚠️ فشل الاتصال بقاعدة البيانات</p>`;
+    // جلب البيانات وعرضها
+    function listenData() {
+      const q = query(collection(db, 'items'), orderBy('createdAt', 'desc'));
+      onSnapshot(q, (snap) => {
+        allData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderAll();
       });
     }
 
-    // دالة عرض البطاقات
-    function renderCards(properties) {
-      if (!properties.length) {
-        cardsContainer.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">لا توجد عروض تطابق بحثك.</p>';
-        return;
-      }
-      const propNames = { apartment:'شقة', house:'بيت مستقل', villa:'فيلا', land:'أرضية', hangar:'هنجر' };
+    function renderAll() {
+      renderSection('realestate', 'cards-realestate');
+      renderSection('electronics', 'cards-electronics');
+      renderSection('cars', 'cards-cars');
+    }
+
+    function renderSection(category, containerId, filterFunc = null) {
+      let items = allData.filter(d => d.category === category);
+      if (filterFunc) items = items.filter(filterFunc);
       
-      cardsContainer.innerHTML = properties.map(p => {
-        const badge = p.type === 'rent' ? 'badge-rent' : 'badge-sale';
-        const typeName = p.type === 'rent' ? 'إيجار' : 'بيع';
-        // استخدام صورة من العروض أو صورة افتراضية
-        const img = (p.images && p.images.length && p.images[0]) ? p.images[0] : dummyImages[0];
-        
+      const container = document.getElementById(containerId);
+      if(!items.length) { container.innerHTML = '<p style="text-align:center;">لا توجد عروض حالياً.</p>'; return; }
+
+      container.innerHTML = items.map(p => {
+        let img = p.image || (category === 'realestate' ? dummyImages.realestate[0] : category === 'cars' ? dummyImages.cars[0] : dummyImages.electronics[0]);
+        let metaHtml = '';
+        let actionBtn = '';
+
+        if(category === 'realestate') {
+          const pName = {apartment:'شقة', house:'بيت مستقل', villa:'فيلا', land:'أرضية'};
+          metaHtml = `<span>📍 ${p.gov} - ${p.dist}</span><span>🏠 ${pName[p.propType] || ''}</span>`;
+          actionBtn = `<button onclick="generateContract('${p.id}')" class="btn ${p.type === 'rent' ? 'btn-accent' : 'btn-outline'}">${p.type === 'rent' ? '📄 عقد إيجار PDF' : '📜 عقد بيع PDF'}</button>`;
+        } else if(category === 'cars') {
+          metaHtml = `<span>📍 ${p.gov} - ${p.dist}</span><span>🚗 ${p.carBrand || 'غير محدد'}</span><span>⚡ ${p.carSpeed || '0'} كم/س</span><span>🛣️ ${p.carMileage || '0'} كم</span><span>⚙️ ${p.carCondition === 'new' ? 'جديد' : 'مستعمل'}</span>`;
+        } else {
+          const eName = {phone:'هاتف', laptop:'لابتوب', furniture:'أثاث', other:'أخرى'};
+          metaHtml = `<span>📍 ${p.gov} - ${p.dist}</span><span>📦 ${eName[p.elecType] || 'مستلزم'}</span>`;
+        }
+
         return `
           <div class="card">
             <div class="card-img-wrapper">
-              <span class="card-badge ${badge}">${typeName}</span>
-              <img class="card-img" src="${img}" loading="lazy" onerror="this.src='${dummyImages[0]}'">
+              <img class="card-img" src="${img}" loading="lazy">
             </div>
             <div class="card-body">
               <h3 class="card-title">${p.title}</h3>
-              <div class="card-meta">
-                <span>📍 ${p.gov} - ${p.dist}</span>
-                <span>🏠 ${propNames[p.property] || p.property}</span>
-              </div>
+              <div class="card-meta">${metaHtml}</div>
               <div class="card-price">${Number(p.price).toLocaleString('ar-YE')} ريال</div>
               <div class="card-actions">
-                <a href="https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالعرض: ${p.title}. رقم المعلن: ${p.phone}`)}" target="_blank" class="btn btn-primary" style="flex:1; text-decoration:none;">💬 تواصل واتساب</a>
-                ${currentUser && currentUser.uid === p.ownerId ? `<button class="btn btn-danger" onclick="deleteProperty('${p.id}')">🗑️</button>` : ''}
+                <button onclick="handleContact('${p.id}')" class="btn btn-primary" style="flex:1;">💬 تواصل مع البائع</button>
+                ${actionBtn}
               </div>
             </div>
           </div>
@@ -543,110 +730,188 @@
       }).join('');
     }
 
-    // منطق الفلترة الاحترافي
-    document.getElementById('searchBtn').onclick = () => {
-      const gov = filterGov.value;
-      const dist = filterDist.value;
-      const type = document.getElementById('filterType').value;
-      const prop = document.getElementById('filterProperty').value;
-      
-      const filtered = allProperties.filter(p => {
-        if (gov && p.gov !== gov) return false;
-        if (dist && p.dist !== dist) return false;
-        if (type && p.type !== type) return false;
-        if (prop && p.property !== prop) return false;
-        return true;
-      });
-      
-      renderCards(filtered);
-    };
-
-    window.deleteProperty = async (id) => {
-      if (!confirm('حذف هذا العرض؟')) return;
-      try { await deleteDoc(doc(db, 'properties', id)); showToast('تم الحذف'); } 
-      catch (e) { showToast('لا تملك الصلاحية'); }
-    };
-
-    window.showDashboard = async () => {
-      if (!currentUser) return showToast('سجل الدخول');
-      openModal('dashboardModal');
-      const q = query(collection(db, 'properties'), where('ownerId', '==', currentUser.uid));
-      onSnapshot(q, (snapshot) => {
-        document.getElementById('dashboardContent').innerHTML = snapshot.docs.length ? snapshot.docs.map(d => {
-          const p = d.data();
-          return `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid var(--border);">
-            <span style="font-size:0.9rem;">${p.title}</span>
-            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProperty('${d.id}')">حذف</button>
-          </div>`;
-        }).join('') : '<p style="text-align:center;">لا يوجد عروض حالياً.</p>';
+    window.switchTab = (tabId) => {
+      document.querySelectorAll('.main-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-'+tabId).classList.add('active');
+      ['realestate', 'electronics', 'cars'].forEach(t => {
+        document.getElementById('section-'+t).style.display = (t === tabId) ? 'block' : 'none';
       });
     };
 
-    window.generateDummyData = async (event) => {
-      if (!currentUser) return;
-      const btn = event.target;
-      btn.textContent = "⏳ جاري التوليد...";
-      btn.disabled = true;
-      
-      const govs = Object.keys(yemenData);
-      try {
-        for (let i = 0; i < 20; i++) {
-          const gov = govs[Math.floor(Math.random() * govs.length)];
-          const dists = yemenData[gov];
-          const dist = dists[Math.floor(Math.random() * dists.length)];
-          const randomImg = dummyImages[Math.floor(Math.random() * dummyImages.length)];
-          
-          await addDoc(collection(db, 'properties'), {
-            title: `عرض تجريبي: عقار في ${dist}`,
-            type: Math.random() > 0.5 ? 'rent' : 'sale',
-            property: ['apartment','house','villa','land'][Math.floor(Math.random()*4)],
-            gov: gov,
-            dist: dist,
-            price: Math.floor(Math.random() * 500000) + 50000,
-            phone: '770000000',
-            ownerId: currentUser.uid,
-            createdAt: serverTimestamp(),
-            images: [randomImg] // إضافة صورة للعرض التجريبي
-          });
-        }
-        showToast('✅ تم توليد 20 عرضاً بصور بنجاح');
-      } catch (e) {
-        showToast('❌ فشل التوليد');
-      } finally {
-        btn.textContent = "✨ توليد 20 عرض تجريبي (مع صور)";
-        btn.disabled = false;
+    window.handleContact = (id) => {
+      if (!currentUser) { showToast('يجب تسجيل الدخول للتواصل'); openModal('authModal'); return; }
+      const p = allData.find(x => x.id === id);
+      if (p) window.open(`https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالعرض: ${p.title}. رقم المعلن: ${p.phone}`)}`, '_blank');
+    };
+
+    // فلترة الأقسام
+    window.searchItems = (category) => {
+      if(category === 'realestate') {
+        const gov = document.getElementById('filterGov').value, dist = document.getElementById('filterDist').value;
+        const type = document.getElementById('filterType').value, propType = document.getElementById('filterPropType').value;
+        renderSection('realestate', 'cards-realestate', p => (!gov || p.gov===gov) && (!dist || p.dist===dist) && (!type || p.type===type) && (!propType || p.propType===propType));
+      } else if(category === 'electronics') {
+        const gov = document.getElementById('eGov').value, dist = document.getElementById('eDist').value;
+        const type = document.getElementById('eType').value;
+        renderSection('electronics', 'cards-electronics', p => (!gov || p.gov===gov) && (!dist || p.dist===dist) && (!type || p.elecType===type));
+      } else {
+        const gov = document.getElementById('cGov').value, dist = document.getElementById('cDist').value;
+        const brand = document.getElementById('cBrand').value.toLowerCase();
+        renderSection('cars', 'cards-cars', p => (!gov || p.gov===gov) && (!dist || p.dist===dist) && (!brand || (p.carBrand && p.carBrand.toLowerCase().includes(brand))));
       }
     };
 
-    window.deleteAllMyProps = async () => {
-      if (!currentUser || !confirm('هل أنت متأكد من حذف جميع عروضك؟')) return;
-      try {
-        const q = query(collection(db, 'properties'), where('ownerId', '==', currentUser.uid));
-        const snap = await getDocs(q);
-        const batch = writeBatch(db);
-        snap.forEach(d => batch.delete(d.ref));
-        await batch.commit();
-        showToast('🗑️ تم حذف جميع عروضك');
-      } catch (e) { showToast('❌ حدث خطأ'); }
+    // توليد العقود (للعقارات فقط)
+    window.generateContract = (id) => {
+      if (!currentUser) { showToast('سجل الدخول أولاً'); return; }
+      const p = allData.find(x => x.id === id);
+      if (!p || p.category !== 'realestate') return;
+
+      const pName = {apartment:'شقة', house:'بيت مستقل', villa:'فيلا', land:'أرضية'};
+      document.getElementById('pdfDate').innerText = new Date().toLocaleDateString('ar-YE');
+      document.getElementById('pdfPropType').innerText = pName[p.propType] || p.propType;
+      document.getElementById('pdfPropLoc').innerText = `${p.gov} - ${p.dist}`;
+      document.getElementById('pdfPropTitle').innerText = p.title;
+      document.getElementById('pdfPropPrice').innerText = Number(p.price).toLocaleString('ar-YE');
+
+      const titleEl = document.getElementById('pdfTitle');
+      const actionEl = document.getElementById('pdfActionText');
+      const termsEl = document.getElementById('pdfTermsText');
+      const extraDetail = document.getElementById('pdfExtraDetail');
+
+      if (p.type === 'rent') {
+        titleEl.innerText = "عقد إيجار عقار - سوق اليمن المفتوح";
+        actionEl.innerText = "إيجار";
+        termsEl.innerText = "يلتزم الطرف الثاني بدفع القيمة الإيجارية في الموعد المتفق عليه، والمحافظة على العقار. ويلتزم الطرف الأول بتسليم العقار بحالة جيدة.";
+        extraDetail.innerText = p.extraDetail ? `مدة الإيجار: ${p.extraDetail}` : 'غير محددة';
+      } else {
+        titleEl.innerText = "عقد بيع ومبايعة عقار - سوق اليمن المفتوح";
+        actionEl.innerText = "بيع وشراء";
+        termsEl.innerText = "يلتزم الطرف الأول بتفريغ العقار للطرف الثاني وتسليمه خالياً من أي نزاعات. ويلتزم الطرف الثاني بدفع المبلغ المتفق عليه فور توقيع العقد.";
+        extraDetail.innerText = p.extraDetail ? `طريقة الدفع: ${p.extraDetail}` : 'غير محددة';
+      }
+
+      const element = document.getElementById('pdf-container');
+      html2pdf().set({ margin: 1, filename: `عقد_${Date.now()}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }).from(element).save();
+      showToast('📄 جاري تحميل العقد...');
     };
 
+    // لوحة الإدارة
+    window.showAdminDashboard = () => {
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) return showToast('غير مصرح لك');
+      openModal('adminModal');
+      switchAdminTab('props');
+    };
+
+    window.switchAdminTab = (tab) => {
+      currentAdminTab = tab;
+      ['props', 'users', 'locations'].forEach(t => document.getElementById('atab'+t.charAt(0).toUpperCase()+t.slice(1)).style.background = t === tab ? 'var(--primary)' : 'transparent');
+      if (tab === 'props') loadAdminProps();
+      else if (tab === 'users') loadAdminUsers();
+      else loadAdminLocations();
+    };
+
+    function loadAdminProps() {
+      document.getElementById('adminContent').innerHTML = allData.map(p => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--border);">
+          <div>
+            <strong style="display:block; font-size:0.9rem;">[${p.category === 'realestate' ? 'عقار' : p.category === 'cars' ? 'سيارة' : 'جهاز'}] ${p.title}</strong>
+            <span style="color:var(--primary); font-size:0.85rem;">📞 ${p.phone}</span>
+          </div>
+          <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="adminDeleteItem('${p.id}')">حذف</button>
+        </div>
+      `).join('') || '<p style="text-align:center;">لا توجد عروض.</p>';
+    }
+
+    window.adminDeleteItem = async (id) => {
+      if (!confirm('حذف هذا العرض نهائياً؟')) return;
+      await deleteDoc(doc(db, 'items', id));
+      showToast('تم الحذف');
+    };
+
+    async function loadAdminUsers() {
+      const snap = await getDocs(collection(db, 'items'));
+      const usersMap = {};
+      snap.forEach(d => { if(d.data().ownerEmail) usersMap[d.data().ownerEmail] = (usersMap[d.data().ownerEmail] || 0) + 1; });
+      document.getElementById('adminContent').innerHTML = Object.keys(usersMap).map(email => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--border);">
+          <div><strong>${email}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">نشر ${usersMap[email]} عرضاً</span></div>
+          <button class="btn btn-primary" onclick="makeAdmin('${email}')" style="padding:5px 10px; font-size:0.8rem;">ترقية لمشرف</button>
+        </div>
+      `).join('') || '<p style="text-align:center;">لا يوجد مستخدمون.</p>';
+    }
+
+    window.makeAdmin = (email) => {
+      // في تطبيق حقيقي، يجب استخدام Cloud Functions لتغيير صلاحيات المصادقة
+      // هنا نستخدم طريقة بسيطة عبر رسالة توضيحية
+      showToast(`تم إرسال طلب ترقية ${email} (يتطلب كود سيرفر)`);
+    };
+
+    function loadAdminLocations() {
+      document.getElementById('adminContent').innerHTML = `
+        <div style="margin-bottom:15px;">
+          <input type="text" id="newGovName" placeholder="اسم المحافظة الجديدة" style="padding:10px; border-radius:8px; border:1px solid var(--border); width:60%;">
+          <button class="btn btn-primary" onclick="addNewGov()" style="padding:10px; margin-right:5px;">إضافة محافظة</button>
+        </div>
+        <div style="margin-bottom:15px;">
+          <select id="targetGov" style="padding:10px; border-radius:8px; border:1px solid var(--border); width:40%;">${Object.keys(yemenData).map(g => `<option>${g}</option>`).join('')}</select>
+          <input type="text" id="newDistName" placeholder="اسم المديرية" style="padding:10px; border-radius:8px; border:1px solid var(--border); width:35%;">
+          <button class="btn btn-primary" onclick="addNewDist()" style="padding:10px; margin-right:5px;">إضافة مديرية</button>
+        </div>
+      `;
+    }
+
+    window.addNewGov = () => {
+      const name = document.getElementById('newGovName').value.trim();
+      if(name && !yemenData[name]) {
+        yemenData[name] = [];
+        localStorage.setItem('customYemenData', JSON.stringify(yemenData));
+        populateGovs();
+        loadAdminLocations();
+        showToast('تمت إضافة المحافظة');
+      }
+    };
+
+    window.addNewDist = () => {
+      const gov = document.getElementById('targetGov').value;
+      const name = document.getElementById('newDistName').value.trim();
+      if(name && yemenData[gov] && !yemenData[gov].includes(name)) {
+        yemenData[gov].push(name);
+        localStorage.setItem('customYemenData', JSON.stringify(yemenData));
+        loadAdminLocations();
+        showToast('تمت إضافة المديرية');
+      }
+    };
+
+    // أدوات
     window.openModal = (id) => document.getElementById(id).classList.add('show');
     window.closeModal = (id) => document.getElementById(id).classList.remove('show');
     window.showToast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('show'); setTimeout(() => toastEl.classList.remove('show'), 3000); };
-    
+
     const pages = {
-      about: { title: 'ℹ️ عن المكتب', body: 'مكتب الثقة هو منصة يمنية متخصصة في عرض العقارات. نسعى لتوفير بيئة آمنة وموثوقة للباحثين عن منازل وأراضي.' },
-      how: { title: '⚙️ آلية العمل', body: 'تصفح العروض، أو أضف عرضك بسهولة. عند تواصلك معنا، سيتم دمج رقمك مع رقم المكتب لتسهيل العملية. نضمن لك السرية والسرعة.' },
-      trust: { title: '🛡️ الثقة والأمان', body: 'نلتزم بالصدق والأمانة. ننصح دائماً بمعاينة العقار على أرض الواقع قبل الدفع، وعدم تحويل أي مبالغ دون توثيق قانوني.' },
-      guidelines: { title: '📜 إرشادات النشر', body: '1. يمنع نشر عروض وهمية. 2. يجب أن تكون الصور حقيقية. 3. أي مخالفة تعرض حسابك للحظر. 4. الالتزام بدفع العمولة عند إتمام الصفقة.' }
+      how: { title: '⚙️ تعليمات وآلية النشر', body: `
+        <p><strong>كيف تعمل الأقسام الثلاثة؟</strong></p>
+        <p>1. <strong>العقارات:</strong> لنشر أو البحث عن بيوت، شقق، أراضي (إيجار أو بيع). يتميز هذا القسم بتوليد عقود PDF رسمية.</p>
+        <p>2. <strong>المستلزمات والأجهزة:</strong> لبيع أو شراء هواتف، لابتوبات، أثاث، وأي إلكترونيات أخرى.</p>
+        <p>3. <strong>السيارات:</strong> مخصص للسيارات، حيث يعرض تفاصيل دقيقة (الماركة، السرعة، الممشى، الحالة).</p>
+        <hr style="margin:15px 0;">
+        <p><strong>التواصل والعمولة:</strong> ندمج رقمك مع رقم المكتب للضمان. عند تواصل المشتري معنا، نعطيه رقمك للتفاهم. السعر بينكما رأساً برأس، والمكتب يأخذ عمولته الرمزية عند إتمام الصفقة لضمان الحقوق.</p>
+      ` },
+      trust: { title: '🛡️ الثقة والأمان', body: 'نلتزم بالصدق والأمانة. لا تنشر عروضاً وهمية. ننصح بمعاينة العقار أو السيارة على أرض الواقع قبل الدفع.' }
     };
     window.showPage = (key) => {
       document.getElementById('pageTitle').textContent = pages[key].title;
-      document.getElementById('pageBody').textContent = pages[key].body;
+      document.getElementById('pageBody').innerHTML = pages[key].body;
       openModal('pageModal');
     };
 
-    listenToProperties();
+    // بدء التشغيل
+    const savedData = localStorage.getItem('customYemenData');
+    if(savedData) yemenData = JSON.parse(savedData);
+    
+    populateGovs();
+    seedData().then(() => listenData());
+    
   </script>
 </body>
 </html>
