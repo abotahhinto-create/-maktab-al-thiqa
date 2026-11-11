@@ -3,180 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>سوق اليمن المفتوح | 2027</title>
+  <title>سوق اليمن المفتوح</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#7c3aed">
+  <meta name="theme-color" content="#0f172a">
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
-    /* ====== الثيمات ====== */
     :root {
-      --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9;
-      --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899;
-      --border: rgba(124,58,237,0.1); --shadow: 0 10px 30px -5px rgba(124,58,237,0.15); 
-      --radius: 20px; --font: 'Cairo', sans-serif; --transition: 0.4s ease;
+      --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8;
+      --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24;
+      --border: #334155; --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); 
+      --radius: 16px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
     }
     
-    /* الثيمات الأخرى */
-    [data-theme="light"] { --bg: #f0f4f8; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b; --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b; --border: rgba(0,0,0,0.05); --shadow: 0 10px 30px -5px rgba(0,0,0,0.08); }
-    [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24; --border: rgba(255,255,255,0.1); --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); }
-    [data-theme="golden"] { --bg: #fffbeb; --surface: #ffffff; --text: #78350f; --text-muted: #b45309; --primary: #d97706; --primary-light: #f59e0b; --accent: #fbbf24; --border: rgba(217,119,6,0.15); --shadow: 0 10px 30px -5px rgba(217,119,6,0.1); }
-    [data-theme="olive"] { --bg: #f7fee7; --surface: #ffffff; --text: #3f6212; --text-muted: #65a30d; --primary: #4d7c0f; --primary-light: #84cc16; --accent: #eab308; --border: rgba(77,124,15,0.15); --shadow: 0 10px 30px -5px rgba(77,124,15,0.1); }
-    [data-theme="sunset"] { --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; --shadow: 0 10px 30px -5px rgba(234,88,12,0.1); }
+    [data-theme="light"] { --bg: #f0f4f8; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b; --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b; --border: #e2e8f0; --shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    [data-theme="royal"] { --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9; --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899; --border: #ddd6fe; --shadow: 0 10px 20px rgba(124,58,237,0.1); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; }
 
-    /* ====== شريط الإعلانات ====== */
-    .marquee-bar { background: linear-gradient(90deg, var(--primary), var(--primary-light)); color: #fff; padding: 8px 0; font-weight: 700; font-size: 0.85rem; overflow: hidden; white-space: nowrap; }
-    .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    /* ====== الهيدر ====== */
-    header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; }
-    [data-theme="dark"] header { background: rgba(30, 41, 59, 0.95); }
+    /* الهيدر */
+    header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 5px; }
     
-    /* الشعار في المنتصف */
-    .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); text-align: center; flex: 1; }
-    
-    /* الأزرار في اليمين */
-    .header-actions { display: flex; gap: 8px; align-items: center; }
-    
-    .theme-btn { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
-    .theme-btn:hover { transform: scale(1.2); }
-    .theme-btn[data-theme="royal"] { background: #7c3aed; }
-    .theme-btn[data-theme="golden"] { background: #d97706; }
-    .theme-btn[data-theme="olive"] { background: #4d7c0f; }
-    .theme-btn[data-theme="sunset"] { background: #ea580c; }
+    .header-actions { display: flex; gap: 5px; align-items: center; }
+    .theme-btn { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; }
     .theme-btn[data-theme="dark"] { background: #0f172a; }
     .theme-btn[data-theme="light"] { background: #f0f4f8; }
+    .theme-btn[data-theme="royal"] { background: #7c3aed; }
 
-    .btn { padding: 8px 14px; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+    .btn-primary { background: var(--primary); color: #0f172a; }
+    .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
     .btn-danger { background: #ef4444; color: #fff; }
-    .btn-accent { background: var(--accent); color: #fff; }
-    .icon-btn { padding: 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1.2rem; }
+    .btn-accent { background: var(--accent); color: #0f172a; }
+    .icon-btn { padding: 6px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 0.9rem; }
 
-    /* ====== السلايدر ====== */
-    .slider-container { position: relative; width: 100%; height: 35vh; min-height: 250px; overflow: hidden; background: #000; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
-    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+    /* السلايدر */
+    .slider-container { position: relative; width: 100%; height: 25vh; min-height: 150px; overflow: hidden; background: #000; }
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
     .slide.active { opacity: 1; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
-    .slide-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 20px; }
-    .slide-content h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-    @media (max-width: 600px) { .slide-content h1 { font-size: 1.3rem; } }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+    .slide-content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+    .slide-content h1 { font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
-    /* ====== أزرار الأقسام ====== */
-    .main-tabs { display: flex; gap: 10px; padding: 15px; max-width: 1200px; margin: -20px auto 20px; position: relative; z-index: 10; overflow-x: auto; }
-    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 10px 18px; border-radius: 14px; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px; color: var(--text); box-shadow: var(--shadow); }
-    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); transform: translateY(-2px); }
+    /* أزرار الأقسام */
+    .main-tabs { display: flex; gap: 8px; padding: 10px 15px; max-width: 1200px; margin: -15px auto 10px; position: relative; z-index: 10; overflow-x: auto; }
+    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 15px; border-radius: 10px; font-weight: 800; font-size: 0.8rem; cursor: pointer; white-space: nowrap; color: var(--text); }
+    .tab-btn.active { background: var(--primary); color: #0f172a; border-color: var(--primary); }
 
-    main { max-width: 1200px; margin: 0 auto; padding: 0 15px 80px; }
+    main { max-width: 1200px; margin: 0 auto; padding: 0 10px 80px; }
 
-    /* ====== بطاقة البحث الأفقية (تم تعديلها لتكون صف واحد) ====== */
-    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
-    .filters-row { display: flex; flex-direction: row; gap: 10px; align-items: center; min-width: max-content; }
-    .filter-group { width: 150px; }
-    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
+    /* بطاقة البحث */
+    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 15px; }
+    .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; color: var(--primary); text-align: center; }
+    .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.8rem; outline: none; }
     .filter-group button { width: 100%; padding: 10px; }
 
-    /* ====== البطاقات الأفقية ====== */
-    .cards-grid { display: flex; flex-direction: column; gap: 15px; }
-    .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 170px; }
-    .card-img-wrapper { width: 35%; position: relative; }
+    /* البطاقات (أفقية على الجوال) */
+    .cards-grid { display: flex; flex-direction: column; gap: 12px; }
+    .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 140px; }
+    .card-img-wrapper { width: 40%; position: relative; }
     .card-img { width: 100%; height: 100%; object-fit: cover; }
-    .card-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: 800; color: #fff; background: var(--primary); }
+    .card-badge { position: absolute; top: 8px; right: 8px; padding: 3px 8px; border-radius: 12px; font-size: 0.6rem; font-weight: 800; color: #0f172a; background: var(--primary); }
     
-    .card-body { width: 65%; padding: 12px 15px; display: flex; flex-direction: column; justify-content: space-between; }
-    .card-title { font-size: 1rem; font-weight: 800; margin-bottom: 5px; line-height: 1.3; }
-    .card-meta { display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-muted); flex-wrap: wrap; }
-    .card-price { font-weight: 800; color: var(--primary); font-size: 1.1rem; margin-top: 5px; }
-    .card-actions { display: flex; gap: 8px; margin-top: 5px; }
-    .card-actions .btn { padding: 6px; font-size: 0.75rem; flex: 1; border-radius: 8px; }
-    
-    @media (max-width: 600px) {
-      .card { height: auto; flex-direction: column; }
-      .card-img-wrapper { width: 100%; height: 160px; }
-      .card-body { width: 100%; }
+    .card-body { width: 60%; padding: 8px 12px; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { display: flex; gap: 6px; font-size: 0.7rem; color: var(--text-muted); }
+    .card-price { font-weight: 800; color: var(--primary); font-size: 1rem; }
+    .card-actions { display: flex; gap: 5px; }
+    .card-actions .btn { flex: 1; padding: 6px; font-size: 0.7rem; border-radius: 6px; }
+
+    @media (min-width: 768px) {
+      .card { height: 180px; }
+      .card-title { font-size: 1.1rem; }
+      .card-price { font-size: 1.2rem; }
     }
 
-    /* ====== زر إضافة عرض عائم ====== */
-    .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.2); cursor: pointer; z-index: 100; border: none; }
+    /* زر إضافة عرض عائم */
+    .fab { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: #0f172a; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(45,212,191,0.4); cursor: pointer; z-index: 100; border: none; }
 
-    /* ====== القائمة الجانبية ====== */
-    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-    .sidebar-overlay.show { opacity: 1; pointer-events: all; }
-    .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: var(--surface); z-index: 200; transition: right 0.4s; box-shadow: -5px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+    /* القائمة الجانبية */
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 199; display: none; }
+    .sidebar-overlay.show { display: block; }
+    .sidebar { position: fixed; top: 0; right: -280px; width: 260px; height: 100vh; background: var(--surface); z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; }
     .sidebar.open { right: 0; }
-    .sidebar-header { padding: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; }
-    .sidebar-menu { flex: 1; padding: 15px; overflow-y: auto; }
-    .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; font-weight: 700; margin-bottom: 5px; }
+    .sidebar-header { padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .sidebar-menu { flex: 1; padding: 10px; overflow-y: auto; }
+    .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 12px; color: var(--text); text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; }
     .sidebar-menu a:hover { background: var(--bg); color: var(--primary); }
     
-    .designer-card { margin: 15px; padding: 15px; background: var(--bg); border-radius: 16px; border: 1px solid var(--border); text-align: center; }
-    .designer-card h4 { font-size: 0.9rem; color: var(--text); }
-    .designer-card p { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; }
-    .designer-card a { display: block; background: #25D366; color: #fff; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.85rem; }
+    .designer-card { margin: 10px; padding: 10px; background: var(--bg); border-radius: 10px; text-align: center; border: 1px solid var(--border); }
+    .designer-card a { display: block; background: #25D366; color: #fff; padding: 8px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 8px; font-size: 0.8rem; }
 
-    /* ====== لوحة التحكم ====== */
+    /* لوحة التحكم */
     #adminPanel { position: fixed; inset: 0; background: var(--bg); z-index: 500; overflow-y: auto; display: none; }
-    .admin-header { background: var(--surface); padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    .admin-header { background: var(--surface); padding: 12px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .admin-content { padding: 15px; max-width: 1000px; margin: 0 auto; }
-    
     .admin-tabs { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; }
-    .admin-tab { padding: 8px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.85rem; }
-    .admin-tab.active { background: var(--primary); color: #fff; }
+    .admin-tab { padding: 8px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.8rem; }
+    .admin-tab.active { background: var(--primary); color: #0f172a; }
     .admin-page { display: none; }
     .admin-page.active { display: block; }
+    .admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+    .stat-card { background: var(--surface); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid var(--border); }
+    .stat-card h3 { font-size: 1.3rem; color: var(--primary); }
+    .stat-card p { font-size: 0.75rem; color: var(--text-muted); }
 
-    .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-    .stat-card { background: var(--surface); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
-    .stat-card h3 { font-size: 1.5rem; color: var(--primary); }
-    .stat-card p { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
-
-    /* ====== المودالات ====== */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: none; align-items: center; justify-content: center; padding: 15px; }
+    /* المودالات */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 300; display: none; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.show { display: flex; }
-    .modal { background: var(--surface); border-radius: var(--radius); padding: 20px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 700; font-size: 0.85rem; }
-    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-weight: 600; outline: none; }
+    .modal { background: var(--surface); border-radius: var(--radius); padding: 15px; width: 100%; max-width: 350px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; margin-bottom: 4px; font-weight: 700; font-size: 0.8rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
     
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--surface); padding: 10px 20px; border-radius: 50px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.4s; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: #0f172a; padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; z-index: 999; opacity: 0; transition: all 0.3s; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
-<body data-theme="royal">
+<body data-theme="dark">
 
-  <div class="marquee-bar">
-    <div class="marquee-content" id="marqueeText">مرحباً بكم في سوق اليمن المفتوح | عقارات، سيارات، وأجهزة إلكترونية | تصفح الآن وأضف عرضك بضغطة زر</div>
-  </div>
-
-  <!-- الهيدر: القائمة في اليمين، الاسم في المنتصف -->
   <header>
+    <div class="logo"><span>🏛️</span> سوق اليمن</div>
     <div class="header-actions">
+      <button class="theme-btn" data-theme="royal"></button>
+      <button class="theme-btn" data-theme="light"></button>
       <button class="icon-btn" id="menuBtn">☰</button>
-      <button class="btn btn-outline" id="loginBtn" style="padding: 6px 10px; font-size:0.75rem;">🔐 دخول</button>
-    </div>
-    
-    <div class="logo">🏛️ سوق اليمن</div>
-    
-    <div style="display:flex; gap:4px;">
-      <button class="theme-btn" data-theme="royal" title="بنفسجي"></button>
-      <button class="theme-btn" data-theme="golden" title="ذهبي"></button>
-      <button class="theme-btn" data-theme="olive" title="زيتوني"></button>
-      <button class="theme-btn" data-theme="sunset" title="برتقالي"></button>
-      <button class="theme-btn" data-theme="dark" title="داكن"></button>
-      <button class="theme-btn" data-theme="light" title="فاتح"></button>
     </div>
   </header>
 
   <div class="slider-container">
-    <div class="slide active"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000"><div class="slide-content"><h1>سوق اليمن المفتوح</h1></div></div>
-    <div class="slide"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000"><div class="slide-content"><h1>عالم العقارات</h1></div></div>
-    <div class="slide"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1000"><div class="slide-content"><h1>عالم السيارات</h1></div></div>
+    <div class="slide active"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800"><div class="slide-content"><h1>سوق اليمن المفتوح</h1></div></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800"><div class="slide-content"><h1>عالم السيارات</h1></div></div>
   </div>
 
   <div class="main-tabs">
@@ -186,10 +147,10 @@
   </div>
 
   <main>
-    <!-- قسم العقارات -->
     <div id="section-realestate">
       <div class="filters-card">
-        <div class="filters-row">
+        <div class="filters-title">🔍 ابحث عن عقارك</div>
+        <div class="filters-grid">
           <div class="filter-group"><select id="fGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="fDist"><option value="">المديرية</option></select></div>
           <div class="filter-group"><select id="fType"><option value="">إيجار/بيع</option><option value="rent">إيجار</option><option value="sale">بيع</option></select></div>
@@ -199,23 +160,23 @@
       <div id="cards-realestate" class="cards-grid"></div>
     </div>
 
-    <!-- قسم المستلزمات -->
     <div id="section-electronics" style="display:none;">
       <div class="filters-card">
-        <div class="filters-row">
+        <div class="filters-title">🔍 ابحث عن جهازك</div>
+        <div class="filters-grid">
           <div class="filter-group"><select id="eGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="eDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="eType"><option value="">النوع</option><option value="phone">هواتف</option><option value="laptop">لابتوب</option><option value="furniture">أثاث</option></select></div>
+          <div class="filter-group"><select id="eType"><option value="">النوع</option><option value="phone">هواتف</option><option value="laptop">لابتوب</option></select></div>
           <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('electronics')">بحث</button></div>
         </div>
       </div>
       <div id="cards-electronics" class="cards-grid"></div>
     </div>
 
-    <!-- قسم السيارات -->
     <div id="section-cars" style="display:none;">
       <div class="filters-card">
-        <div class="filters-row">
+        <div class="filters-title">🔍 ابحث عن سيارتك</div>
+        <div class="filters-grid">
           <div class="filter-group"><select id="cGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="cDist"><option value="">المديرية</option></select></div>
           <div class="filter-group"><input type="text" id="cBrand" placeholder="الماركة..."></div>
@@ -232,44 +193,47 @@
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <h2>سوق اليمن المفتوح</h2>
-      <p id="userGreeting">مرحباً بك</p>
+      <h2>سوق اليمن</h2>
+      <p id="userGreeting" style="font-size:0.75rem; color:var(--text-muted);">مرحباً بك</p>
     </div>
     <div class="sidebar-menu">
+      <!-- أزرار تسجيل الدخول -->
+      <div id="guestMenu">
+        <a href="#" onclick="openAuthModal('login')">🔐 تسجيل الدخول</a>
+        <a href="#" onclick="openAuthModal('signup')">📝 حساب جديد</a>
+      </div>
+      
       <a href="#" onclick="showInfoPage('about')">ℹ️ تحدث عنا</a>
-      <a href="#" onclick="showInfoPage('how')">⚙️ آلية العمل</a>
-      <a href="#" onclick="showInfoPage('publish')">📝 شرح الاستخدام والنشر</a>
-      <a href="#" onclick="showInfoPage('trust')">🛡️ الثقة والأمان</a>
+      <a href="#" onclick="showInfoPage('publish')">📝 شرح النشر</a>
+      
       <div id="adminMenu" style="display:none;">
         <hr style="margin:10px 0; border-color:var(--border);">
         <a href="#" onclick="openAdminPanel()" style="color:var(--accent);">👑 لوحة التحكم</a>
       </div>
-      <hr style="margin:10px 0; border-color:var(--border);">
-      <a href="#" onclick="logout()" style="color:#ef4444;">🚪 تسجيل الخروج</a>
+      <div id="logoutMenu" style="display:none;">
+        <hr style="margin:10px 0; border-color:var(--border);">
+        <a href="#" onclick="logout()" style="color:#ef4444;">🚪 تسجيل الخروج</a>
+      </div>
     </div>
-    <!-- بطاقة المصمم -->
     <div class="designer-card">
-      <h4>م. نشوان البدري</h4>
-      <p>صاحب السوق والمصمم</p>
+      <h4 style="font-size:0.8rem;">م. نشوان البدري</h4>
       <a href="https://wa.me/967771713275" target="_blank">💬 تواصل واتساب</a>
     </div>
   </aside>
 
-  <!-- لوحة التحكم الإدارية -->
+  <!-- لوحة التحكم -->
   <div id="adminPanel">
     <div class="admin-header">
-      <h2 style="color:var(--primary); font-size:1.2rem;">لوحة التحكم</h2>
+      <h2 style="color:var(--primary); font-size:1rem;">لوحة التحكم</h2>
       <button class="icon-btn" onclick="closeAdminPanel()">✖</button>
     </div>
     <div class="admin-content">
-      
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('reports')" id="atab-reports">📊 التقارير</button>
         <button class="admin-tab" onclick="switchAdminTab('users')" id="atab-users">👥 المستخدمين</button>
-        <button class="admin-tab" onclick="switchAdminTab('items')" id="atab-items">📦 إدارة العروض</button>
+        <button class="admin-tab" onclick="switchAdminTab('items')" id="atab-items">📦 العروض</button>
       </div>
 
-      <!-- صفحة التقارير -->
       <div id="apage-reports" class="admin-page active">
         <div class="admin-stats">
           <div class="stat-card"><h3 id="statProps">0</h3><p>عقارات</p></div>
@@ -277,43 +241,27 @@
           <div class="stat-card"><h3 id="statCars">0</h3><p>سيارات</p></div>
           <div class="stat-card"><h3 id="statUsers">0</h3><p>مستخدمين</p></div>
         </div>
-        <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
-          <button class="btn btn-accent" onclick="generateDummyData()">✨ توليد 30 عرض تجريبي</button>
-          <button class="btn btn-danger" onclick="deleteDummyData()">🗑️ حذف البيانات التجريبية</button>
-        </div>
-        <div style="background:var(--surface); padding:15px; border-radius:15px; border:1px solid var(--border);">
-          <h3 style="font-size:1rem; margin-bottom:10px;">📍 إدارة المواقع</h3>
-          <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
-            <input type="text" id="newGovName" placeholder="المحافظة الجديدة" style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
-            <button class="btn btn-primary" onclick="addNewGov()">إضافة</button>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <select id="targetGov" style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);"></select>
-            <input type="text" id="newDistName" placeholder="المديرية الجديدة" style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
-            <button class="btn btn-primary" onclick="addNewDist()">إضافة</button>
-          </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-accent" onclick="generateDummyData()" style="padding:10px;">✨ توليد 30 عرض تجريبي</button>
+          <button class="btn btn-danger" onclick="deleteDummyData()" style="padding:10px;">🗑️ حذف البيانات التجريبية</button>
         </div>
       </div>
 
-      <!-- صفحة المستخدمين -->
       <div id="apage-users" class="admin-page">
-        <h3 style="margin-bottom:10px; font-size:1rem;">قائمة المستخدمين</h3>
         <div id="adminUsersList"></div>
       </div>
 
-      <!-- صفحة العروض -->
       <div id="apage-items" class="admin-page">
-        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border); margin-bottom:10px; background:var(--bg); color:var(--text);">
+        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:10px; background:var(--bg); color:var(--text);">
         <div id="adminItemsList"></div>
       </div>
-
     </div>
   </div>
 
   <!-- مودال إضافة عرض -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
-      <h2 style="margin-bottom: 15px; color: var(--primary); text-align:center; font-size:1.2rem;">➕ إضافة عرض</h2>
+      <h2 style="margin-bottom: 10px; color: var(--primary); text-align:center; font-size:1rem;">➕ إضافة عرض</h2>
       <form id="addForm">
         <div class="form-group"><label>القسم</label><select id="addCategory" onchange="toggleAddFields()"><option value="realestate">🏠 عقارات</option><option value="electronics">📱 مستلزمات</option><option value="cars">🚗 سيارات</option></select></div>
         <div class="form-group"><label>المحافظة</label><select id="addGov" required></select></div>
@@ -326,18 +274,17 @@
           <div class="form-group"><label>العقار</label><select id="addPropType"><option value="apartment">شقة</option><option value="house">بيت</option><option value="villa">فيلا</option><option value="land">أرض</option></select></div>
         </div>
         <div id="fields-electronics" style="display:none;">
-          <div class="form-group"><label>النوع</label><select id="addElecType"><option value="phone">هاتف</option><option value="laptop">لابتوب</option><option value="furniture">أثاث</option></select></div>
+          <div class="form-group"><label>النوع</label><select id="addElecType"><option value="phone">هاتف</option><option value="laptop">لابتوب</option></select></div>
         </div>
         <div id="fields-cars" style="display:none;">
           <div class="form-group"><label>الماركة</label><input type="text" id="addCarBrand"></div>
-          <div class="form-group"><label>الممشى (كم)</label><input type="number" id="addCarMileage"></div>
         </div>
 
         <div class="form-group"><label>رقم هاتفك</label><input type="tel" id="addPhone" required></div>
         <div class="form-group"><label>صورة</label><input type="file" id="addImage" accept="image/*"></div>
         
         <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">💾 نشر</button>
-        <button type="button" class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('addModal')">إلغاء</button>
+        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('addModal')">إلغاء</button>
       </form>
     </div>
   </div>
@@ -345,7 +292,7 @@
   <!-- مودال تسجيل الدخول -->
   <div class="modal-overlay" id="authModal">
     <div class="modal">
-      <h2 id="authTitle" style="margin-bottom: 15px; text-align:center; font-size:1.2rem;">🔐 دخول</h2>
+      <h2 id="authTitle" style="margin-bottom: 10px; text-align:center; font-size:1rem;">🔐 دخول</h2>
       <form id="authForm">
         <div id="nameFields" style="display:none;">
           <div class="form-group"><label>الاسم الكامل</label><input type="text" id="authName"></div>
@@ -354,20 +301,20 @@
         <div class="form-group"><label>كلمة المرور</label><input type="password" id="authPassword" required minlength="6"></div>
         
         <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;" id="authSubmitBtn">دخول</button>
-        <button type="button" class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('authModal')">إلغاء</button>
+        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('authModal')">إلغاء</button>
       </form>
-      <p style="text-align:center; margin-top:10px; font-size:0.8rem;">
+      <p style="text-align:center; margin-top:10px; font-size:0.75rem;">
         <a href="#" id="toggleAuthMode" style="color:var(--primary); font-weight:bold;">إنشاء حساب</a>
       </p>
     </div>
   </div>
 
-  <!-- مودال الصفحات والمعلومات -->
+  <!-- مودال الصفحات -->
   <div class="modal-overlay" id="infoModal">
     <div class="modal">
-      <h2 id="infoTitle" style="margin-bottom: 10px; color:var(--primary); font-size:1.1rem;"></h2>
-      <div id="infoBody" style="line-height:1.7; font-size:0.9rem; color:var(--text-muted);"></div>
-      <button class="btn btn-outline" style="width:100%; margin-top:15px;" onclick="closeModal('infoModal')">إغلاق</button>
+      <h2 id="infoTitle" style="margin-bottom: 10px; color:var(--primary); font-size:1rem;"></h2>
+      <div id="infoBody" style="line-height:1.6; font-size:0.85rem; color:var(--text-muted);"></div>
+      <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('infoModal')">إغلاق</button>
     </div>
   </div>
 
@@ -429,7 +376,7 @@
         localStorage.setItem('theme', btn.dataset.theme);
       });
     });
-    document.body.dataset.theme = localStorage.getItem('theme') || 'royal';
+    document.body.dataset.theme = localStorage.getItem('theme') || 'dark';
 
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
@@ -438,7 +385,7 @@
     document.getElementById('menuBtn').onclick = toggleSidebar;
 
     function populateGovs() {
-      ['fGov', 'eGov', 'cGov', 'addGov', 'targetGov'].forEach(id => {
+      ['fGov', 'eGov', 'cGov', 'addGov'].forEach(id => {
         const el = document.getElementById(id);
         if(!el) return;
         el.innerHTML = '<option value="">اختر</option>';
@@ -458,13 +405,21 @@
     };
 
     let authMode = 'login';
-    document.getElementById('loginBtn').onclick = () => { authMode='login'; updateAuthUI(); openModal('authModal'); };
-    document.getElementById('toggleAuthMode').onclick = (e) => { e.preventDefault(); authMode = authMode === 'login' ? 'signup' : 'login'; updateAuthUI(); };
+    window.openAuthModal = (mode) => {
+      authMode = mode;
+      updateAuthUI();
+      openModal('authModal');
+      toggleSidebar(); // إغلاق القائمة الجانبية عند فتح المودال
+    };
+
+    document.getElementById('toggleAuthMode').onclick = (e) => { 
+      e.preventDefault(); authMode = authMode === 'login' ? 'signup' : 'login'; updateAuthUI(); 
+    };
     
     function updateAuthUI() {
       document.getElementById('authTitle').textContent = authMode === 'login' ? '🔐 تسجيل الدخول' : '📝 إنشاء حساب';
       document.getElementById('authSubmitBtn').textContent = authMode === 'login' ? 'دخول' : 'إنشاء';
-      document.getElementById('toggleAuthMode').textContent = authMode === 'login' ? 'إنشاء حساب جديد' : 'لدي حساب';
+      document.getElementById('toggleAuthMode').textContent = authMode === 'login' ? 'إنشاء حساب جديد' : 'لدي حساب بالفعل';
       document.getElementById('nameFields').style.display = authMode === 'signup' ? 'block' : 'none';
     }
 
@@ -480,7 +435,6 @@
           await signInWithEmailAndPassword(auth, email, pass);
         } else {
           if(!name) return showToast('ادخل اسمك');
-          if(identifier.includes('@')) return showToast('أنشئ حساباً برقم الجوال');
           await createUserWithEmailAndPassword(auth, email, pass);
           await setDoc(doc(db, 'users', identifier), { name, phone: identifier, uid: auth.currentUser.uid, role: 'user' });
         }
@@ -488,7 +442,6 @@
         closeModal('authModal'); showToast('✅ تم بنجاح');
       } catch (err) { 
         if(err.code === 'auth/email-already-in-use') showToast('❌ هذا الرقم مسجل مسبقاً');
-        else if(err.code === 'auth/invalid-email') showToast('❌ تأكد من صحة الرقم');
         else if(err.code === 'permission-denied') showToast('❌ خطأ في الصلاحيات (Rules)');
         else showToast('❌ خطأ: ' + err.message); 
       }
@@ -496,25 +449,28 @@
 
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
-      const btn = document.getElementById('loginBtn');
       if(user) {
         const phoneOrEmail = user.email.split('@')[0]; 
         currentPhone = phoneOrEmail;
-        btn.textContent = '👤 ' + phoneOrEmail;
+        document.getElementById('guestMenu').style.display = 'none';
+        document.getElementById('logoutMenu').style.display = 'block';
+        document.getElementById('userGreeting').textContent = 'أهلاً، ' + phoneOrEmail;
         
         if (phoneOrEmail === ADMIN_PHONE || user.email === ADMIN_EMAIL) {
           document.getElementById('adminMenu').style.display = 'block';
-          openAdminPanel(); // فتح لوحة التحكم تلقائياً
+          openAdminPanel();
         } else {
           document.getElementById('adminMenu').style.display = 'none';
         }
       } else {
-        btn.textContent = '🔐 دخول';
+        document.getElementById('guestMenu').style.display = 'block';
+        document.getElementById('logoutMenu').style.display = 'none';
+        document.getElementById('userGreeting').textContent = 'مرحباً بك';
         document.getElementById('adminMenu').style.display = 'none';
         closeAdminPanel();
       }
     });
-    window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); };
+    window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); toggleSidebar(); };
 
     async function imgToText(file) {
       return new Promise((resolve) => {
@@ -526,7 +482,7 @@
           img.onload = () => {
             const canvas = document.createElement('canvas');
             let w = img.width, h = img.height;
-            if (w > 600) { h = Math.round((h * 600) / w); w = 600; }
+            if (w > 500) { h = Math.round((h * 500) / w); w = 500; }
             canvas.width = w; canvas.height = h;
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
             resolve(canvas.toDataURL('image/jpeg', 0.5));
@@ -536,7 +492,7 @@
     }
 
     window.openAddModal = () => {
-      if (!currentUser) { showToast('يجب تسجيل الدخول أولاً'); openModal('authModal'); return; }
+      if (!currentUser) { showToast('يجب تسجيل الدخول أولاً'); openAuthModal('login'); return; }
       openModal('addModal');
     };
 
@@ -572,13 +528,12 @@
           data.elecType = document.getElementById('addElecType').value;
         } else {
           data.carBrand = document.getElementById('addCarBrand').value;
-          data.carMileage = document.getElementById('addCarMileage').value;
         }
 
         await addDoc(collection(db, 'items'), data);
         showToast('✅ تم النشر'); closeModal('addModal'); e.target.reset();
       } catch (err) { 
-        if(err.code === 'permission-denied') showToast('❌ قم بتحديث قواعد Firebase (Rules) للسماح بالنشر.');
+        if(err.code === 'permission-denied') showToast('❌ خطأ في الصلاحيات (Rules).');
         else showToast('❌ حدث خطأ.'); 
       } finally { btn.textContent = '💾 نشر'; btn.disabled = false; }
     };
@@ -652,7 +607,7 @@
     };
 
     window.handleContact = (id) => {
-      if (!currentUser) { showToast('سجل الدخول أولاً'); openModal('authModal'); return; }
+      if (!currentUser) { showToast('سجل الدخول أولاً'); openAuthModal('login'); return; }
       const p = allData.find(x => x.id === id);
       if (p) window.open(`https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالعرض: ${p.title}. رقم المعلن: ${p.phone}`)}`, '_blank');
     };
@@ -699,12 +654,12 @@
       if(searchTerm) filtered = allData.filter(p => p.title.includes(searchTerm) || p.phone.includes(searchTerm));
       
       document.getElementById('adminItemsList').innerHTML = filtered.map(p => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:8px;">
           <div>
-            <strong>[${p.category}] ${p.title}</strong><br>
-            <small style="color:var(--text-muted);">📞 ${p.phone} | 👤 ${p.ownerPhone || 'مجهول'}</small>
+            <strong style="font-size:0.8rem;">[${p.category}] ${p.title}</strong><br>
+            <small style="color:var(--text-muted); font-size:0.7rem;">📞 ${p.phone} | 👤 ${p.ownerPhone || 'مجهول'}</small>
           </div>
-          <button class="btn btn-danger" style="padding:5px 8px; font-size:0.75rem;" onclick="deleteItem('${p.id}')">حذف</button>
+          <button class="btn btn-danger" style="padding:4px 8px; font-size:0.65rem;" onclick="deleteItem('${p.id}')">حذف</button>
         </div>
       `).join('') || 'لا توجد عروض.';
     }
@@ -713,14 +668,14 @@
 
     function loadAdminUsersList() {
       document.getElementById('adminUsersList').innerHTML = allUsers.map(u => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:8px;">
           <div>
-            <strong>${u.name || 'مستخدم'}</strong><br>
-            <small style="color:var(--text-muted);">📞 ${u.phone}</small>
+            <strong style="font-size:0.8rem;">${u.name || 'مستخدم'}</strong><br>
+            <small style="color:var(--text-muted); font-size:0.7rem;">📞 ${u.phone}</small>
           </div>
-          <div style="display:flex; gap:5px; flex-wrap:wrap;">
-            <button class="btn btn-accent" style="padding:4px 8px; font-size:0.7rem;" onclick="resetUserPassword('${u.phone}')">إعادة كلمة المرور</button>
-            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.7rem;" onclick="deleteUser('${u.id}')">حذف</button>
+          <div style="display:flex; gap:4px; flex-wrap:wrap;">
+            <button class="btn btn-primary" style="padding:4px 6px; font-size:0.65rem;" onclick="makeAdmin('${u.id}')">ترقية لمشرف</button>
+            <button class="btn btn-danger" style="padding:4px 6px; font-size:0.65rem;" onclick="deleteUser('${u.id}')">حذف</button>
           </div>
         </div>
       `).join('') || '<p>لا يوجد مستخدمون.</p>';
@@ -738,29 +693,12 @@
       showToast('تم حذف المستخدم');
     };
 
-    window.resetUserPassword = async (phone) => {
-      const email = `${phone}@souq.com`;
-      try {
-        await sendPasswordResetEmail(auth, email);
-        showToast('✅ تم إرسال رابط إعادة التعيين للدعم');
-      } catch (error) {
-        showToast('❌ لا يمكن إرسال الرابط لإيميل وهمي');
+    window.makeAdmin = async (id) => {
+      if(!confirm('هل أنت متأكد من ترقية هذا المستخدم إلى مشرف؟ (سيكون له صلاحيات)')){
+        return;
       }
-    };
-
-    window.addNewGov = async () => {
-      const name = document.getElementById('newGovName').value.trim();
-      if(name && !yemenData[name]) {
-        yemenData[name] = []; populateGovs(); showToast('تمت الإضافة');
-      }
-    };
-
-    window.addNewDist = async () => {
-      const gov = document.getElementById('targetGov').value;
-      const name = document.getElementById('newDistName').value.trim();
-      if(name && yemenData[gov] && !yemenData[gov].includes(name)) {
-        yemenData[gov].push(name); showToast('تمت الإضافة');
-      }
+      await setDoc(doc(db, 'users', id), { role: 'admin' }, { merge: true });
+      showToast('✅ تمت الترقية لمشرف');
     };
 
     window.generateDummyData = async () => {
@@ -780,7 +718,7 @@
           createdAt: serverTimestamp(), isDemo: true
         };
         if(cat==='realestate') { data.type = i%2===0?'rent':'sale'; data.propType = 'apartment'; }
-        if(cat==='cars') { data.carBrand = 'تويوتا'; data.carMileage = 50000; }
+        if(cat==='cars') { data.carBrand = 'تويوتا'; }
         
         await addDoc(collection(db, 'items'), data);
       }
@@ -802,9 +740,7 @@
 
     const pages = {
       about: { title: 'ℹ️ تحدث عنا', body: 'سوق اليمن المفتوح هو منصة إلكترونية متكاملة تجمع البائع والمشتري في مكان واحد.' },
-      how: { title: '⚙️ آلية العمل', body: 'تصفح الأقسام، سجل حسابك برقمك، واضغط على زر "تواصل" للتفاهم مع البائع مباشرة.' },
-      publish: { title: '📝 شرح النشر', body: 'سجل الدخول، اضغط على زر (+)، اختر القسم، املأ التفاصيل وأرفق صورة. سيظهر عرضك فوراً!' },
-      trust: { title: '🛡️ الثقة والأمان', body: 'نرجو الالتزام بالصدق. السعر يكون بين البائع والمشتري، والمكتب دوره هو الضمان فقط.' }
+      publish: { title: '📝 شرح النشر', body: 'سجل الدخول، اضغط على زر (+)، اختر القسم، املأ التفاصيل وأرفق صورة. سيظهر عرضك فوراً!' }
     };
     window.showInfoPage = (key) => {
       document.getElementById('infoTitle').textContent = pages[key].title;
