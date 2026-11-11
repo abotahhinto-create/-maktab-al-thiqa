@@ -66,21 +66,24 @@
     .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
     .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 12px; color: var(--primary); text-align: center; }
     .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
-    .filter-group button { width: 100%; padding: 10px; }
+    .filter-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px; }
+    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.8rem; outline: none; }
+    .filter-group button { width: 100%; padding: 10px; margin-top: 18px; }
 
-    /* ====== البطاقات الأفقية ====== */
+    /* ====== البطاقات الأفقية 100% ====== */
     .cards-grid { display: flex; flex-direction: column; gap: 12px; }
-    .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 140px; }
-    .card-img-wrapper { width: 40%; position: relative; }
+    /* تثبيت الأبعاد لمنع النزول لتحت */
+    .card { background: var(--surface); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 150px; width: 100%; }
+    
+    .card-img-wrapper { width: 35% !important; position: relative; flex-shrink: 0; }
     .card-img { width: 100%; height: 100%; object-fit: cover; }
-    .card-badge { position: absolute; top: 8px; right: 8px; padding: 3px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; color: #fff; }
+    .card-badge { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; color: #fff; }
     .badge-offer { background: var(--primary); }
     .badge-request { background: var(--accent); color: #000; }
     
-    .card-body { width: 60%; padding: 8px 12px; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-body { width: 65% !important; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
     .card-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-meta { display: flex; gap: 6px; font-size: 0.7rem; color: var(--text-muted); }
+    .card-meta { display: flex; gap: 6px; font-size: 0.7rem; color: var(--text-muted); flex-wrap: wrap; }
     .card-price { font-weight: 800; color: var(--primary); font-size: 1rem; }
     .card-actions { display: flex; gap: 5px; }
     .card-actions .btn { flex: 1; padding: 6px; font-size: 0.7rem; border-radius: 6px; }
@@ -88,7 +91,7 @@
     /* ====== زر إضافة عرض عائم ====== */
     .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; }
 
-    /* ====== القائمة الجانبية (تصميم جديد) ====== */
+    /* ====== القائمة الجانبية ====== */
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); z-index: 199; display: none; }
     .sidebar-overlay.show { display: block; }
     
@@ -103,7 +106,6 @@
     .sidebar-menu a:hover { background: #334155; color: #2dd4bf; }
     .sidebar-menu .divider { height: 1px; background: #334155; margin: 10px 0; }
     
-    /* بطاقة المصمم مثبتة في الأسفل */
     .designer-card { padding: 15px; background: #0f172a; border-top: 1px solid #334155; text-align: center; }
     .designer-card h4 { font-size: 0.9rem; color: #f8fafc; }
     .designer-card p { font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px; }
@@ -163,40 +165,112 @@
   </div>
 
   <main>
+    <!-- قسم العقارات -->
     <div id="section-realestate">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث عن عقارك</div>
         <div class="filters-grid">
-          <div class="filter-group"><select id="fGov"><option value="">المحافظة</option></select></div>
-          <div class="filter-group"><select id="fDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="fType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
-          <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('realestate')">بحث</button></div>
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="fGov" onchange="updateDistricts('fGov', 'fDist')">
+              <option value="">كل المحافظات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="fDist">
+              <option value="">كل المديريات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>نوع الإعلان</label>
+            <select id="fType">
+              <option value="">عرض / طلب</option>
+              <option value="offer">عرض (متاح)</option>
+              <option value="request">طلب (مطلوب)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>بحث بالاسم</label>
+            <input type="text" id="fSearch" placeholder="ابحث...">
+          </div>
+          <div class="filter-group" style="grid-column: span 2;">
+            <button class="btn btn-primary" onclick="searchItems('realestate')">بحث</button>
+          </div>
         </div>
       </div>
       <div id="cards-realestate" class="cards-grid"></div>
     </div>
 
+    <!-- قسم المستلزمات -->
     <div id="section-electronics" style="display:none;">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث عن جهازك</div>
         <div class="filters-grid">
-          <div class="filter-group"><select id="eGov"><option value="">المحافظة</option></select></div>
-          <div class="filter-group"><select id="eDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="eType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
-          <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('electronics')">بحث</button></div>
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="eGov" onchange="updateDistricts('eGov', 'eDist')">
+              <option value="">كل المحافظات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="eDist">
+              <option value="">كل المديريات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>نوع الإعلان</label>
+            <select id="eType">
+              <option value="">عرض / طلب</option>
+              <option value="offer">عرض (متاح)</option>
+              <option value="request">طلب (مطلوب)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>بحث بالاسم</label>
+            <input type="text" id="eSearch" placeholder="ابحث...">
+          </div>
+          <div class="filter-group" style="grid-column: span 2;">
+            <button class="btn btn-primary" onclick="searchItems('electronics')">بحث</button>
+          </div>
         </div>
       </div>
       <div id="cards-electronics" class="cards-grid"></div>
     </div>
 
+    <!-- قسم السيارات -->
     <div id="section-cars" style="display:none;">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث عن سيارتك</div>
         <div class="filters-grid">
-          <div class="filter-group"><select id="cGov"><option value="">المحافظة</option></select></div>
-          <div class="filter-group"><select id="cDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="cType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
-          <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('cars')">بحث</button></div>
+          <div class="filter-group">
+            <label>المحافظة</label>
+            <select id="cGov" onchange="updateDistricts('cGov', 'cDist')">
+              <option value="">كل المحافظات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>المديرية</label>
+            <select id="cDist">
+              <option value="">كل المديريات</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>نوع الإعلان</label>
+            <select id="cType">
+              <option value="">عرض / طلب</option>
+              <option value="offer">عرض (متاح)</option>
+              <option value="request">طلب (مطلوب)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>بحث بالاسم</label>
+            <input type="text" id="cSearch" placeholder="ابحث...">
+          </div>
+          <div class="filter-group" style="grid-column: span 2;">
+            <button class="btn btn-primary" onclick="searchItems('cars')">بحث</button>
+          </div>
         </div>
       </div>
       <div id="cards-cars" class="cards-grid"></div>
@@ -219,7 +293,7 @@
         <div class="divider"></div>
       </div>
       
-      <a href="#" onclick="openAddModal(); toggleSidebar();">➕ إضافة عرض / طلب جديد</a>
+      <a href="#" onclick="openAddModal(); toggleSidebar();">➕ إضافة عرض / طلب</a>
       <a href="#" onclick="showInfoPage('how')">ℹ️ شرح التسجيل والنشر</a>
       <a href="#" onclick="showInfoPage('about')">🏛️ تحدث عنا</a>
       
@@ -233,7 +307,6 @@
         <a href="#" onclick="logout()" style="color:#ef4444;">🚪 تسجيل الخروج</a>
       </div>
     </div>
-    <!-- بطاقة المصمم -->
     <div class="designer-card">
       <h4>م. نشوان البدري</h4>
       <p>صاحب السوق والمصمم</p>
@@ -285,7 +358,6 @@
       <form id="addForm">
         <div class="form-group"><label>القسم</label><select id="addCategory" onchange="toggleAddFields()"><option value="realestate">🏠 عقارات</option><option value="electronics">📱 مستلزمات</option><option value="cars">🚗 سيارات</option></select></div>
         
-        <!-- نوع الإعلان (عرض أو طلب) -->
         <div class="form-group">
           <label>نوع الإعلان</label>
           <select id="addPostType">
@@ -294,7 +366,7 @@
           </select>
         </div>
 
-        <div class="form-group"><label>المحافظة</label><select id="addGov" required></select></div>
+        <div class="form-group"><label>المحافظة</label><select id="addGov" required onchange="updateDistricts('addGov', 'addDist')"></select></div>
         <div class="form-group"><label>المديرية</label><select id="addDist" required></select></div>
         <div class="form-group"><label>العنوان / التفاصيل</label><input type="text" id="addTitle" required></div>
         <div class="form-group"><label>السعر (ريال)</label><input type="number" id="addPrice" required></div>
@@ -351,7 +423,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -376,7 +448,11 @@
       "عدن": ["كريتر","المنصورة","الشيخ عثمان","خور مكسر"],
       "تعز": ["القاهرة","المظفر","صالة","التربة"],
       "الحديدة": ["الحوك","الميناء","الحالي","باجل"],
-      "حضرموت": ["المكلا","الشحر","تريم","سيئون"]
+      "حضرموت": ["المكلا","الشحر","تريم","سيئون"],
+      "إب": ["المشنة","الظهار","الحوارث","يريم"],
+      "الضالع": ["المدينة","دمت","قعطبة"],
+      "لحج": ["الحوطة","تبن","المقاطرة"],
+      "أبين": ["زنجبار","خنفر","مودية"]
     };
 
     let currentUser = null;
@@ -413,25 +489,24 @@
     };
     document.getElementById('menuBtn').onclick = toggleSidebar;
 
+    // دالة تحديث المديريات بناءً على المحافظة
+    window.updateDistricts = (govId, distId) => {
+      const gov = document.getElementById(govId).value;
+      const distEl = document.getElementById(distId);
+      distEl.innerHTML = '<option value="">كل المديريات</option>';
+      if(gov && yemenData[gov]) {
+        yemenData[gov].forEach(d => distEl.appendChild(new Option(d, d)));
+      }
+    };
+
     function populateGovs() {
       ['fGov', 'eGov', 'cGov', 'addGov'].forEach(id => {
         const el = document.getElementById(id);
         if(!el) return;
-        el.innerHTML = '<option value="">اختر</option>';
+        el.innerHTML = '<option value="">كل المحافظات</option>';
         Object.keys(yemenData).sort().forEach(g => el.appendChild(new Option(g, g)));
       });
     }
-
-    document.getElementById('addGov').onchange = function() {
-      const distEl = document.getElementById('addDist');
-      distEl.innerHTML = '<option value="">اختر</option>';
-      if(this.value && yemenData[this.value]) yemenData[this.value].forEach(d => distEl.appendChild(new Option(d, d)));
-    };
-    document.getElementById('fGov').onchange = function() {
-      const distEl = document.getElementById('fDist');
-      distEl.innerHTML = '<option value="">الكل</option>';
-      if(this.value && yemenData[this.value]) yemenData[this.value].forEach(d => distEl.appendChild(new Option(d, d)));
-    };
 
     let authMode = 'login';
     window.openAuthModal = (mode) => {
@@ -483,7 +558,7 @@
       if(user) {
         const phoneOrEmail = user.email.split('@')[0]; 
         currentPhone = phoneOrEmail;
-        btn.style.display = 'none'; // إخفاء زر الدخول من الهيدر
+        btn.style.display = 'none';
         document.getElementById('guestMenu').style.display = 'none';
         document.getElementById('logoutMenu').style.display = 'block';
         document.getElementById('userGreeting').textContent = 'أهلاً، ' + phoneOrEmail;
@@ -547,7 +622,7 @@
         
         const data = {
           category: cat, 
-          postType: document.getElementById('addPostType').value, // عرض أو طلب
+          postType: document.getElementById('addPostType').value,
           title: document.getElementById('addTitle').value,
           price: parseFloat(document.getElementById('addPrice').value),
           gov: document.getElementById('addGov').value, 
@@ -655,14 +730,14 @@
 
     window.searchItems = (cat) => {
       if(cat === 'realestate') {
-        const g = document.getElementById('fGov').value, d = document.getElementById('fDist').value, t = document.getElementById('fType').value;
-        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
+        const g = document.getElementById('fGov').value, d = document.getElementById('fDist').value, t = document.getElementById('fType').value, s = document.getElementById('fSearch').value.toLowerCase();
+        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       } else if(cat === 'electronics') {
-        const g = document.getElementById('eGov').value, d = document.getElementById('eDist').value, t = document.getElementById('eType').value;
-        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
+        const g = document.getElementById('eGov').value, d = document.getElementById('eDist').value, t = document.getElementById('eType').value, s = document.getElementById('eSearch').value.toLowerCase();
+        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       } else {
-        const g = document.getElementById('cGov').value, d = document.getElementById('cDist').value, t = document.getElementById('cType').value;
-        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
+        const g = document.getElementById('cGov').value, d = document.getElementById('cDist').value, t = document.getElementById('cType').value, s = document.getElementById('cSearch').value.toLowerCase();
+        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       }
     };
 
@@ -753,7 +828,7 @@
         
         const data = {
           category: cat, 
-          postType: i%4 === 0 ? 'request' : 'offer', // بعضها طلبات
+          postType: i%4 === 0 ? 'request' : 'offer',
           title: i%4 === 0 ? `مطلوب ${gov}` : `متاح ${gov}`, 
           price: Math.floor(Math.random()*1000000)+50000,
           gov, dist, phone: '770000000', image: img, ownerId: 'demo', ownerPhone: '770000000',
