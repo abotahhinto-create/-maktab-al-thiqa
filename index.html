@@ -30,10 +30,14 @@
     .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* ====== الهيدر ====== */
+    /* ====== الهيدر (تم تثبيت اليمين واليسار) ====== */
     header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
     [data-theme="dark"] header { background: rgba(30, 41, 59, 0.9); }
+    
+    /* الشعار في اليسار */
     .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    
+    /* الأزرار في اليمين */
     .header-actions { display: flex; gap: 8px; align-items: center; }
     
     .theme-btn { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
@@ -156,17 +160,24 @@
     <div class="marquee-content" id="marqueeText">مرحباً بكم في سوق اليمن المفتوح | عقارات، سيارات، وأجهزة إلكترونية | تصفح الآن وأضف عرضك بضغطة زر</div>
   </div>
 
+  <!-- الهيدر: الأزرار والقائمة على اليمين، الشعار على اليسار -->
   <header>
-    <div class="logo"><span>🏛️</span> سوق اليمن</div>
     <div class="header-actions">
-      <button class="theme-btn" data-theme="light"></button>
-      <button class="theme-btn" data-theme="dark"></button>
-      <button class="theme-btn" data-theme="royal"></button>
-      <button class="theme-btn" data-theme="golden"></button>
-      <button class="theme-btn" data-theme="olive"></button>
-      <button class="btn btn-outline" id="loginBtn" style="padding: 8px 12px; font-size:0.8rem;">🔐 دخول</button>
+      <!-- القائمة والزر في اليمين -->
       <button class="icon-btn" id="menuBtn">☰</button>
+      <button class="btn btn-outline" id="loginBtn" style="padding: 8px 12px; font-size:0.8rem;">🔐 دخول</button>
+      
+      <!-- الثيمات -->
+      <div style="display:flex; gap:5px;">
+        <button class="theme-btn" data-theme="light"></button>
+        <button class="theme-btn" data-theme="dark"></button>
+        <button class="theme-btn" data-theme="royal"></button>
+        <button class="theme-btn" data-theme="golden"></button>
+        <button class="theme-btn" data-theme="olive"></button>
+      </div>
     </div>
+    
+    <div class="logo"><span>🏛️</span> سوق اليمن</div>
   </header>
 
   <div class="slider-container">
@@ -274,6 +285,7 @@
           <div class="stat-card"><h3 id="statUsers">0</h3><p>مستخدمين</p></div>
         </div>
         <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+          <!-- زر التوليد هنا -->
           <button class="btn btn-accent" onclick="generateDummyData()">✨ توليد 30 عرض تجريبي</button>
           <button class="btn btn-danger" onclick="deleteDummyData()">🗑️ حذف البيانات التجريبية</button>
         </div>
@@ -511,8 +523,7 @@
         
         if (phoneOrEmail === ADMIN_PHONE || user.email === ADMIN_EMAIL) {
           document.getElementById('adminMenu').style.display = 'block';
-          // فتح لوحة التحكم تلقائياً إذا كان مديراً
-          openAdminPanel();
+          openAdminPanel(); // فتح لوحة التحكم تلقائياً عند دخول المدير
         } else {
           document.getElementById('adminMenu').style.display = 'none';
         }
