@@ -10,64 +10,73 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
+    /* ====== الثيمات ====== */
     :root {
-      --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8;
-      --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24;
-      --border: #334155; --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); 
+      --bg: #f0f4f8; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b;
+      --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b;
+      --border: rgba(0,0,0,0.05); --shadow: 0 10px 30px -5px rgba(0,0,0,0.08); 
       --radius: 16px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
     }
-    
-    [data-theme="light"] { --bg: #f0f4f8; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b; --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b; --border: #e2e8f0; --shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    [data-theme="royal"] { --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9; --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899; --border: #ddd6fe; --shadow: 0 10px 20px rgba(124,58,237,0.1); }
+    [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24; --border: rgba(255,255,255,0.1); --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); }
+    [data-theme="royal"] { --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9; --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899; --border: rgba(124,58,237,0.1); }
+    [data-theme="golden"] { --bg: #fffbeb; --surface: #ffffff; --text: #78350f; --text-muted: #b45309; --primary: #d97706; --primary-light: #f59e0b; --accent: #fbbf24; --border: rgba(217,119,6,0.15); --shadow: 0 10px 30px -5px rgba(217,119,6,0.1); }
+    [data-theme="olive"] { --bg: #f7fee7; --surface: #ffffff; --text: #3f6212; --text-muted: #65a30d; --primary: #4d7c0f; --primary-light: #84cc16; --accent: #eab308; --border: rgba(77,124,15,0.15); --shadow: 0 10px 30px -5px rgba(77,124,15,0.1); }
+    [data-theme="sunset"] { --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; --shadow: 0 10px 30px -5px rgba(234,88,12,0.1); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
     body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; }
 
-    /* الهيدر */
+    /* ====== الهيدر ====== */
     header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
     .logo { font-weight: 800; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 5px; }
+    .header-actions { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; justify-content: flex-end;}
     
-    .header-actions { display: flex; gap: 5px; align-items: center; }
-    .theme-btn { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; }
-    .theme-btn[data-theme="dark"] { background: #0f172a; }
+    .theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
+    .theme-btn:hover { transform: scale(1.2); }
     .theme-btn[data-theme="light"] { background: #f0f4f8; }
+    .theme-btn[data-theme="dark"] { background: #0f172a; }
     .theme-btn[data-theme="royal"] { background: #7c3aed; }
+    .theme-btn[data-theme="golden"] { background: #d97706; }
+    .theme-btn[data-theme="olive"] { background: #4d7c0f; }
+    .theme-btn[data-theme="sunset"] { background: #ea580c; }
 
-    .btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
-    .btn-primary { background: var(--primary); color: #0f172a; }
+    .btn { padding: 8px 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-primary { background: var(--primary); color: #fff; }
     .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
     .btn-danger { background: #ef4444; color: #fff; }
-    .btn-accent { background: var(--accent); color: #0f172a; }
-    .icon-btn { padding: 6px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 0.9rem; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .icon-btn { padding: 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1.1rem; }
 
-    /* السلايدر */
-    .slider-container { position: relative; width: 100%; height: 25vh; min-height: 150px; overflow: hidden; background: #000; }
+    /* ====== السلايدر ====== */
+    .slider-container { position: relative; width: 100%; height: 25vh; min-height: 200px; overflow: hidden; background: #000; }
     .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
     .slide.active { opacity: 1; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
     .slide-content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
-    .slide-content h1 { font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .slide-content h1 { font-size: 1.3rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
 
-    /* أزرار الأقسام */
+    /* ====== أزرار الأقسام ====== */
     .main-tabs { display: flex; gap: 8px; padding: 10px 15px; max-width: 1200px; margin: -15px auto 10px; position: relative; z-index: 10; overflow-x: auto; }
-    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 15px; border-radius: 10px; font-weight: 800; font-size: 0.8rem; cursor: pointer; white-space: nowrap; color: var(--text); }
-    .tab-btn.active { background: var(--primary); color: #0f172a; border-color: var(--primary); }
+    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; color: var(--text); box-shadow: var(--shadow); }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     main { max-width: 1200px; margin: 0 auto; padding: 0 10px 80px; }
 
-    /* بطاقة البحث */
-    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 15px; }
-    .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; color: var(--primary); text-align: center; }
+    /* ====== بطاقة البحث ====== */
+    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
+    .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 12px; color: var(--primary); text-align: center; }
     .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.8rem; outline: none; }
+    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
     .filter-group button { width: 100%; padding: 10px; }
 
-    /* البطاقات (أفقية على الجوال) */
+    /* ====== البطاقات الأفقية ====== */
     .cards-grid { display: flex; flex-direction: column; gap: 12px; }
     .card { background: var(--surface); border-radius: var(--radius); display: flex; flex-direction: row; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 140px; }
     .card-img-wrapper { width: 40%; position: relative; }
     .card-img { width: 100%; height: 100%; object-fit: cover; }
-    .card-badge { position: absolute; top: 8px; right: 8px; padding: 3px 8px; border-radius: 12px; font-size: 0.6rem; font-weight: 800; color: #0f172a; background: var(--primary); }
+    .card-badge { position: absolute; top: 8px; right: 8px; padding: 3px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; color: #fff; }
+    .badge-offer { background: var(--primary); }
+    .badge-request { background: var(--accent); color: #000; }
     
     .card-body { width: 60%; padding: 8px 12px; display: flex; flex-direction: column; justify-content: space-between; }
     .card-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -76,61 +85,68 @@
     .card-actions { display: flex; gap: 5px; }
     .card-actions .btn { flex: 1; padding: 6px; font-size: 0.7rem; border-radius: 6px; }
 
-    @media (min-width: 768px) {
-      .card { height: 180px; }
-      .card-title { font-size: 1.1rem; }
-      .card-price { font-size: 1.2rem; }
-    }
+    /* ====== زر إضافة عرض عائم ====== */
+    .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; }
 
-    /* زر إضافة عرض عائم */
-    .fab { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: #0f172a; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(45,212,191,0.4); cursor: pointer; z-index: 100; border: none; }
-
-    /* القائمة الجانبية */
-    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 199; display: none; }
+    /* ====== القائمة الجانبية (تصميم جديد) ====== */
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); z-index: 199; display: none; }
     .sidebar-overlay.show { display: block; }
-    .sidebar { position: fixed; top: 0; right: -280px; width: 260px; height: 100vh; background: var(--surface); z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; }
-    .sidebar.open { right: 0; }
-    .sidebar-header { padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); }
-    .sidebar-menu { flex: 1; padding: 10px; overflow-y: auto; }
-    .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 12px; color: var(--text); text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; }
-    .sidebar-menu a:hover { background: var(--bg); color: var(--primary); }
     
-    .designer-card { margin: 10px; padding: 10px; background: var(--bg); border-radius: 10px; text-align: center; border: 1px solid var(--border); }
-    .designer-card a { display: block; background: #25D366; color: #fff; padding: 8px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 8px; font-size: 0.8rem; }
+    .sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: #1e293b; color: #f8fafc; z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
+    .sidebar.open { right: 0; }
+    .sidebar-header { padding: 20px; background: #0f172a; border-bottom: 1px solid #334155; }
+    .sidebar-header h2 { font-size: 1.2rem; color: #2dd4bf; margin-bottom: 5px; }
+    .sidebar-header p { font-size: 0.8rem; color: #94a3b8; }
+    
+    .sidebar-menu { flex: 1; padding: 15px; overflow-y: auto; }
+    .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: #e2e8f0; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; transition: background 0.2s; }
+    .sidebar-menu a:hover { background: #334155; color: #2dd4bf; }
+    .sidebar-menu .divider { height: 1px; background: #334155; margin: 10px 0; }
+    
+    /* بطاقة المصمم مثبتة في الأسفل */
+    .designer-card { padding: 15px; background: #0f172a; border-top: 1px solid #334155; text-align: center; }
+    .designer-card h4 { font-size: 0.9rem; color: #f8fafc; }
+    .designer-card p { font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px; }
+    .designer-card a { display: block; background: #25D366; color: #fff; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.85rem; }
 
-    /* لوحة التحكم */
+    /* ====== لوحة التحكم ====== */
     #adminPanel { position: fixed; inset: 0; background: var(--bg); z-index: 500; overflow-y: auto; display: none; }
     .admin-header { background: var(--surface); padding: 12px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .admin-content { padding: 15px; max-width: 1000px; margin: 0 auto; }
     .admin-tabs { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; }
-    .admin-tab { padding: 8px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.8rem; }
-    .admin-tab.active { background: var(--primary); color: #0f172a; }
+    .admin-tab { padding: 10px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.85rem; }
+    .admin-tab.active { background: var(--primary); color: #fff; }
     .admin-page { display: none; }
     .admin-page.active { display: block; }
-    .admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-    .stat-card { background: var(--surface); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid var(--border); }
-    .stat-card h3 { font-size: 1.3rem; color: var(--primary); }
-    .stat-card p { font-size: 0.75rem; color: var(--text-muted); }
+    .admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .stat-card { background: var(--surface); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
+    .stat-card h3 { font-size: 1.5rem; color: var(--primary); }
+    .stat-card p { font-size: 0.8rem; color: var(--text-muted); }
 
-    /* المودالات */
+    /* ====== المودالات ====== */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 300; display: none; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.show { display: flex; }
-    .modal { background: var(--surface); border-radius: var(--radius); padding: 15px; width: 100%; max-width: 350px; max-height: 90vh; overflow-y: auto; }
-    .form-group { margin-bottom: 10px; }
-    .form-group label { display: block; margin-bottom: 4px; font-weight: 700; font-size: 0.8rem; }
-    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
+    .modal { background: var(--surface); border-radius: var(--radius); padding: 20px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 700; font-size: 0.85rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; outline: none; }
     
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: #0f172a; padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; z-index: 999; opacity: 0; transition: all 0.3s; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--surface); padding: 12px 20px; border-radius: 50px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.3s; font-size:0.85rem;}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
-<body data-theme="dark">
+<body data-theme="light">
 
   <header>
     <div class="logo"><span>🏛️</span> سوق اليمن</div>
     <div class="header-actions">
-      <button class="theme-btn" data-theme="royal"></button>
-      <button class="theme-btn" data-theme="light"></button>
+      <button class="theme-btn" data-theme="light" title="فاتح"></button>
+      <button class="theme-btn" data-theme="dark" title="داكن"></button>
+      <button class="theme-btn" data-theme="royal" title="بنفسجي"></button>
+      <button class="theme-btn" data-theme="golden" title="ذهبي"></button>
+      <button class="theme-btn" data-theme="olive" title="زيتوني"></button>
+      <button class="theme-btn" data-theme="sunset" title="برتقالي"></button>
+      <button class="btn btn-outline" id="loginBtn" style="padding: 6px 10px; font-size:0.75rem;">دخول</button>
       <button class="icon-btn" id="menuBtn">☰</button>
     </div>
   </header>
@@ -153,7 +169,7 @@
         <div class="filters-grid">
           <div class="filter-group"><select id="fGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="fDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="fType"><option value="">إيجار/بيع</option><option value="rent">إيجار</option><option value="sale">بيع</option></select></div>
+          <div class="filter-group"><select id="fType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
           <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('realestate')">بحث</button></div>
         </div>
       </div>
@@ -166,7 +182,7 @@
         <div class="filters-grid">
           <div class="filter-group"><select id="eGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="eDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><select id="eType"><option value="">النوع</option><option value="phone">هواتف</option><option value="laptop">لابتوب</option></select></div>
+          <div class="filter-group"><select id="eType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
           <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('electronics')">بحث</button></div>
         </div>
       </div>
@@ -179,7 +195,7 @@
         <div class="filters-grid">
           <div class="filter-group"><select id="cGov"><option value="">المحافظة</option></select></div>
           <div class="filter-group"><select id="cDist"><option value="">المديرية</option></select></div>
-          <div class="filter-group"><input type="text" id="cBrand" placeholder="الماركة..."></div>
+          <div class="filter-group"><select id="cType"><option value="">الكل</option><option value="offer">عروض</option><option value="request">طلبات</option></select></div>
           <div class="filter-group"><button class="btn btn-primary" onclick="searchItems('cars')">بحث</button></div>
         </div>
       </div>
@@ -193,45 +209,49 @@
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <h2>سوق اليمن</h2>
-      <p id="userGreeting" style="font-size:0.75rem; color:var(--text-muted);">مرحباً بك</p>
+      <h2>سوق اليمن المفتوح</h2>
+      <p id="userGreeting">مرحباً بك</p>
     </div>
     <div class="sidebar-menu">
-      <!-- أزرار تسجيل الدخول -->
       <div id="guestMenu">
         <a href="#" onclick="openAuthModal('login')">🔐 تسجيل الدخول</a>
         <a href="#" onclick="openAuthModal('signup')">📝 حساب جديد</a>
+        <div class="divider"></div>
       </div>
       
-      <a href="#" onclick="showInfoPage('about')">ℹ️ تحدث عنا</a>
-      <a href="#" onclick="showInfoPage('publish')">📝 شرح النشر</a>
+      <a href="#" onclick="openAddModal(); toggleSidebar();">➕ إضافة عرض / طلب جديد</a>
+      <a href="#" onclick="showInfoPage('how')">ℹ️ شرح التسجيل والنشر</a>
+      <a href="#" onclick="showInfoPage('about')">🏛️ تحدث عنا</a>
       
       <div id="adminMenu" style="display:none;">
-        <hr style="margin:10px 0; border-color:var(--border);">
-        <a href="#" onclick="openAdminPanel()" style="color:var(--accent);">👑 لوحة التحكم</a>
+        <div class="divider"></div>
+        <a href="#" onclick="openAdminPanel(); toggleSidebar();" style="color:var(--accent);">👑 لوحة التحكم</a>
       </div>
+      
       <div id="logoutMenu" style="display:none;">
-        <hr style="margin:10px 0; border-color:var(--border);">
+        <div class="divider"></div>
         <a href="#" onclick="logout()" style="color:#ef4444;">🚪 تسجيل الخروج</a>
       </div>
     </div>
+    <!-- بطاقة المصمم -->
     <div class="designer-card">
-      <h4 style="font-size:0.8rem;">م. نشوان البدري</h4>
+      <h4>م. نشوان البدري</h4>
+      <p>صاحب السوق والمصمم</p>
       <a href="https://wa.me/967771713275" target="_blank">💬 تواصل واتساب</a>
     </div>
   </aside>
 
-  <!-- لوحة التحكم -->
+  <!-- لوحة التحكم الإدارية -->
   <div id="adminPanel">
     <div class="admin-header">
-      <h2 style="color:var(--primary); font-size:1rem;">لوحة التحكم</h2>
+      <h2 style="color:var(--primary); font-size:1.1rem;">لوحة التحكم</h2>
       <button class="icon-btn" onclick="closeAdminPanel()">✖</button>
     </div>
     <div class="admin-content">
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('reports')" id="atab-reports">📊 التقارير</button>
         <button class="admin-tab" onclick="switchAdminTab('users')" id="atab-users">👥 المستخدمين</button>
-        <button class="admin-tab" onclick="switchAdminTab('items')" id="atab-items">📦 العروض</button>
+        <button class="admin-tab" onclick="switchAdminTab('items')" id="atab-items">📦 الإعلانات</button>
       </div>
 
       <div id="apage-reports" class="admin-page active">
@@ -241,9 +261,9 @@
           <div class="stat-card"><h3 id="statCars">0</h3><p>سيارات</p></div>
           <div class="stat-card"><h3 id="statUsers">0</h3><p>مستخدمين</p></div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <button class="btn btn-accent" onclick="generateDummyData()" style="padding:10px;">✨ توليد 30 عرض تجريبي</button>
-          <button class="btn btn-danger" onclick="deleteDummyData()" style="padding:10px;">🗑️ حذف البيانات التجريبية</button>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <button class="btn btn-accent" onclick="generateDummyData()" style="padding:12px;">✨ توليد 30 إعلان تجريبي</button>
+          <button class="btn btn-danger" onclick="deleteDummyData()" style="padding:12px;">🗑️ حذف البيانات التجريبية</button>
         </div>
       </div>
 
@@ -252,7 +272,7 @@
       </div>
 
       <div id="apage-items" class="admin-page">
-        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:10px; background:var(--bg); color:var(--text);">
+        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--border); margin-bottom:10px; background:var(--bg); color:var(--text);">
         <div id="adminItemsList"></div>
       </div>
     </div>
@@ -261,16 +281,25 @@
   <!-- مودال إضافة عرض -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
-      <h2 style="margin-bottom: 10px; color: var(--primary); text-align:center; font-size:1rem;">➕ إضافة عرض</h2>
+      <h2 style="margin-bottom: 15px; color: var(--primary); text-align:center; font-size:1.1rem;">➕ إضافة إعلان</h2>
       <form id="addForm">
         <div class="form-group"><label>القسم</label><select id="addCategory" onchange="toggleAddFields()"><option value="realestate">🏠 عقارات</option><option value="electronics">📱 مستلزمات</option><option value="cars">🚗 سيارات</option></select></div>
+        
+        <!-- نوع الإعلان (عرض أو طلب) -->
+        <div class="form-group">
+          <label>نوع الإعلان</label>
+          <select id="addPostType">
+            <option value="offer">عرض (أنا أبيع/أؤجر)</option>
+            <option value="request">طلب (أنا أبحث/أشتري)</option>
+          </select>
+        </div>
+
         <div class="form-group"><label>المحافظة</label><select id="addGov" required></select></div>
         <div class="form-group"><label>المديرية</label><select id="addDist" required></select></div>
-        <div class="form-group"><label>العنوان</label><input type="text" id="addTitle" required></div>
+        <div class="form-group"><label>العنوان / التفاصيل</label><input type="text" id="addTitle" required></div>
         <div class="form-group"><label>السعر (ريال)</label><input type="number" id="addPrice" required></div>
         
         <div id="fields-realestate">
-          <div class="form-group"><label>الطلب</label><select id="addType"><option value="rent">إيجار</option><option value="sale">بيع</option></select></div>
           <div class="form-group"><label>العقار</label><select id="addPropType"><option value="apartment">شقة</option><option value="house">بيت</option><option value="villa">فيلا</option><option value="land">أرض</option></select></div>
         </div>
         <div id="fields-electronics" style="display:none;">
@@ -280,10 +309,10 @@
           <div class="form-group"><label>الماركة</label><input type="text" id="addCarBrand"></div>
         </div>
 
-        <div class="form-group"><label>رقم هاتفك</label><input type="tel" id="addPhone" required></div>
-        <div class="form-group"><label>صورة</label><input type="file" id="addImage" accept="image/*"></div>
+        <div class="form-group"><label>رقم هاتفك للتواصل</label><input type="tel" id="addPhone" required></div>
+        <div class="form-group"><label>صورة (اختياري)</label><input type="file" id="addImage" accept="image/*"></div>
         
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">💾 نشر</button>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">💾 نشر الإعلان</button>
         <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('addModal')">إلغاء</button>
       </form>
     </div>
@@ -292,7 +321,7 @@
   <!-- مودال تسجيل الدخول -->
   <div class="modal-overlay" id="authModal">
     <div class="modal">
-      <h2 id="authTitle" style="margin-bottom: 10px; text-align:center; font-size:1rem;">🔐 دخول</h2>
+      <h2 id="authTitle" style="margin-bottom: 15px; text-align:center; font-size:1.1rem;">🔐 دخول</h2>
       <form id="authForm">
         <div id="nameFields" style="display:none;">
           <div class="form-group"><label>الاسم الكامل</label><input type="text" id="authName"></div>
@@ -303,8 +332,8 @@
         <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;" id="authSubmitBtn">دخول</button>
         <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('authModal')">إلغاء</button>
       </form>
-      <p style="text-align:center; margin-top:10px; font-size:0.75rem;">
-        <a href="#" id="toggleAuthMode" style="color:var(--primary); font-weight:bold;">إنشاء حساب</a>
+      <p style="text-align:center; margin-top:10px; font-size:0.8rem;">
+        <a href="#" id="toggleAuthMode" style="color:var(--primary); font-weight:bold;">إنشاء حساب جديد</a>
       </p>
     </div>
   </div>
@@ -312,9 +341,9 @@
   <!-- مودال الصفحات -->
   <div class="modal-overlay" id="infoModal">
     <div class="modal">
-      <h2 id="infoTitle" style="margin-bottom: 10px; color:var(--primary); font-size:1rem;"></h2>
-      <div id="infoBody" style="line-height:1.6; font-size:0.85rem; color:var(--text-muted);"></div>
-      <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('infoModal')">إغلاق</button>
+      <h2 id="infoTitle" style="margin-bottom: 10px; color:var(--primary); font-size:1.1rem;"></h2>
+      <div id="infoBody" style="line-height:1.8; font-size:0.9rem; color:var(--text-muted);"></div>
+      <button class="btn btn-outline" style="width:100%; margin-top:15px;" onclick="closeModal('infoModal')">إغلاق</button>
     </div>
   </div>
 
@@ -376,7 +405,7 @@
         localStorage.setItem('theme', btn.dataset.theme);
       });
     });
-    document.body.dataset.theme = localStorage.getItem('theme') || 'dark';
+    document.body.dataset.theme = localStorage.getItem('theme') || 'light';
 
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
@@ -409,9 +438,10 @@
       authMode = mode;
       updateAuthUI();
       openModal('authModal');
-      toggleSidebar(); // إغلاق القائمة الجانبية عند فتح المودال
+      if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
     };
 
+    document.getElementById('loginBtn').onclick = () => openAuthModal('login');
     document.getElementById('toggleAuthMode').onclick = (e) => { 
       e.preventDefault(); authMode = authMode === 'login' ? 'signup' : 'login'; updateAuthUI(); 
     };
@@ -449,20 +479,22 @@
 
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
+      const btn = document.getElementById('loginBtn');
       if(user) {
         const phoneOrEmail = user.email.split('@')[0]; 
         currentPhone = phoneOrEmail;
+        btn.style.display = 'none'; // إخفاء زر الدخول من الهيدر
         document.getElementById('guestMenu').style.display = 'none';
         document.getElementById('logoutMenu').style.display = 'block';
         document.getElementById('userGreeting').textContent = 'أهلاً، ' + phoneOrEmail;
         
         if (phoneOrEmail === ADMIN_PHONE || user.email === ADMIN_EMAIL) {
           document.getElementById('adminMenu').style.display = 'block';
-          openAdminPanel();
         } else {
           document.getElementById('adminMenu').style.display = 'none';
         }
       } else {
+        btn.style.display = 'inline-flex';
         document.getElementById('guestMenu').style.display = 'block';
         document.getElementById('logoutMenu').style.display = 'none';
         document.getElementById('userGreeting').textContent = 'مرحباً بك';
@@ -470,7 +502,7 @@
         closeAdminPanel();
       }
     });
-    window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); toggleSidebar(); };
+    window.logout = () => { if(currentUser) signOut(auth).then(() => { showToast('تم الخروج'); toggleSidebar(); }); };
 
     async function imgToText(file) {
       return new Promise((resolve) => {
@@ -514,15 +546,20 @@
         const cat = document.getElementById('addCategory').value;
         
         const data = {
-          category: cat, title: document.getElementById('addTitle').value,
+          category: cat, 
+          postType: document.getElementById('addPostType').value, // عرض أو طلب
+          title: document.getElementById('addTitle').value,
           price: parseFloat(document.getElementById('addPrice').value),
-          gov: document.getElementById('addGov').value, dist: document.getElementById('addDist').value,
-          phone: document.getElementById('addPhone').value, image: imgText,
-          ownerId: currentUser.uid, ownerPhone: currentPhone, createdAt: serverTimestamp()
+          gov: document.getElementById('addGov').value, 
+          dist: document.getElementById('addDist').value,
+          phone: document.getElementById('addPhone').value, 
+          image: imgText,
+          ownerId: currentUser.uid, 
+          ownerPhone: currentPhone, 
+          createdAt: serverTimestamp()
         };
 
         if (cat === 'realestate') {
-          data.type = document.getElementById('addType').value;
           data.propType = document.getElementById('addPropType').value;
         } else if (cat === 'electronics') {
           data.elecType = document.getElementById('addElecType').value;
@@ -535,7 +572,7 @@
       } catch (err) { 
         if(err.code === 'permission-denied') showToast('❌ خطأ في الصلاحيات (Rules).');
         else showToast('❌ حدث خطأ.'); 
-      } finally { btn.textContent = '💾 نشر'; btn.disabled = false; }
+      } finally { btn.textContent = '💾 نشر الإعلان'; btn.disabled = false; }
     };
 
     function listenData() {
@@ -561,7 +598,7 @@
       let items = allData.filter(d => d.category === category);
       if (filterFunc) items = items.filter(filterFunc);
       const container = document.getElementById(containerId);
-      if(!items.length) { container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد عروض.</p>'; return; }
+      if(!items.length) { container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد إعلانات.</p>'; return; }
 
       container.innerHTML = items.map(p => {
         let img = p.image || dummyImgs[category][0];
@@ -575,11 +612,15 @@
           meta = `<span>📍 ${p.gov}</span><span>📦 مستلزم</span>`;
         }
 
+        const isOffer = p.postType !== 'request';
+        const badgeClass = isOffer ? 'badge-offer' : 'badge-request';
+        const badgeText = isOffer ? 'عرض' : 'طلب';
+
         return `
           <div class="card">
             <div class="card-img-wrapper">
               <img class="card-img" src="${img}">
-              <span class="card-badge">${p.type === 'rent' ? 'إيجار' : 'متاح'}</span>
+              <span class="card-badge ${badgeClass}">${badgeText}</span>
             </div>
             <div class="card-body">
               <div>
@@ -609,19 +650,19 @@
     window.handleContact = (id) => {
       if (!currentUser) { showToast('سجل الدخول أولاً'); openAuthModal('login'); return; }
       const p = allData.find(x => x.id === id);
-      if (p) window.open(`https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالعرض: ${p.title}. رقم المعلن: ${p.phone}`)}`, '_blank');
+      if (p) window.open(`https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالإعلان: ${p.title}. رقم المعلن: ${p.phone}`)}`, '_blank');
     };
 
     window.searchItems = (cat) => {
       if(cat === 'realestate') {
         const g = document.getElementById('fGov').value, d = document.getElementById('fDist').value, t = document.getElementById('fType').value;
-        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.type===t));
+        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
       } else if(cat === 'electronics') {
         const g = document.getElementById('eGov').value, d = document.getElementById('eDist').value, t = document.getElementById('eType').value;
-        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.elecType===t));
+        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
       } else {
-        const g = document.getElementById('cGov').value, d = document.getElementById('cDist').value, b = document.getElementById('cBrand').value.toLowerCase();
-        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!b||(p.carBrand&&p.carBrand.toLowerCase().includes(b))));
+        const g = document.getElementById('cGov').value, d = document.getElementById('cDist').value, t = document.getElementById('cType').value;
+        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t));
       }
     };
 
@@ -656,12 +697,12 @@
       document.getElementById('adminItemsList').innerHTML = filtered.map(p => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:8px;">
           <div>
-            <strong style="font-size:0.8rem;">[${p.category}] ${p.title}</strong><br>
+            <strong style="font-size:0.8rem;">[${p.postType === 'request' ? 'طلب' : 'عرض'}] ${p.title}</strong><br>
             <small style="color:var(--text-muted); font-size:0.7rem;">📞 ${p.phone} | 👤 ${p.ownerPhone || 'مجهول'}</small>
           </div>
           <button class="btn btn-danger" style="padding:4px 8px; font-size:0.65rem;" onclick="deleteItem('${p.id}')">حذف</button>
         </div>
-      `).join('') || 'لا توجد عروض.';
+      `).join('') || 'لا توجد إعلانات.';
     }
 
     document.getElementById('adminSearchInput').addEventListener('input', (e) => { loadAdminItemsList(e.target.value); });
@@ -682,9 +723,9 @@
     }
 
     window.deleteItem = async (id) => {
-      if(!confirm('حذف هذا العرض؟')) return;
+      if(!confirm('حذف هذا الإعلان؟')) return;
       await deleteDoc(doc(db, 'items', id));
-      showToast('تم حذف العرض');
+      showToast('تم حذف الإعلان');
     };
 
     window.deleteUser = async (id) => {
@@ -694,15 +735,13 @@
     };
 
     window.makeAdmin = async (id) => {
-      if(!confirm('هل أنت متأكد من ترقية هذا المستخدم إلى مشرف؟ (سيكون له صلاحيات)')){
-        return;
-      }
+      if(!confirm('ترقية هذا المستخدم لمشرف؟')) return;
       await setDoc(doc(db, 'users', id), { role: 'admin' }, { merge: true });
       showToast('✅ تمت الترقية لمشرف');
     };
 
     window.generateDummyData = async () => {
-      if(!confirm('سيتم إضافة 30 عرض تجريبي. متابعة؟')) return;
+      if(!confirm('سيتم إضافة 30 إعلان تجريبي. متابعة؟')) return;
       const categories = ['realestate', 'electronics', 'cars'];
       const govs = Object.keys(yemenData);
       
@@ -713,16 +752,19 @@
         const img = dummyImgs[cat][Math.floor(Math.random()*2)];
         
         const data = {
-          category: cat, title: `عرض تجريبي ${i+1} - ${gov}`, price: Math.floor(Math.random()*1000000)+50000,
+          category: cat, 
+          postType: i%4 === 0 ? 'request' : 'offer', // بعضها طلبات
+          title: i%4 === 0 ? `مطلوب ${gov}` : `متاح ${gov}`, 
+          price: Math.floor(Math.random()*1000000)+50000,
           gov, dist, phone: '770000000', image: img, ownerId: 'demo', ownerPhone: '770000000',
           createdAt: serverTimestamp(), isDemo: true
         };
-        if(cat==='realestate') { data.type = i%2===0?'rent':'sale'; data.propType = 'apartment'; }
+        if(cat==='realestate') { data.propType = 'apartment'; }
         if(cat==='cars') { data.carBrand = 'تويوتا'; }
         
         await addDoc(collection(db, 'items'), data);
       }
-      showToast('✅ تم إضافة 30 عرضاً');
+      showToast('✅ تم إضافة 30 إعلان');
     };
 
     window.deleteDummyData = async () => {
@@ -740,12 +782,19 @@
 
     const pages = {
       about: { title: 'ℹ️ تحدث عنا', body: 'سوق اليمن المفتوح هو منصة إلكترونية متكاملة تجمع البائع والمشتري في مكان واحد.' },
-      publish: { title: '📝 شرح النشر', body: 'سجل الدخول، اضغط على زر (+)، اختر القسم، املأ التفاصيل وأرفق صورة. سيظهر عرضك فوراً!' }
+      how: { title: '📝 شرح التسجيل والنشر', body: `
+        <p><strong>كيف تسجل حسابك؟</strong></p>
+        <p>1. من القائمة الجانبية اختر "حساب جديد".<br>2. اكتب اسمك الكامل، رقم جوالك، وكلمة مرور.<br>3. اضغط "إنشاء".</p>
+        <hr style="margin:10px 0;">
+        <p><strong>كيف تنشر إعلانك؟</strong></p>
+        <p>1. اضغط على زر (+) في الشاشة.<br>2. اختر نوع الإعلان (عرض: تبيع شيئاً، طلب: تبحث عن شيء).<br>3. املأ التفاصيل وأضف صورة إن أردت.</p>
+      ` }
     };
     window.showInfoPage = (key) => {
       document.getElementById('infoTitle').textContent = pages[key].title;
       document.getElementById('infoBody').innerHTML = pages[key].body;
       openModal('infoModal');
+      if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
     };
 
     populateGovs();
