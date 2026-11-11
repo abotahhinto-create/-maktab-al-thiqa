@@ -7,12 +7,12 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f766e">
   <style>
-    /* ========== المتغيرات والثيمات ========== */
+    /* ========== المتغيرات والثيمات المتحركة ========== */
     :root {
       --bg: #f8f9fa; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b;
       --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b;
       --border: #e2e8f0; --shadow: 0 4px 20px rgba(0,0,0,0.08); --radius: 16px;
-      --font: 'Segoe UI', Tahoma, sans-serif; --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Segoe UI', Tahoma, sans-serif; --transition: 0.35s ease;
     }
     [data-theme="dark"] {
       --bg: #0f172a; --surface: #1e293b; --text: #f1f5f9; --text-muted: #94a3b8;
@@ -24,6 +24,12 @@
       --primary: #8b5cf6; --primary-light: #a78bfa; --accent: #f472b6;
       --border: #2d2650; --shadow: 0 4px 25px rgba(139,92,246,0.25);
     }
+    [data-theme="royal"] .hero, [data-theme="royal"] .designer-card {
+      background: linear-gradient(-45deg, #8b5cf6, #ec4899, #8b5cf6);
+      background-size: 300% 300%; animation: gradientBG 6s ease infinite;
+    }
+    @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+    
     [data-theme="sunset"] {
       --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412;
       --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626;
@@ -34,15 +40,22 @@
       --primary: #0891b2; --primary-light: #22d3ee; --accent: #f59e0b;
       --border: #a5f3fc; --shadow: 0 4px 20px rgba(8,145,178,0.12);
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); min-height: 100vh; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); min-height: 100vh; overflow-x: hidden; }
+
+    /* شريط الإعلانات المتحرك */
+    .marquee-bar { background: var(--accent); color: #000; padding: 8px 0; font-weight: bold; font-size: 0.9rem; overflow: hidden; white-space: nowrap; position: relative; }
+    .marquee-content { display: inline-block; animation: marquee 15s linear infinite; padding-left: 100%; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
     /* الهيدر */
     header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(12px); }
     .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
     .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .theme-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
-    .theme-btn:hover { transform: scale(1.15); }
+    
+    .theme-btn { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: transform 0.2s; }
+    .theme-btn:hover { transform: scale(1.2); }
     .theme-btn[data-theme="light"] { background: #f8f9fa; }
     .theme-btn[data-theme="dark"] { background: #0f172a; }
     .theme-btn[data-theme="royal"] { background: #8b5cf6; }
@@ -65,12 +78,12 @@
 
     /* المحتوى */
     main { max-width: 1300px; margin: 0 auto; padding: 20px; }
-    .hero { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius); padding: 40px 30px; color: #fff; margin-bottom: 24px; position: relative; overflow: hidden; }
+    .hero { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius); padding: 40px 30px; color: #fff; margin-bottom: 24px; position: relative; overflow: hidden; transition: all 0.5s; }
     .hero h1 { font-size: 1.6rem; margin-bottom: 8px; }
 
     /* الفلاتر */
     .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; background: var(--surface); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px; }
-    .filters select, .filters input { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--font); width: 100%; }
+    .filters select { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--font); width: 100%; }
     
     /* شبكة البطاقات */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
@@ -81,9 +94,7 @@
     .card-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; width: fit-content; }
     .badge-rent { background: #dbeafe; color: #1e40af; }
     .badge-sale { background: #dcfce7; color: #166534; }
-    .badge-buy { background: #fef3c7; color: #92400e; }
     .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-    .card-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; flex: 1; }
     .card-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
     .card-price { font-weight: 800; color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; }
     .card-actions { display: flex; gap: 8px; margin-top: auto; }
@@ -104,7 +115,12 @@
 </head>
 <body data-theme="light">
 
-  <!-- الهيدر -->
+  <div class="marquee-bar">
+    <div class="marquee-content" id="marqueeText">
+      مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين | اللهم اغفر لنا وارحمنا | سبحان الله وبحمده، سبحان الله العظيم
+    </div>
+  </div>
+
   <header>
     <div class="logo"><span>🏛️</span> مكتب الثقة</div>
     <div class="header-actions">
@@ -119,28 +135,23 @@
     </div>
   </header>
 
-  <!-- القائمة الجانبية -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <aside class="sidebar" id="sidebar">
     <h3 style="color:var(--primary); margin-bottom:16px;">القائمة</h3>
     <a href="#" onclick="showPage('about'); closeSidebar();">ℹ️ عن المكتب</a>
     <a href="#" onclick="showPage('how'); closeSidebar();">⚙️ آلية العمل</a>
     <a href="#" onclick="showPage('trust'); closeSidebar();">🛡️ الثقة والأمان</a>
-    <a href="#" onclick="showPage('guidelines'); closeSidebar();">📜 إرشادات النشر</a>
-    <a href="#" onclick="showPage('fees'); closeSidebar();">💰 العمولة</a>
     <hr style="margin:16px 0; border-color:var(--border);">
     <a href="#" onclick="showDashboard(); closeSidebar();">📊 لوحة التحكم</a>
     <a href="#" onclick="logout(); closeSidebar();">🚪 تسجيل الخروج</a>
   </aside>
 
-  <!-- المحتوى -->
   <main>
     <section class="hero">
       <h1>مكتب الثقة لعروض إيجار وبيع البيوت والأراضي</h1>
       <p>ابحث عن عقارك المثالي في جميع محافظات اليمن</p>
     </section>
 
-    <!-- الفلاتر -->
     <div class="filters">
       <select id="filterGovernorate"><option value="">🏙️ كل المحافظات</option></select>
       <select id="filterDistrict"><option value="">📍 كل المديريات</option></select>
@@ -148,7 +159,6 @@
         <option value="">📌 كل الأنواع</option>
         <option value="rent">إيجار</option>
         <option value="sale">بيع</option>
-        <option value="buy">طلب شراء</option>
       </select>
       <select id="filterProperty">
         <option value="">🏠 كل العقارات</option>
@@ -161,13 +171,11 @@
       <button class="btn btn-primary" id="searchBtn">🔍 بحث</button>
     </div>
 
-    <!-- شبكة البطاقات -->
     <div id="cardsContainer" class="cards-grid">
       <p style="text-align:center; grid-column:1/-1; color:var(--text-muted); padding:40px;">جاري تحميل العروض...</p>
     </div>
 
-    <!-- بطاقة المصمم -->
-    <div style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; border-radius: var(--radius); padding: 24px; margin-top: 30px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <div class="designer-card" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; border-radius: var(--radius); padding: 24px; margin-top: 30px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
       <div style="font-size:2.5rem;">👨‍💻</div>
       <div style="flex:1;">
         <h4 style="font-size: 1.1rem; margin-bottom: 4px;">م. نشوان البدري</h4>
@@ -182,46 +190,14 @@
     <div class="modal">
       <h2 style="margin-bottom: 18px; color: var(--primary);">➕ إضافة عرض جديد</h2>
       <form id="addForm">
-        <div class="form-group">
-          <label>نوع الطلب</label>
-          <select id="addType" required>
-            <option value="rent">عرض إيجار</option><option value="sale">عرض بيع</option><option value="buy">طلب شراء</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>نوع العقار</label>
-          <select id="addProperty" required>
-            <option value="apartment">شقة</option><option value="house">بيت مستقل</option><option value="villa">فيلا</option><option value="land">أرضية</option><option value="hangar">هنجر</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>المحافظة</label>
-          <select id="addGovernorate" required></select>
-        </div>
-        <div class="form-group">
-          <label>المديرية</label>
-          <select id="addDistrict" required></select>
-        </div>
-        <div class="form-group">
-          <label>العنوان / الوصف</label>
-          <input type="text" id="addTitle" placeholder="مثال: شقة 3 غرف في حي السنينة" required>
-        </div>
-        <div class="form-group">
-          <label>تفاصيل إضافية</label>
-          <textarea id="addDesc" placeholder="مساحة، طابق، تشطيب..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>السعر (ريال يمني)</label>
-          <input type="number" id="addPrice" placeholder="مثال: 500000" required>
-        </div>
-        <div class="form-group">
-          <label>رقم هاتفك (سيتم دمجه مع رقم المكتب)</label>
-          <input type="tel" id="addPhone" placeholder="7xxxxxxxx" required>
-        </div>
-        <div class="form-group">
-          <label>صور العقار (حتى 4 ميجا)</label>
-          <input type="file" id="addImages" accept="image/*" multiple>
-        </div>
+        <div class="form-group"><label>نوع الطلب</label><select id="addType" required><option value="rent">عرض إيجار</option><option value="sale">عرض بيع</option></select></div>
+        <div class="form-group"><label>نوع العقار</label><select id="addProperty" required><option value="apartment">شقة</option><option value="house">بيت مستقل</option><option value="villa">فيلا</option><option value="land">أرضية</option></select></div>
+        <div class="form-group"><label>المحافظة</label><select id="addGovernorate" required></select></div>
+        <div class="form-group"><label>المديرية</label><select id="addDistrict" required></select></div>
+        <div class="form-group"><label>العنوان / الوصف</label><input type="text" id="addTitle" required></div>
+        <div class="form-group"><label>السعر (ريال يمني)</label><input type="number" id="addPrice" required></div>
+        <div class="form-group"><label>رقم هاتفك</label><input type="tel" id="addPhone" required></div>
+        <div class="form-group"><label>صور العقار (سيتم معالجتها كنص)</label><input type="file" id="addImages" accept="image/*" multiple></div>
         <div style="display:flex; gap:10px; margin-top:16px;">
           <button type="submit" class="btn btn-primary" style="flex:1;" id="saveBtn">💾 حفظ ونشر</button>
           <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">إلغاء</button>
@@ -242,9 +218,7 @@
           <button type="button" class="btn btn-outline" onclick="closeModal('authModal')">إلغاء</button>
         </div>
       </form>
-      <p style="text-align:center; margin-top:14px; font-size:0.85rem;">
-        <a href="#" id="toggleAuthMode" style="color:var(--primary);">إنشاء حساب جديد</a>
-      </p>
+      <p style="text-align:center; margin-top:14px; font-size:0.85rem;"><a href="#" id="toggleAuthMode" style="color:var(--primary);">إنشاء حساب جديد</a></p>
     </div>
   </div>
 
@@ -252,8 +226,12 @@
   <div class="modal-overlay" id="dashboardModal">
     <div class="modal">
       <h2 style="margin-bottom: 18px;">📊 لوحة التحكم</h2>
+      <div style="display:flex; gap:10px; margin-bottom:15px;">
+        <button class="btn btn-accent" onclick="generateDummyData()" style="flex:1;">✨ توليد 20 عرض تجريبي</button>
+        <button class="btn btn-danger" onclick="deleteAllMyProps()" style="flex:1;">🗑️ حذف كل عروضي</button>
+      </div>
       <div id="dashboardContent"><p>جاري التحميل...</p></div>
-      <button class="btn btn-outline" style="margin-top:16px;" onclick="closeModal('dashboardModal')">إغلاق</button>
+      <button class="btn btn-outline" style="margin-top:16px; width:100%;" onclick="closeModal('dashboardModal')">إغلاق</button>
     </div>
   </div>
 
@@ -268,14 +246,14 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- Firebase v10 SDK (Modular) -->
+  <!-- Firebase v10 SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, where, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    
+    // ⚠️ تم حذف استيراد Storage نهائياً لأننا لن نستخدمه
 
-    // ====== إعدادات Firebase الخاصة بك ======
     const firebaseConfig = {
       apiKey: "AIzaSyAZ1iTXO00mxNnoT2xmXfumCtMs0JkLfdc",
       authDomain: "maktab-al-thiqa.firebaseapp.com",
@@ -288,18 +266,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const storage = getStorage(app);
+    // ⚠️ تم حذف const storage نهائياً
 
-    // تفعيل العمل بدون إنترنت (Offline Support)
-    enableIndexedDbPersistence(db).catch((err) => {
-      if (err.code == 'failed-precondition') {
-        console.log("Multiple tabs open, persistence can only be enabled in one tab at a a time.");
-      } else if (err.code == 'unimplemented') {
-        console.log("The current browser does not support all of the features required to enable persistence");
-      }
-    });
-
-    // بيانات المحافظات (مختصرة)
     const yemenData = {
       "أمانة العاصمة": ["صنعاء القديمة","شعوب","آزال","الصافية","السبعين","التحرير","الوحدة","معين","الثورة","بني الحارث"],
       "صنعاء": ["همدان","أرحب","نهم","بني حشيش","خولان","سنحان وبني بهلول"],
@@ -309,14 +277,25 @@
       "حضرموت": ["المكلا","الشحر","تريم","سيئون","شبام"]
     };
 
-    // ====== عناصر DOM ======
     const cardsContainer = document.getElementById('cardsContainer');
     const filterGov = document.getElementById('filterGovernorate');
     const filterDist = document.getElementById('filterDistrict');
     const toastEl = document.getElementById('toast');
     let currentUser = null;
 
-    // ====== الثيمات ======
+    const ads = [
+      "مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين",
+      "اللهم اغفر لنا وارحمنا واهدنا الصراط المستقيم",
+      "أستغفر الله العظيم وأتوب إليه | تذكر أن الصدق والأمانة أساس التجارة",
+      "لا تنسَ دفع العمولة عند إتمام الصفقة لضمان استمرار الخدمة",
+      "سبحان الله وبحمده، سبحان الله العظيم"
+    ];
+    let adIndex = 0;
+    setInterval(() => {
+      adIndex = (adIndex + 1) % ads.length;
+      document.getElementById('marqueeText').innerText = ads[adIndex];
+    }, 1000 * 60 * 30);
+
     document.querySelectorAll('.theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.dataset.theme = btn.dataset.theme;
@@ -325,17 +304,13 @@
     });
     document.body.dataset.theme = localStorage.getItem('theme') || 'light';
 
-    // ====== القائمة الجانبية ======
     document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('show'); };
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); }
     document.getElementById('sidebarOverlay').onclick = closeSidebar;
 
-    // ====== تعبئة المحافظات ======
     function populateGovernorates(selectEl, includeEmpty = true) {
       if (includeEmpty) selectEl.innerHTML = '<option value="">اختر المحافظة</option>';
-      Object.keys(yemenData).sort().forEach(gov => {
-        selectEl.appendChild(new Option(gov, gov));
-      });
+      Object.keys(yemenData).sort().forEach(gov => selectEl.appendChild(new Option(gov, gov)));
     }
     populateGovernorates(filterGov);
     const addGov = document.getElementById('addGovernorate');
@@ -344,23 +319,17 @@
 
     filterGov.onchange = () => {
       filterDist.innerHTML = '<option value="">كل المديريات</option>';
-      if (filterGov.value && yemenData[filterGov.value]) {
-        yemenData[filterGov.value].forEach(dist => filterDist.appendChild(new Option(dist, dist)));
-      }
+      if (filterGov.value && yemenData[filterGov.value]) yemenData[filterGov.value].forEach(dist => filterDist.appendChild(new Option(dist, dist)));
     };
     addGov.onchange = () => {
       const addDist = document.getElementById('addDistrict');
       addDist.innerHTML = '<option value="">اختر المديرية</option>';
-      if (addGov.value && yemenData[addGov.value]) {
-        yemenData[addGov.value].forEach(dist => addDist.appendChild(new Option(dist, dist)));
-      }
+      if (addGov.value && yemenData[addGov.value]) yemenData[addGov.value].forEach(dist => addDist.appendChild(new Option(dist, dist)));
     };
 
-    // ====== المصادقة ======
     let authMode = 'login';
     document.getElementById('loginBtn').onclick = () => { authMode='login'; updateAuthUI(); openModal('authModal'); };
     document.getElementById('toggleAuthMode').onclick = (e) => { e.preventDefault(); authMode = authMode === 'login' ? 'signup' : 'login'; updateAuthUI(); };
-    
     function updateAuthUI() {
       document.getElementById('authTitle').textContent = authMode === 'login' ? '🔐 تسجيل الدخول' : '📝 إنشاء حساب';
       document.getElementById('authSubmitBtn').textContent = authMode === 'login' ? 'دخول' : 'إنشاء';
@@ -374,8 +343,7 @@
       try {
         if (authMode === 'login') await signInWithEmailAndPassword(auth, email, pass);
         else await createUserWithEmailAndPassword(auth, email, pass);
-        closeModal('authModal');
-        showToast('✅ تم بنجاح');
+        closeModal('authModal'); showToast('✅ تم بنجاح');
       } catch (err) { showToast('❌ خطأ: ' + err.message); }
     };
 
@@ -383,11 +351,38 @@
       currentUser = user;
       document.getElementById('loginBtn').textContent = user ? '👤 ' + user.email.split('@')[0] : '🔐 دخول';
     });
+    window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); };
 
-    function logout() { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); }
-    window.logout = logout;
+    // ====== ⚠️ الدالة السحرية: تحويل الصورة إلى نص (Base64) ======
+    async function convertImageToText(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width, height = img.height;
+            
+            // ضغط قوي جداً لكي لا يتجاوز حجم النص 1 ميجا (حد فايربيز)
+            const MAX_DIM = 700; // أقصى عرض أو طول 700 بكسل
+            if (width > MAX_DIM || height > MAX_DIM) { 
+              if (width > height) { height = Math.round((height * MAX_DIM) / width); width = MAX_DIM; }
+              else { width = Math.round((width * MAX_DIM) / height); height = MAX_DIM; }
+            }
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // تحويل الصورة المضغوطة إلى نص Base64 بجودة 40%
+            const base64Text = canvas.toDataURL('image/jpeg', 0.4);
+            resolve(base64Text);
+          };
+        };
+      });
+    }
 
-    // ====== إضافة عرض ======
     document.getElementById('addPropertyBtn').onclick = () => {
       if (!currentUser) { showToast('سجل الدخول أولاً'); openModal('authModal'); return; }
       openModal('addModal');
@@ -396,57 +391,58 @@
     document.getElementById('addForm').onsubmit = async (e) => {
       e.preventDefault();
       const btn = document.getElementById('saveBtn');
-      btn.disabled = true; btn.textContent = '⏳ جاري النشر...';
+      btn.disabled = true; btn.textContent = '⏳ جاري المعالجة...';
 
       try {
         const files = document.getElementById('addImages').files;
-        const imageUrls = [];
+        const imageTexts = []; // هنا سنحفظ النصوص بدلاً من الروابط
         
-        for (let i = 0; i < Math.min(files.length, 5); i++) {
-          const file = files[i];
-          if (file.size > 4 * 1024 * 1024) { showToast('⚠️ صورة أكبر من 4 ميجا تم تجاهلها'); continue; }
-          const storageRef = ref(storage, `properties/${Date.now()}_${file.name}`);
-          await uploadBytes(storageRef, file);
-          imageUrls.push(await getDownloadURL(storageRef));
+        for (let i = 0; i < Math.min(files.length, 3); i++) { // تقليل العدد لـ 3 لضمان عدم تجاوز حجم المستند
+          showToast(`جاري معالجة الصورة ${i+1}...`);
+          const base64String = await convertImageToText(files[i]);
+          imageTexts.push(base64String);
         }
 
+        // حفظ النصوص في فايربيز (بدون Storage)
         await addDoc(collection(db, 'properties'), {
           type: document.getElementById('addType').value,
           property: document.getElementById('addProperty').value,
           gov: document.getElementById('addGovernorate').value,
           dist: document.getElementById('addDistrict').value,
           title: document.getElementById('addTitle').value,
-          desc: document.getElementById('addDesc').value,
           price: parseFloat(document.getElementById('addPrice').value),
           phone: document.getElementById('addPhone').value,
-          images: imageUrls,
+          images: imageTexts, // يتم حفظ النصوص هنا، والمتصفح يفهمها كصور
           ownerId: currentUser.uid,
           createdAt: serverTimestamp()
         });
 
-        showToast('✅ تم النشر فورا');
+        showToast('✅ تم النشر بنجاح (بدون Storage)');
         closeModal('addModal');
         e.target.reset();
         
         setTimeout(() => {
-          if (confirm('تم الحفظ! هل تريد الانضمام لقروب واتساب للتفعيل؟')) {
-            window.open('https://wa.me/967771713275?text=أضفت عرضاً جديداً: ' + document.getElementById('addTitle').value, '_blank');
+          if (confirm('هل تريد الانضمام لقروب واتساب للتفعيل؟')) {
+            window.open('https://wa.me/967771713275?text=أضفت عرضاً جديداً', '_blank');
           }
         }, 800);
 
-      } catch (err) { showToast('❌ خطأ: ' + err.message); } 
-      finally { btn.disabled = false; btn.textContent = '💾 حفظ ونشر'; }
+      } catch (err) { 
+        console.error(err);
+        showToast('❌ خطأ: ' + err.message); 
+      } finally { 
+        btn.disabled = false; btn.textContent = '💾 حفظ ونشر'; 
+      }
     };
 
-    // ====== التحديث الفوري للبيانات (Real-time) ======
     function listenToProperties() {
       const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'));
-      // onSnapshot تجعل التطبيق يستمع لأي تغيير وتحديث الشاشة فورا
       onSnapshot(q, (snapshot) => {
         const props = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
         renderCards(props);
       }, (err) => {
-        cardsContainer.innerHTML = '<p style="text-align:center; grid-column:1/-1;">⚠️ تعذر الاتصال بقاعدة البيانات</p>';
+        console.error("Firebase Error: ", err);
+        cardsContainer.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:20px;"><p style="color:#ef4444; font-weight:bold;">⚠️ فشل الاتصال بقاعدة البيانات</p></div>`;
       });
     }
 
@@ -457,9 +453,10 @@
       }
       const propNames = { apartment:'شقة', house:'بيت مستقل', villa:'فيلا', land:'أرضية', hangar:'هنجر' };
       cardsContainer.innerHTML = properties.map(p => {
-        const badge = p.type === 'rent' ? 'badge-rent' : p.type === 'sale' ? 'badge-sale' : 'badge-buy';
-        const typeName = p.type === 'rent' ? 'إيجار' : p.type === 'sale' ? 'بيع' : 'طلب شراء';
-        const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/400x200?text=عقار';
+        const badge = p.type === 'rent' ? 'badge-rent' : 'badge-sale';
+        const typeName = p.type === 'rent' ? 'إيجار' : 'بيع';
+        // إذا كان هناك نص Base64 سيظهر كصورة، وإلا صورة افتراضية
+        const img = (p.images && p.images.length && p.images[0]) ? p.images[0] : 'https://via.placeholder.com/400x200?text=عقار';
         
         return `
           <div class="card">
@@ -467,7 +464,6 @@
             <div class="card-body">
               <span class="card-badge ${badge}">${typeName}</span>
               <h3 class="card-title">${p.title}</h3>
-              <p class="card-desc">${p.desc || ''}</p>
               <div class="card-meta">
                 <span>📍 ${p.gov} - ${p.dist}</span>
                 <span>${propNames[p.property] || p.property}</span>
@@ -489,7 +485,6 @@
       catch (e) { showToast('لا تملك الصلاحية'); }
     };
 
-    // ====== الفلاتر ======
     document.getElementById('searchBtn').onclick = () => {
       const gov = filterGov.value, dist = filterDist.value;
       const type = document.getElementById('filterType').value;
@@ -500,13 +495,12 @@
         const text = card.innerText;
         if (gov && !text.includes(gov)) show = false;
         if (dist && !text.includes(dist)) show = false;
-        if (type) { const t = {rent:'إيجار', sale:'بيع', buy:'طلب شراء'}; if(!text.includes(t[type])) show = false; }
+        if (type) { const t = {rent:'إيجار', sale:'بيع'}; if(!text.includes(t[type])) show = false; }
         if (prop) { const p = {apartment:'شقة', house:'بيت مستقل', villa:'فيلا', land:'أرضية', hangar:'هنجر'}; if(!text.includes(p[prop])) show = false; }
         card.style.display = show ? 'flex' : 'none';
       });
     };
 
-    // ====== لوحة التحكم والصفحات ======
     window.showDashboard = async () => {
       if (!currentUser) return showToast('سجل الدخول');
       openModal('dashboardModal');
@@ -515,19 +509,68 @@
         document.getElementById('dashboardContent').innerHTML = snapshot.docs.length ? snapshot.docs.map(d => {
           const p = d.data();
           return `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid var(--border);">
-            <span>${p.title}</span>
-            <button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteProperty('${d.id}')">حذف</button>
+            <span style="font-size:0.9rem;">${p.title}</span>
+            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProperty('${d.id}')">حذف</button>
           </div>`;
-        }).join('') : '<p>لا يوجد عروض.</p>';
+        }).join('') : '<p>لا يوجد عروض حالياً.</p>';
       });
     };
 
+    window.generateDummyData = async () => {
+      if (!currentUser) return;
+      const btn = event.target;
+      btn.textContent = "⏳ جاري التوليد...";
+      btn.disabled = true;
+      
+      const govs = Object.keys(yemenData);
+      try {
+        for (let i = 0; i < 20; i++) {
+          const gov = govs[Math.floor(Math.random() * govs.length)];
+          const dists = yemenData[gov];
+          const dist = dists[Math.floor(Math.random() * dists.length)];
+          
+          await addDoc(collection(db, 'properties'), {
+            title: `عرض تجريبي: عقار في ${dist}`,
+            type: Math.random() > 0.5 ? 'rent' : 'sale',
+            property: ['apartment','house','villa','land'][Math.floor(Math.random()*4)],
+            gov: gov,
+            dist: dist,
+            price: Math.floor(Math.random() * 500000) + 50000,
+            phone: '770000000',
+            ownerId: currentUser.uid,
+            createdAt: serverTimestamp(),
+            images: [] // بدون صور لتخفيف الحجم
+          });
+        }
+        showToast('✅ تم توليد 20 عرضاً بنجاح');
+      } catch (e) {
+        showToast('❌ فشل التوليد');
+      } finally {
+        btn.textContent = "✨ توليد 20 عرض تجريبي";
+        btn.disabled = false;
+      }
+    };
+
+    window.deleteAllMyProps = async () => {
+      if (!currentUser || !confirm('هل أنت متأكد من حذف جميع عروضك؟')) return;
+      try {
+        const q = query(collection(db, 'properties'), where('ownerId', '==', currentUser.uid));
+        const snap = await getDocs(q);
+        const batch = writeBatch(db);
+        snap.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        showToast('🗑️ تم حذف جميع عروضك');
+      } catch (e) { showToast('❌ حدث خطأ'); }
+    };
+
+    window.openModal = (id) => document.getElementById(id).classList.add('show');
+    window.closeModal = (id) => document.getElementById(id).classList.remove('show');
+    window.showToast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('show'); setTimeout(() => toastEl.classList.remove('show'), 3000); };
+    
     const pages = {
       about: { title: 'ℹ️ عن المكتب', body: 'مكتب الثقة هو منصة يمنية متخصصة في عرض العقارات.' },
       how: { title: '⚙️ آلية العمل', body: 'أضف عرضك، سيتم دمج رقمك مع رقم المكتب للتواصل.' },
-      trust: { title: '🛡️ الثقة والأمان', body: 'نلتزم بالصدق والأمانة في التعاملات.' },
-      guidelines: { title: '📜 الإرشادات', body: 'يُمنع نشر عروض وهمية، والالتزام بدفع العمولة.' },
-      fees: { title: '💰 العمولة', body: 'تُحدد حسب نوع العقار وقيمة الصفقة.' }
+      trust: { title: '🛡️ الثقة والأمان', body: 'نلتزم بالصدق والأمانة في التعاملات.' }
     };
     window.showPage = (key) => {
       document.getElementById('pageTitle').textContent = pages[key].title;
@@ -535,23 +578,7 @@
       openModal('pageModal');
     };
 
-    // أدوات مساعدة
-    window.openModal = (id) => document.getElementById(id).classList.add('show');
-    window.closeModal = (id) => document.getElementById(id).classList.remove('show');
-    window.showToast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('show'); setTimeout(() => toastEl.classList.remove('show'), 3000); };
-    document.querySelectorAll('.modal-overlay').forEach(o => o.onclick = (e) => { if(e.target === o) o.classList.remove('show'); });
-
-    // ====== تشغيل التطبيق ======
     listenToProperties();
-
-    // تسجيل Service Worker ليعمل كتطبيق وبدون إنترنت
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(reg => {
-          console.log('SW registered!', reg);
-        }).catch(err => console.log('SW registration failed:', err));
-      });
-    }
   </script>
 </body>
 </html>
