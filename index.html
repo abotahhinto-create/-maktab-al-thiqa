@@ -7,39 +7,17 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f766e">
   <style>
-    /* ========== المتغيرات والثيمات المتحركة ========== */
+    /* ========== المتغيرات والثيمات ========== */
     :root {
       --bg: #f8f9fa; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b;
       --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b;
       --border: #e2e8f0; --shadow: 0 4px 20px rgba(0,0,0,0.08); --radius: 16px;
       --font: 'Segoe UI', Tahoma, sans-serif; --transition: 0.35s ease;
     }
-    [data-theme="dark"] {
-      --bg: #0f172a; --surface: #1e293b; --text: #f1f5f9; --text-muted: #94a3b8;
-      --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24;
-      --border: #334155; --shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-    [data-theme="royal"] {
-      --bg: #0c0a1d; --surface: #1a1635; --text: #e9e5ff; --text-muted: #a09ac0;
-      --primary: #8b5cf6; --primary-light: #a78bfa; --accent: #f472b6;
-      --border: #2d2650; --shadow: 0 4px 25px rgba(139,92,246,0.25);
-    }
-    [data-theme="royal"] .hero, [data-theme="royal"] .designer-card {
-      background: linear-gradient(-45deg, #8b5cf6, #ec4899, #8b5cf6);
-      background-size: 300% 300%; animation: gradientBG 6s ease infinite;
-    }
-    @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-    
-    [data-theme="sunset"] {
-      --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412;
-      --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626;
-      --border: #fed7aa; --shadow: 0 4px 20px rgba(234,88,12,0.12);
-    }
-    [data-theme="ocean"] {
-      --bg: #ecfeff; --surface: #ffffff; --text: #164e63; --text-muted: #155e75;
-      --primary: #0891b2; --primary-light: #22d3ee; --accent: #f59e0b;
-      --border: #a5f3fc; --shadow: 0 4px 20px rgba(8,145,178,0.12);
-    }
+    [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f1f5f9; --text-muted: #94a3b8; --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24; --border: #334155; --shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    [data-theme="royal"] { --bg: #0c0a1d; --surface: #1a1635; --text: #e9e5ff; --text-muted: #a09ac0; --primary: #8b5cf6; --primary-light: #a78bfa; --accent: #f472b6; --border: #2d2650; --shadow: 0 4px 25px rgba(139,92,246,0.25); }
+    [data-theme="sunset"] { --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; --shadow: 0 4px 20px rgba(234,88,12,0.12); }
+    [data-theme="ocean"] { --bg: #ecfeff; --surface: #ffffff; --text: #164e63; --text-muted: #155e75; --primary: #0891b2; --primary-light: #22d3ee; --accent: #f59e0b; --border: #a5f3fc; --shadow: 0 4px 20px rgba(8,145,178,0.12); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); min-height: 100vh; overflow-x: hidden; }
@@ -49,7 +27,6 @@
     .marquee-content { display: inline-block; animation: marquee 15s linear infinite; padding-left: 100%; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* الهيدر */
     header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(12px); }
     .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
     .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -68,7 +45,6 @@
     .btn-accent { background: var(--accent); color: #1e293b; }
     .btn-danger { background: #ef4444; color: #fff; }
 
-    /* القائمة الجانبية */
     .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 200; padding: 24px; transition: right 0.4s; overflow-y: auto; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
     .sidebar.open { right: 0; }
     .sidebar a { display: block; padding: 12px 14px; color: var(--text); text-decoration: none; border-radius: 10px; margin-bottom: 4px; transition: background 0.2s; }
@@ -76,16 +52,13 @@
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .sidebar-overlay.show { opacity: 1; pointer-events: all; }
 
-    /* المحتوى */
     main { max-width: 1300px; margin: 0 auto; padding: 20px; }
     .hero { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius); padding: 40px 30px; color: #fff; margin-bottom: 24px; position: relative; overflow: hidden; transition: all 0.5s; }
     .hero h1 { font-size: 1.6rem; margin-bottom: 8px; }
 
-    /* الفلاتر */
     .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; background: var(--surface); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px; }
     .filters select { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--font); width: 100%; }
     
-    /* شبكة البطاقات */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
     .card { background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s; border: 1px solid var(--border); display: flex; flex-direction: column; }
     .card:hover { transform: translateY(-6px); }
@@ -99,7 +72,6 @@
     .card-price { font-weight: 800; color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; }
     .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
-    /* المودالات */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
     .modal-overlay.show { display: flex; }
     .modal { background: var(--surface); border-radius: var(--radius); padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; animation: modalIn 0.3s ease; }
@@ -115,6 +87,7 @@
 </head>
 <body data-theme="light">
 
+  <!-- شريط الإعلانات -->
   <div class="marquee-bar">
     <div class="marquee-content" id="marqueeText">
       مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين | اللهم اغفر لنا وارحمنا | سبحان الله وبحمده، سبحان الله العظيم
@@ -197,7 +170,7 @@
         <div class="form-group"><label>العنوان / الوصف</label><input type="text" id="addTitle" required></div>
         <div class="form-group"><label>السعر (ريال يمني)</label><input type="number" id="addPrice" required></div>
         <div class="form-group"><label>رقم هاتفك</label><input type="tel" id="addPhone" required></div>
-        <div class="form-group"><label>صور العقار (سيتم معالجتها كنص)</label><input type="file" id="addImages" accept="image/*" multiple></div>
+        <div class="form-group"><label>صورة العقار (صورة واحدة فقط)</label><input type="file" id="addImages" accept="image/*"></div>
         <div style="display:flex; gap:10px; margin-top:16px;">
           <button type="submit" class="btn btn-primary" style="flex:1;" id="saveBtn">💾 حفظ ونشر</button>
           <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">إلغاء</button>
@@ -226,10 +199,13 @@
   <div class="modal-overlay" id="dashboardModal">
     <div class="modal">
       <h2 style="margin-bottom: 18px;">📊 لوحة التحكم</h2>
+      
+      <!-- أزرار لوحة التحكم التي تبحث عنها -->
       <div style="display:flex; gap:10px; margin-bottom:15px;">
-        <button class="btn btn-accent" onclick="generateDummyData()" style="flex:1;">✨ توليد 20 عرض تجريبي</button>
+        <button class="btn btn-accent" onclick="generateDummyData(event)" style="flex:1;">✨ توليد 20 عرض تجريبي</button>
         <button class="btn btn-danger" onclick="deleteAllMyProps()" style="flex:1;">🗑️ حذف كل عروضي</button>
       </div>
+      
       <div id="dashboardContent"><p>جاري التحميل...</p></div>
       <button class="btn btn-outline" style="margin-top:16px; width:100%;" onclick="closeModal('dashboardModal')">إغلاق</button>
     </div>
@@ -251,8 +227,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-    
-    // ⚠️ تم حذف استيراد Storage نهائياً لأننا لن نستخدمه
 
     const firebaseConfig = {
       apiKey: "AIzaSyAZ1iTXO00mxNnoT2xmXfumCtMs0JkLfdc",
@@ -266,7 +240,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    // ⚠️ تم حذف const storage نهائياً
 
     const yemenData = {
       "أمانة العاصمة": ["صنعاء القديمة","شعوب","آزال","الصافية","السبعين","التحرير","الوحدة","معين","الثورة","بني الحارث"],
@@ -283,6 +256,7 @@
     const toastEl = document.getElementById('toast');
     let currentUser = null;
 
+    // شريط الاعلانات
     const ads = [
       "مرحباً بكم في مكتب الثقة | أنشر عرضك الآن للوصول إلى آلاف المشترين",
       "اللهم اغفر لنا وارحمنا واهدنا الصراط المستقيم",
@@ -353,7 +327,7 @@
     });
     window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); };
 
-    // ====== ⚠️ الدالة السحرية: تحويل الصورة إلى نص (Base64) ======
+    // ضغط الصورة وتحويلها لنص
     async function convertImageToText(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -364,9 +338,8 @@
           img.onload = () => {
             const canvas = document.createElement('canvas');
             let width = img.width, height = img.height;
-            
-            // ضغط قوي جداً لكي لا يتجاوز حجم النص 1 ميجا (حد فايربيز)
-            const MAX_DIM = 700; // أقصى عرض أو طول 700 بكسل
+            // ضغط قوي جداً لضمان بقاء النص أقل من 1 ميجا (شرط فايربيز)
+            const MAX_DIM = 500; 
             if (width > MAX_DIM || height > MAX_DIM) { 
               if (width > height) { height = Math.round((height * MAX_DIM) / width); width = MAX_DIM; }
               else { width = Math.round((width * MAX_DIM) / height); height = MAX_DIM; }
@@ -374,10 +347,7 @@
             canvas.width = width; canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
-            
-            // تحويل الصورة المضغوطة إلى نص Base64 بجودة 40%
-            const base64Text = canvas.toDataURL('image/jpeg', 0.4);
-            resolve(base64Text);
+            resolve(canvas.toDataURL('image/jpeg', 0.5)); // جودة 50%
           };
         };
       });
@@ -395,15 +365,13 @@
 
       try {
         const files = document.getElementById('addImages').files;
-        const imageTexts = []; // هنا سنحفظ النصوص بدلاً من الروابط
+        let imageText = ''; // صورة واحدة فقط
         
-        for (let i = 0; i < Math.min(files.length, 3); i++) { // تقليل العدد لـ 3 لضمان عدم تجاوز حجم المستند
-          showToast(`جاري معالجة الصورة ${i+1}...`);
-          const base64String = await convertImageToText(files[i]);
-          imageTexts.push(base64String);
+        if (files.length > 0) {
+          showToast(`جاري معالجة الصورة...`);
+          imageText = await convertImageToText(files[0]); // نأخذ أول صورة فقط
         }
 
-        // حفظ النصوص في فايربيز (بدون Storage)
         await addDoc(collection(db, 'properties'), {
           type: document.getElementById('addType').value,
           property: document.getElementById('addProperty').value,
@@ -412,21 +380,15 @@
           title: document.getElementById('addTitle').value,
           price: parseFloat(document.getElementById('addPrice').value),
           phone: document.getElementById('addPhone').value,
-          images: imageTexts, // يتم حفظ النصوص هنا، والمتصفح يفهمها كصور
+          images: imageText ? [imageText] : [], // حفظ النص
           ownerId: currentUser.uid,
           createdAt: serverTimestamp()
         });
 
-        showToast('✅ تم النشر بنجاح (بدون Storage)');
+        showToast('✅ تم النشر بنجاح');
         closeModal('addModal');
         e.target.reset();
         
-        setTimeout(() => {
-          if (confirm('هل تريد الانضمام لقروب واتساب للتفعيل؟')) {
-            window.open('https://wa.me/967771713275?text=أضفت عرضاً جديداً', '_blank');
-          }
-        }, 800);
-
       } catch (err) { 
         console.error(err);
         showToast('❌ خطأ: ' + err.message); 
@@ -441,7 +403,6 @@
         const props = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
         renderCards(props);
       }, (err) => {
-        console.error("Firebase Error: ", err);
         cardsContainer.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:20px;"><p style="color:#ef4444; font-weight:bold;">⚠️ فشل الاتصال بقاعدة البيانات</p></div>`;
       });
     }
@@ -455,7 +416,6 @@
       cardsContainer.innerHTML = properties.map(p => {
         const badge = p.type === 'rent' ? 'badge-rent' : 'badge-sale';
         const typeName = p.type === 'rent' ? 'إيجار' : 'بيع';
-        // إذا كان هناك نص Base64 سيظهر كصورة، وإلا صورة افتراضية
         const img = (p.images && p.images.length && p.images[0]) ? p.images[0] : 'https://via.placeholder.com/400x200?text=عقار';
         
         return `
@@ -516,7 +476,7 @@
       });
     };
 
-    window.generateDummyData = async () => {
+    window.generateDummyData = async (event) => {
       if (!currentUser) return;
       const btn = event.target;
       btn.textContent = "⏳ جاري التوليد...";
@@ -539,7 +499,7 @@
             phone: '770000000',
             ownerId: currentUser.uid,
             createdAt: serverTimestamp(),
-            images: [] // بدون صور لتخفيف الحجم
+            images: []
           });
         }
         showToast('✅ تم توليد 20 عرضاً بنجاح');
