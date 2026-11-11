@@ -274,7 +274,7 @@
           <div class="stat-card"><h3 id="statUsers">0</h3><p>مستخدمين</p></div>
         </div>
         <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
-          <button class="btn btn-accent" onclick="generateDummyData()">✨ توليد بيانات تجريبية</button>
+          <button class="btn btn-accent" onclick="generateDummyData()">✨ توليد 30 عرض تجريبي</button>
           <button class="btn btn-danger" onclick="deleteDummyData()">🗑️ حذف البيانات التجريبية</button>
         </div>
         <div style="background:var(--surface); padding:20px; border-radius:20px; border:1px solid var(--border);">
@@ -372,7 +372,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, writeBatch, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAZ1iTXO00mxNnoT2xmXfumCtMs0JkLfdc",
@@ -496,6 +496,7 @@
       } catch (err) { 
         if(err.code === 'auth/email-already-in-use') showToast('❌ هذا الرقم مسجل مسبقاً، يرجى الدخول.');
         else if(err.code === 'auth/invalid-email') showToast('❌ تأكد من كتابة رقم الجوال صحيح أو إيميل صحيح.');
+        else if(err.code === 'permission-denied') showToast('❌ خطأ في الصلاحيات، تأكد من قواعد Firebase (Rules).');
         else showToast('❌ خطأ: ' + err.message); 
       }
     };
@@ -508,15 +509,17 @@
         currentPhone = phoneOrEmail;
         btn.textContent = '👤 ' + phoneOrEmail;
         
-        // التحقق مما إذا كان هذا هو حساب المدير (عن طريق الرقم أو الإيميل)
         if (phoneOrEmail === ADMIN_PHONE || user.email === ADMIN_EMAIL) {
           document.getElementById('adminMenu').style.display = 'block';
+          // فتح لوحة التحكم تلقائياً إذا كان مديراً
+          openAdminPanel();
         } else {
           document.getElementById('adminMenu').style.display = 'none';
         }
       } else {
         btn.textContent = '🔐 دخول';
         document.getElementById('adminMenu').style.display = 'none';
+        closeAdminPanel();
       }
     });
     window.logout = () => { if(currentUser) signOut(auth).then(() => showToast('تم الخروج')); };
@@ -591,7 +594,10 @@
         showToast('✅ تم النشر');
         closeModal('addModal');
         e.target.reset();
-      } catch (err) { showToast('❌ خطأ'); } finally { btn.textContent = '💾 نشر العرض'; btn.disabled = false; }
+      } catch (err) { 
+        if(err.code === 'permission-denied') showToast('❌ قم بتحديث قواعد Firebase (Rules) للسماح بالنشر.');
+        else showToast('❌ حدث خطأ.'); 
+      } finally { btn.textContent = '💾 نشر العرض'; btn.disabled = false; }
     };
 
     // عرض البيانات
@@ -790,7 +796,7 @@
     };
 
     window.generateDummyData = async () => {
-      if(!confirm('سيتم إضافة 30 عرض تجريبي. متابعة؟')) return;
+      if(!confirm('سيتم إضافة 30 عرض تجريبي (10 من كل قسم). متابعة؟')) return;
       const categories = ['realestate', 'electronics', 'cars'];
       const govs = Object.keys(yemenData);
       
