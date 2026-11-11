@@ -1,4 +1,4 @@
-const CACHE_NAME = 'thiqa-v12';
+const CACHE_NAME = 'thiqa-v14';
 const urlsToCache = [
   '/',
   '/index.html',
