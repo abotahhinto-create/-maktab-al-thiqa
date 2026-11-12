@@ -5,167 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>سوق اليمن المفتوح 2027</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#7c3aed">
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
-    /* ====== الثيمات 2027 ====== */
+    /* ====== الثيمات (الافتراضي بنفسجي/أبيض) ====== */
     :root {
-      --bg: #0f172a; --surface: rgba(30, 41, 59, 0.85); --text: #f8fafc; --text-muted: #94a3b8;
-      --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24;
-      --border: rgba(255,255,255,0.1); --shadow: 0 8px 25px -5px rgba(0,0,0,0.5); 
-      --radius: 16px; --font: 'Cairo', sans-serif; --transition: 0.4s ease;
+      --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9;
+      --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899;
+      --border: #ddd6fe; --shadow: 0 4px 15px -3px rgba(124,58,237,0.1); 
+      --radius: 14px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
     }
-    [data-theme="light"] { --bg: #f0f4f8; --surface: rgba(255, 255, 255, 0.85); --text: #1e293b; --text-muted: #64748b; --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b; --border: rgba(0,0,0,0.05); --shadow: 0 8px 25px -5px rgba(0,0,0,0.1); }
-    [data-theme="royal"] { --bg: #1a0b2e; --surface: rgba(45, 20, 80, 0.85); --text: #e9e5ff; --text-muted: #a09ac0; --primary: #a78bfa; --primary-light: #c4b5fd; --accent: #f472b6; --border: rgba(139,92,246,0.2); }
-    [data-theme="golden"] { --bg: #1c1408; --surface: rgba(60, 40, 10, 0.85); --text: #fef3c7; --text-muted: #d97706; --primary: #fbbf24; --primary-light: #fcd34d; --accent: #f59e0b; --border: rgba(251,191,36,0.2); }
+    [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --primary: #a78bfa; --primary-light: #c4b5fd; --accent: #f472b6; --border: #334155; --shadow: 0 8px 25px -5px rgba(0,0,0,0.5); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, var(--surface) 0%, var(--bg) 70%); }
+    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; font-size: 13px; }
 
     /* ====== شريط الدعاء ====== */
-    .marquee-bar { background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)); background-size: 200% 200%; animation: gradientBG 5s ease infinite; color: #fff; padding: 8px 0; font-weight: 700; font-size: 0.8rem; overflow: hidden; white-space: nowrap; }
+    .marquee-bar { background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)); background-size: 200% 200%; animation: gradientBG 5s ease infinite; color: #fff; padding: 6px 0; font-weight: 700; font-size: 0.75rem; overflow: hidden; white-space: nowrap; }
     .marquee-content { display: inline-block; animation: marquee 25s linear infinite; padding-left: 100%; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
     @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
     /* ====== الهيدر ====== */
-    header { position: sticky; top: 0; z-index: 100; background: var(--surface); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-weight: 800; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 5px; }
-    .header-actions { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; justify-content: flex-end;}
+    header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; font-size: 1rem; color: var(--primary); display: flex; align-items: center; gap: 4px; }
+    .header-actions { display: flex; gap: 4px; align-items: center; }
     
-    .theme-btn { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; }
+    .theme-btn { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; }
     .theme-btn[data-theme="dark"] { background: #0f172a; }
-    .theme-btn[data-theme="light"] { background: #f0f4f8; }
-    .theme-btn[data-theme="royal"] { background: #a78bfa; }
-    .theme-btn[data-theme="golden"] { background: #fbbf24; }
+    .theme-btn[data-theme="royal"] { background: #7c3aed; }
 
-    .btn { padding: 8px 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn-primary { background: var(--primary); color: var(--bg); }
+    .btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.7rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+    .btn-primary { background: var(--primary); color: #fff; }
     .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
     .btn-danger { background: #ef4444; color: #fff; }
-    .btn-accent { background: var(--accent); color: #000; }
-    .icon-btn { padding: 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1.1rem; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .icon-btn { padding: 6px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1rem; }
 
     /* ====== شريط أحدث العروض ====== */
-    .latest-scroller { display: flex; gap: 10px; padding: 15px; overflow-x: auto; scrollbar-width: none; }
+    .latest-scroller { display: flex; gap: 8px; padding: 10px; overflow-x: auto; scrollbar-width: none; background: var(--surface); border-bottom: 1px solid var(--border); }
     .latest-scroller::-webkit-scrollbar { display: none; }
-    .latest-card { min-width: 120px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; backdrop-filter: blur(10px); }
-    .latest-card img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; margin-bottom: 5px; }
-    .latest-card h4 { font-size: 0.7rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .latest-card { min-width: 100px; border: 1px solid var(--border); border-radius: 8px; padding: 5px; text-align: center; background: var(--bg); }
+    .latest-card img { width: 100%; height: 50px; object-fit: cover; border-radius: 6px; margin-bottom: 3px; }
+    .latest-card h4 { font-size: 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* ====== أزرار الأقسام ====== */
-    .main-tabs { display: flex; gap: 8px; padding: 10px 15px; max-width: 1200px; margin: 0 auto; overflow-x: auto; }
-    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; color: var(--text); backdrop-filter: blur(10px); transition: all 0.3s; }
-    .tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--bg); border-color: transparent; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+    .main-tabs { display: flex; gap: 6px; padding: 8px 10px; max-width: 1200px; margin: 0 auto; overflow-x: auto; }
+    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 15px; border-radius: 10px; font-weight: 800; font-size: 0.8rem; cursor: pointer; white-space: nowrap; color: var(--text); transition: all 0.3s; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    main { max-width: 1200px; margin: 0 auto; padding: 0 10px 80px; }
+    main { max-width: 1200px; margin: 0 auto; padding: 0 8px 60px; }
 
     /* ====== بطاقة البحث ====== */
-    .filters-card { background: var(--surface); backdrop-filter: blur(15px); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
-    .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 12px; color: var(--primary); text-align: center; }
-    .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .filter-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px; }
-    .filter-group select, .filter-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.8rem; outline: none; }
-    .filter-group button { width: 100%; padding: 10px; margin-top: 18px; }
+    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 10px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 12px; }
+    .filters-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 8px; color: var(--primary); text-align: center; }
+    .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .filter-group label { display: block; font-size: 0.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
+    .filter-group select, .filter-group input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.7rem; outline: none; }
+    .filter-group button { width: 100%; padding: 8px; margin-top: 15px; }
 
-    /* ====== البطاقات (عرضين بجانب بعضهما) ====== */
-    .cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-    @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; } }
-    @media (min-width: 1024px) { .cards-grid { grid-template-columns: repeat(4, 1fr); } }
+    /* ====== البطاقات (بطاقتين بجانب بعضهما) ====== */
+    .cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
     
-    .card { background: var(--surface); backdrop-filter: blur(10px); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 130px; width: 100%; transition: transform 0.3s; }
-    .card:hover { transform: translateY(-3px); border-color: var(--primary); }
+    .card { background: var(--surface); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 120px; width: 100%; transition: transform 0.2s; }
+    .card:active { transform: scale(0.98); }
     
     .card-img-wrapper { width: 40% !important; position: relative; flex-shrink: 0; }
     .card-img { width: 100%; height: 100%; object-fit: cover; }
-    .card-badge { position: absolute; top: 5px; right: 5px; padding: 2px 6px; border-radius: 6px; font-size: 0.55rem; font-weight: 800; color: #fff; backdrop-filter: blur(5px); }
-    .badge-offer { background: rgba(45, 212, 191, 0.9); color: #000; }
-    .badge-request { background: rgba(251, 191, 36, 0.9); color: #000; }
+    .card-badge { position: absolute; top: 4px; right: 4px; padding: 2px 5px; border-radius: 4px; font-size: 0.5rem; font-weight: 800; color: #fff; }
+    .badge-offer { background: var(--primary); }
+    .badge-request { background: var(--accent); }
     
-    .card-body { width: 60% !important; padding: 5px 8px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-    .card-title { font-size: 0.75rem; font-weight: 800; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-meta { display: flex; gap: 4px; font-size: 0.55rem; color: var(--text-muted); flex-wrap: wrap; }
+    .card-body { width: 60% !important; padding: 4px 6px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+    .card-title { font-size: 0.7rem; font-weight: 800; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { display: flex; gap: 3px; font-size: 0.5rem; color: var(--text-muted); flex-wrap: wrap; }
     
     /* تفاصيل البطاقة */
-    .item-details { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 2px; }
-    .item-details span { background: rgba(0,0,0,0.2); padding: 1px 4px; border-radius: 4px; font-size: 0.5rem; color: var(--text); }
+    .item-details { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
+    .item-details span { background: var(--bg); padding: 1px 3px; border-radius: 3px; font-size: 0.45rem; color: var(--text-muted); font-weight: 600; }
 
-    .card-price { font-weight: 800; color: var(--primary); font-size: 0.8rem; }
+    .card-price { font-weight: 800; color: var(--primary); font-size: 0.75rem; }
     .card-actions { display: flex; gap: 4px; margin-top: 3px; }
-    .card-actions .btn { flex: 1; padding: 4px; font-size: 0.55rem; border-radius: 4px; }
+    .card-actions .btn { flex: 1; padding: 3px; font-size: 0.55rem; border-radius: 4px; }
 
     /* ====== زر إضافة عرض عائم ====== */
-    .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--bg); font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; transition: transform 0.3s; }
-    .fab:hover { transform: scale(1.1) rotate(90deg); }
+    .fab { position: fixed; bottom: 15px; left: 15px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; }
 
     /* ====== القائمة الجانبية ====== */
-    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); z-index: 199; display: none; }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; }
     .sidebar-overlay.show { display: block; }
-    
-    .sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: var(--surface); backdrop-filter: blur(20px); color: var(--text); z-index: 200; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.5); border-left: 1px solid var(--border); }
+    .sidebar { position: fixed; top: 0; right: -250px; width: 240px; height: 100vh; background: var(--surface); z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.2); }
     .sidebar.open { right: 0; }
-    .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
-    .sidebar-header h2 { font-size: 1.2rem; color: var(--primary); margin-bottom: 5px; }
-    .sidebar-header p { font-size: 0.8rem; color: var(--text-muted); }
-    
-    .sidebar-menu { flex: 1; padding: 15px; overflow-y: auto; }
-    .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: var(--text); text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; transition: background 0.2s; }
-    .sidebar-menu a:hover { background: rgba(255,255,255,0.1); color: var(--primary); }
-    .sidebar-menu .divider { height: 1px; background: var(--border); margin: 10px 0; }
-    
-    .designer-card { padding: 15px; border-top: 1px solid var(--border); text-align: center; }
-    .designer-card h4 { font-size: 0.9rem; color: var(--text); }
-    .designer-card p { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 10px; }
-    .designer-card a { display: block; background: #25D366; color: #fff; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.85rem; }
+    .sidebar-header { padding: 15px; border-bottom: 1px solid var(--border); }
+    .sidebar-header h2 { font-size: 1rem; color: var(--primary); margin-bottom: 3px; }
+    .sidebar-header p { font-size: 0.7rem; color: var(--text-muted); }
+    .sidebar-menu { flex: 1; padding: 10px; overflow-y: auto; }
+    .sidebar-menu a { display: flex; align-items: center; gap: 8px; padding: 10px; color: var(--text); text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.8rem; margin-bottom: 3px; transition: background 0.2s; }
+    .sidebar-menu a:hover { background: var(--bg); color: var(--primary); }
+    .sidebar-menu .divider { height: 1px; background: var(--border); margin: 8px 0; }
+    .designer-card { padding: 10px; border-top: 1px solid var(--border); text-align: center; }
+    .designer-card h4 { font-size: 0.8rem; color: var(--text); }
+    .designer-card a { display: block; background: #25D366; color: #fff; padding: 8px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.7rem; margin-top: 5px; }
 
     /* ====== لوحة التحكم ====== */
     #adminPanel { position: fixed; inset: 0; background: var(--bg); z-index: 500; overflow-y: auto; display: none; }
-    .admin-header { background: var(--surface); padding: 12px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .admin-content { padding: 15px; max-width: 1000px; margin: 0 auto; }
-    .admin-tabs { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; }
-    .admin-tab { padding: 10px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.85rem; }
-    .admin-tab.active { background: var(--primary); color: var(--bg); }
+    .admin-header { background: var(--surface); padding: 10px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .admin-content { padding: 10px; max-width: 1000px; margin: 0 auto; }
+    .admin-tabs { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; }
+    .admin-tab { padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 0.75rem; }
+    .admin-tab.active { background: var(--primary); color: #fff; }
     .admin-page { display: none; }
     .admin-page.active { display: block; }
-    .admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-    .stat-card { background: var(--surface); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
-    .stat-card h3 { font-size: 1.5rem; color: var(--primary); }
-    .stat-card p { font-size: 0.8rem; color: var(--text-muted); }
+    .admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+    .stat-card { background: var(--surface); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid var(--border); }
+    .stat-card h3 { font-size: 1.2rem; color: var(--primary); }
+    .stat-card p { font-size: 0.7rem; color: var(--text-muted); }
 
     /* ====== المودالات ====== */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 300; display: none; align-items: center; justify-content: center; padding: 15px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 10px; }
     .modal-overlay.show { display: flex; }
-    .modal { background: var(--surface); backdrop-filter: blur(20px); border-radius: var(--radius); padding: 20px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); }
-    .form-group { margin-bottom: 10px; }
-    .form-group label { display: block; margin-bottom: 4px; font-weight: 700; font-size: 0.8rem; }
-    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
+    .modal { background: var(--surface); border-radius: var(--radius); padding: 15px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 8px; }
+    .form-group label { display: block; margin-bottom: 3px; font-weight: 700; font-size: 0.7rem; }
+    .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.75rem; outline: none; }
     
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: var(--bg); padding: 12px 20px; border-radius: 50px; font-weight: 800; z-index: 999; opacity: 0; transition: all 0.3s; font-size:0.85rem;}
+    .toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--surface); padding: 10px 15px; border-radius: 50px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.3s; font-size:0.75rem;}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
-<body data-theme="dark">
+<body data-theme="royal">
 
-  <!-- شريط الدعاء -->
   <div class="marquee-bar">
     <div class="marquee-content">اللهم إنا نسألك الرزق الحلال والعمل الصالح | لا تنسَ ذكر الله | مرحباً بكم في سوق اليمن المفتوح 2027</div>
   </div>
 
   <header>
-    <div class="logo"><span>🏛️</span> سوق اليمن 2027</div>
+    <div class="logo"><span>🏛️</span> سوق اليمن</div>
     <div class="header-actions">
-      <button class="theme-btn" data-theme="dark" title="داكن"></button>
-      <button class="theme-btn" data-theme="light" title="فاتح"></button>
       <button class="theme-btn" data-theme="royal" title="ملكي"></button>
-      <button class="theme-btn" data-theme="golden" title="ذهبي"></button>
-      <button class="btn btn-outline" id="loginBtn" style="padding: 6px 10px; font-size:0.75rem;">دخول</button>
+      <button class="theme-btn" data-theme="dark" title="داكن"></button>
+      <button class="btn btn-outline" id="loginBtn" style="padding: 4px 8px; font-size:0.65rem;">دخول</button>
       <button class="icon-btn" id="menuBtn">☰</button>
     </div>
   </header>
 
-  <!-- شريط أحدث العروض -->
   <div class="latest-scroller" id="latestItems"></div>
 
   <div class="main-tabs">
@@ -295,7 +280,7 @@
     </div>
     <div class="designer-card">
       <h4>م. نشوان البدري</h4>
-      <p>صاحب السوق والمصمم</p>
+      <p style="font-size:0.6rem; color:var(--text-muted);">صاحب السوق والمصمم</p>
       <a href="https://wa.me/967771713275" target="_blank">💬 تواصل واتساب</a>
     </div>
   </aside>
@@ -303,7 +288,7 @@
   <!-- لوحة التحكم الإدارية -->
   <div id="adminPanel">
     <div class="admin-header">
-      <h2 style="color:var(--primary); font-size:1.1rem;">لوحة التحكم</h2>
+      <h2 style="color:var(--primary); font-size:1rem;">لوحة التحكم</h2>
       <button class="icon-btn" onclick="closeAdminPanel()">✖</button>
     </div>
     <div class="admin-content">
@@ -311,6 +296,7 @@
         <button class="admin-tab active" onclick="switchAdminTab('reports')" id="atab-reports">📊 التقارير</button>
         <button class="admin-tab" onclick="switchAdminTab('users')" id="atab-users">👥 المستخدمين</button>
         <button class="admin-tab" onclick="switchAdminTab('items')" id="atab-items">📦 الإعلانات</button>
+        <button class="admin-tab" onclick="switchAdminTab('settings')" id="atab-settings">⚙️ الإعدادات</button>
       </div>
 
       <div id="apage-reports" class="admin-page active">
@@ -320,9 +306,9 @@
           <div class="stat-card"><h3 id="statCars">0</h3><p>سيارات</p></div>
           <div class="stat-card"><h3 id="statUsers">0</h3><p>مستخدمين</p></div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <button class="btn btn-accent" onclick="generateDummyData()" style="padding:12px;">✨ توليد 30 إعلان تجريبي</button>
-          <button class="btn btn-danger" onclick="deleteDummyData()" style="padding:12px;">🗑️ حذف البيانات التجريبية</button>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-accent" onclick="generateDummyData()" style="padding:10px;">✨ توليد 30 إعلان تجريبي</button>
+          <button class="btn btn-danger" onclick="deleteDummyData()" style="padding:10px;">🗑️ حذف البيانات التجريبية</button>
         </div>
       </div>
 
@@ -331,16 +317,28 @@
       </div>
 
       <div id="apage-items" class="admin-page">
-        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--border); margin-bottom:10px; background:var(--bg); color:var(--text);">
+        <input type="text" id="adminSearchInput" placeholder="🔍 بحث سريع..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:8px; background:var(--bg); color:var(--text); font-size:0.8rem;">
         <div id="adminItemsList"></div>
       </div>
+
+      <!-- إعدادات إضافة الأنواع -->
+      <div id="apage-settings" class="admin-page">
+        <h3 style="margin-bottom:10px; font-size:0.9rem;">إضافة نوع جديد (للمستلزمات)</h3>
+        <div style="display:flex; gap:8px; margin-bottom:15px;">
+          <input type="text" id="newElecType" placeholder="مثال: آيباد، ساعة ذكية..." style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:0.8rem;">
+          <button class="btn btn-primary" onclick="addNewElecType()">إضافة</button>
+        </div>
+        <h3 style="margin-bottom:10px; font-size:0.9rem;">الأنواع الحالية</h3>
+        <div id="elecTypesList" style="display:flex; gap:5px; flex-wrap:wrap;"></div>
+      </div>
+
     </div>
   </div>
 
   <!-- مودال إضافة عرض -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
-      <h2 style="margin-bottom: 15px; color: var(--primary); text-align:center; font-size:1.1rem;">➕ إضافة إعلان</h2>
+      <h2 style="margin-bottom: 10px; color: var(--primary); text-align:center; font-size:1rem;">➕ إضافة إعلان</h2>
       <form id="addForm">
         <div class="form-group"><label>القسم</label><select id="addCategory" onchange="toggleAddFields()"><option value="realestate">🏠 عقارات</option><option value="electronics">📱 مستلزمات</option><option value="cars">🚗 سيارات</option></select></div>
         
@@ -357,15 +355,21 @@
         <div class="form-group"><label>العنوان / التفاصيل</label><input type="text" id="addTitle" required></div>
         <div class="form-group"><label>السعر (ريال)</label><input type="number" id="addPrice" required></div>
         
+        <!-- حقول العقارات -->
         <div id="fields-realestate">
           <div class="form-group"><label>العقار</label><select id="addPropType"><option value="apartment">شقة</option><option value="house">بيت</option><option value="villa">فيلا</option><option value="land">أرض</option></select></div>
+          <div class="form-group"><label>عدد الغرف</label><input type="number" id="addRooms" placeholder="مثال: 3"></div>
+          <div class="form-group"><label>المساحة (متر)</label><input type="number" id="addArea" placeholder="مثال: 150"></div>
         </div>
         
+        <!-- حقول المستلزمات -->
         <div id="fields-electronics" style="display:none;">
-          <div class="form-group"><label>النوع</label><select id="addElecType"><option value="phone">هاتف</option><option value="laptop">لابتوب</option></select></div>
+          <div class="form-group"><label>النوع</label><select id="addElecType"><!-- سيتم تعبئته ديناميكياً --></select></div>
+          <div class="form-group"><label>الحالة</label><select id="addElecCondition"><option value="new">جديد</option><option value="used">مستعمل</option></select></div>
+          <div class="form-group"><label>هل يوجد عيوب؟</label><select id="addElecDefects"><option value="no">لا يوجد</option><option value="yes">يوجد (اذكرها في العنوان)</option></select></div>
         </div>
 
-        <!-- حقول السيارة التفصيلية -->
+        <!-- حقول السيارة -->
         <div id="fields-cars" style="display:none;">
           <div class="form-group"><label>الماركة والموديل</label><input type="text" id="addCarBrand" placeholder="مثال: تويوتا كامري 2020"></div>
           <div class="form-group"><label>السرعة القصوى (كم/س)</label><input type="number" id="addCarSpeed" placeholder="مثال: 200"></div>
@@ -378,7 +382,7 @@
         <div class="form-group"><label>صورة (اختياري)</label><input type="file" id="addImage" accept="image/*"></div>
         
         <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">💾 نشر الإعلان</button>
-        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('addModal')">إلغاء</button>
+        <button type="button" class="btn btn-outline" style="width:100%; margin-top:6px;" onclick="closeModal('addModal')">إلغاء</button>
       </form>
     </div>
   </div>
@@ -386,7 +390,7 @@
   <!-- مودال تسجيل الدخول -->
   <div class="modal-overlay" id="authModal">
     <div class="modal">
-      <h2 id="authTitle" style="margin-bottom: 15px; text-align:center; font-size:1.1rem;">🔐 دخول</h2>
+      <h2 id="authTitle" style="margin-bottom: 10px; text-align:center; font-size:1rem;">🔐 دخول</h2>
       <form id="authForm">
         <div id="nameFields" style="display:none;">
           <div class="form-group"><label>الاسم الكامل</label><input type="text" id="authName"></div>
@@ -394,10 +398,10 @@
         <div class="form-group"><label>رقم الجوال / الإيميل</label><input type="text" id="authPhone" required></div>
         <div class="form-group"><label>كلمة المرور</label><input type="password" id="authPassword" required minlength="6"></div>
         
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;" id="authSubmitBtn">دخول</button>
-        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="closeModal('authModal')">إلغاء</button>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;" id="authSubmitBtn">دخول</button>
+        <button type="button" class="btn btn-outline" style="width:100%; margin-top:6px;" onclick="closeModal('authModal')">إلغاء</button>
       </form>
-      <p style="text-align:center; margin-top:10px; font-size:0.8rem;">
+      <p style="text-align:center; margin-top:8px; font-size:0.7rem;">
         <a href="#" id="toggleAuthMode" style="color:var(--primary); font-weight:bold;">إنشاء حساب جديد</a>
       </p>
     </div>
@@ -406,9 +410,9 @@
   <!-- مودال الصفحات -->
   <div class="modal-overlay" id="infoModal">
     <div class="modal">
-      <h2 id="infoTitle" style="margin-bottom: 10px; color:var(--primary); font-size:1.1rem;"></h2>
-      <div id="infoBody" style="line-height:1.8; font-size:0.9rem; color:var(--text-muted);"></div>
-      <button class="btn btn-outline" style="width:100%; margin-top:15px;" onclick="closeModal('infoModal')">إغلاق</button>
+      <h2 id="infoTitle" style="margin-bottom: 8px; color:var(--primary); font-size:1rem;"></h2>
+      <div id="infoBody" style="line-height:1.6; font-size:0.8rem; color:var(--text-muted);"></div>
+      <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('infoModal')">إغلاق</button>
     </div>
   </div>
 
@@ -448,6 +452,8 @@
       "أبين": ["زنجبار","خنفر","مودية"]
     };
 
+    let elecTypes = ["هاتف", "لابتوب", "آيباد", "ساعة ذكية"];
+
     let currentUser = null;
     let currentPhone = "";
     let allData = [];
@@ -474,7 +480,7 @@
         localStorage.setItem('theme', btn.dataset.theme);
       });
     });
-    document.body.dataset.theme = localStorage.getItem('theme') || 'dark';
+    document.body.dataset.theme = localStorage.getItem('theme') || 'royal';
 
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
@@ -498,6 +504,14 @@
         el.innerHTML = '<option value="">كل المحافظات</option>';
         Object.keys(yemenData).sort().forEach(g => el.appendChild(new Option(g, g)));
       });
+    }
+
+    function populateElecTypes() {
+      const sel = document.getElementById('addElecType');
+      sel.innerHTML = '';
+      elecTypes.forEach(t => sel.appendChild(new Option(t, t)));
+      
+      document.getElementById('elecTypesList').innerHTML = elecTypes.map(t => `<span style="background:var(--bg); padding:4px 8px; border-radius:6px; font-size:0.75rem; border:1px solid var(--border);">${t}</span>`).join('');
     }
 
     let authMode = 'login';
@@ -628,8 +642,12 @@
 
         if (cat === 'realestate') {
           data.propType = document.getElementById('addPropType').value;
+          data.rooms = document.getElementById('addRooms').value;
+          data.area = document.getElementById('addArea').value;
         } else if (cat === 'electronics') {
           data.elecType = document.getElementById('addElecType').value;
+          data.elecCondition = document.getElementById('addElecCondition').value;
+          data.elecDefects = document.getElementById('addElecDefects').value;
         } else {
           data.carBrand = document.getElementById('addCarBrand').value;
           data.carSpeed = document.getElementById('addCarSpeed').value;
@@ -680,19 +698,25 @@
       let items = allData.filter(d => d.category === category);
       if (filterFunc) items = items.filter(filterFunc);
       const container = document.getElementById(containerId);
-      if(!items.length) { container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted); grid-column:span 2;">لا توجد إعلانات.</p>'; return; }
+      if(!items.length) { container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted); grid-column:span 2; font-size:0.8rem;">لا توجد إعلانات.</p>'; return; }
 
       container.innerHTML = items.map(p => {
         let img = p.image || dummyImgs[category][0];
         let meta = '';
-        let carDetails = '';
+        let details = '';
 
         if(category === 'realestate') {
           const types = {apartment:'شقة', house:'بيت', villa:'فيلا', land:'أرض'};
           meta = `<span>📍 ${p.gov}</span><span>🏠 ${types[p.propType] || ''}</span>`;
+          details = `
+            <div class="item-details">
+              <span>🛏️ ${p.rooms || '0'} غرف</span>
+              <span>📏 ${p.area || '0'} م²</span>
+            </div>
+          `;
         } else if(category === 'cars') {
           meta = `<span>📍 ${p.gov}</span>`;
-          carDetails = `
+          details = `
             <div class="item-details">
               <span>🚗 ${p.carBrand || 'غير محدد'}</span>
               <span>⚡ ${p.carSpeed || '0'} كم/س</span>
@@ -702,7 +726,14 @@
             </div>
           `;
         } else {
-          meta = `<span>📍 ${p.gov}</span><span>📦 مستلزم</span>`;
+          meta = `<span>📍 ${p.gov}</span>`;
+          details = `
+            <div class="item-details">
+              <span>📱 ${p.elecType || 'مستلزم'}</span>
+              <span>⚙️ ${p.elecCondition === 'new' ? 'جديد' : 'مستعمل'}</span>
+              <span>🔍 ${p.elecDefects === 'yes' ? 'يوجد عيوب' : 'لا عيوب'}</span>
+            </div>
+          `;
         }
 
         const isOffer = p.postType !== 'request';
@@ -719,7 +750,7 @@
               <div>
                 <h3 class="card-title">${p.title}</h3>
                 <div class="card-meta">${meta}</div>
-                ${carDetails}
+                ${details}
               </div>
               <div>
                 <div class="card-price">${Number(p.price).toLocaleString('ar-YE')} ريال</div>
@@ -763,18 +794,29 @@
     window.openAdminPanel = () => {
       if(currentPhone !== ADMIN_PHONE && currentUser.email !== ADMIN_EMAIL) return showToast('غير مصرح');
       document.getElementById('adminPanel').style.display = 'block';
-      loadAdminItemsList(); loadAdminUsersList();
+      loadAdminItemsList(); loadAdminUsersList(); populateElecTypes();
     };
     window.closeAdminPanel = () => document.getElementById('adminPanel').style.display = 'none';
 
     window.switchAdminTab = (tab) => {
       document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
       document.getElementById('atab-'+tab).classList.add('active');
-      ['reports', 'users', 'items'].forEach(t => {
+      ['reports', 'users', 'items', 'settings'].forEach(t => {
         document.getElementById('apage-'+t).style.display = (t === tab) ? 'block' : 'none';
       });
       if(tab === 'users') loadAdminUsersList();
       if(tab === 'items') loadAdminItemsList();
+      if(tab === 'settings') populateElecTypes();
+    };
+
+    window.addNewElecType = () => {
+      const type = document.getElementById('newElecType').value.trim();
+      if(type && !elecTypes.includes(type)) {
+        elecTypes.push(type);
+        populateElecTypes();
+        document.getElementById('newElecType').value = '';
+        showToast('✅ تم إضافة النوع');
+      }
     };
 
     function updateAdminStats() {
@@ -791,8 +833,8 @@
       document.getElementById('adminItemsList').innerHTML = filtered.map(p => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:8px;">
           <div>
-            <strong style="font-size:0.8rem;">[${p.postType === 'request' ? 'طلب' : 'عرض'}] ${p.title}</strong><br>
-            <small style="color:var(--text-muted); font-size:0.7rem;">📞 ${p.phone} | 👤 ${p.ownerPhone || 'مجهول'}</small>
+            <strong style="font-size:0.75rem;">[${p.postType === 'request' ? 'طلب' : 'عرض'}] ${p.title}</strong><br>
+            <small style="color:var(--text-muted); font-size:0.65rem;">📞 ${p.phone} | 👤 ${p.ownerPhone || 'مجهول'}</small>
           </div>
           <button class="btn btn-danger" style="padding:4px 8px; font-size:0.65rem;" onclick="deleteItem('${p.id}')">حذف</button>
         </div>
@@ -805,8 +847,8 @@
       document.getElementById('adminUsersList').innerHTML = allUsers.map(u => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid var(--border); background:var(--surface); margin-bottom:5px; border-radius:8px;">
           <div>
-            <strong style="font-size:0.8rem;">${u.name || 'مستخدم'}</strong><br>
-            <small style="color:var(--text-muted); font-size:0.7rem;">📞 ${u.phone}</small>
+            <strong style="font-size:0.75rem;">${u.name || 'مستخدم'}</strong><br>
+            <small style="color:var(--text-muted); font-size:0.65rem;">📞 ${u.phone}</small>
           </div>
           <div style="display:flex; gap:4px; flex-wrap:wrap;">
             <button class="btn btn-primary" style="padding:4px 6px; font-size:0.65rem;" onclick="makeAdmin('${u.id}')">ترقية لمشرف</button>
@@ -838,29 +880,30 @@
       if(!confirm('سيتم إضافة 30 إعلان تجريبي. متابعة؟')) return;
       const categories = ['realestate', 'electronics', 'cars'];
       const govs = Object.keys(yemenData);
+      const titles = {
+        realestate: ["شقة فاخرة للإيجار", "فيلا حديثة للبيع", "أرض تجارية", "بيت عائلي واسع", "شقة طلابية"],
+        electronics: ["آيفون 14 برو", "لابتوب ديل XPS", "آيباد الجيل التاسع", "ساعة أبل الجديدة", "شاشة سامسونج"],
+        cars: ["تويوتا كامري 2022", "هيونداي توسان", "نيسان صني", "لكزس 2023", "مرسيدس C200"]
+      };
       
       for (let i=0; i<30; i++) {
         const cat = categories[i % 3];
         const gov = govs[Math.floor(Math.random()*govs.length)];
         const dist = yemenData[gov][0];
         const img = dummyImgs[cat][Math.floor(Math.random()*2)];
+        const title = titles[cat][Math.floor(Math.random()*5)] + ` (${i+1})`;
         
         const data = {
           category: cat, 
-          postType: i%4 === 0 ? 'request' : 'offer',
-          title: i%4 === 0 ? `مطلوب ${gov}` : `متاح ${gov}`, 
+          postType: Math.random() > 0.3 ? 'offer' : 'request',
+          title: title, 
           price: Math.floor(Math.random()*1000000)+50000,
           gov, dist, phone: '770000000', image: img, ownerId: 'demo', ownerPhone: '770000000',
           createdAt: serverTimestamp(), isDemo: true
         };
-        if(cat==='realestate') { data.propType = 'apartment'; }
-        if(cat==='cars') { 
-          data.carBrand = 'تويوتا كامري 2020'; 
-          data.carSpeed = '220';
-          data.carMileage = '50000';
-          data.carCondition = 'used';
-          data.carFuel = 'petrol';
-        }
+        if(cat==='realestate') { data.propType = 'apartment'; data.rooms = Math.floor(Math.random()*4)+1; data.area = Math.floor(Math.random()*200)+50; }
+        if(cat==='cars') { data.carBrand = 'تويوتا'; data.carSpeed = '220'; data.carMileage = Math.floor(Math.random()*100000); data.carCondition = 'used'; data.carFuel = 'petrol'; }
+        if(cat==='electronics') { data.elecType = 'هاتف'; data.elecCondition = Math.random()>0.5?'new':'used'; data.elecDefects = Math.random()>0.8?'yes':'no'; }
         
         await addDoc(collection(db, 'items'), data);
       }
@@ -898,6 +941,7 @@
     };
 
     populateGovs();
+    populateElecTypes();
     listenData();
   </script>
 </body>
