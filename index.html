@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -12,22 +12,28 @@
 
     /* ====== الثيمات ====== */
     :root {
-      --bg: #f0f4f8; --surface: #ffffff; --text: #1e293b; --text-muted: #64748b;
+      --bg: #f0f4f8; --surface: rgba(255, 255, 255, 0.9); --text: #1e293b; --text-muted: #64748b;
       --primary: #0f766e; --primary-light: #14b8a6; --accent: #f59e0b;
       --border: rgba(0,0,0,0.05); --shadow: 0 10px 30px -5px rgba(0,0,0,0.08); 
       --radius: 16px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
+      --glass: blur(10px);
     }
-    [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24; --border: rgba(255,255,255,0.1); --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); }
-    [data-theme="royal"] { --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9; --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899; --border: rgba(124,58,237,0.1); }
-    [data-theme="golden"] { --bg: #fffbeb; --surface: #ffffff; --text: #78350f; --text-muted: #b45309; --primary: #d97706; --primary-light: #f59e0b; --accent: #fbbf24; --border: rgba(217,119,6,0.15); --shadow: 0 10px 30px -5px rgba(217,119,6,0.1); }
-    [data-theme="olive"] { --bg: #f7fee7; --surface: #ffffff; --text: #3f6212; --text-muted: #65a30d; --primary: #4d7c0f; --primary-light: #84cc16; --accent: #eab308; --border: rgba(77,124,15,0.15); --shadow: 0 10px 30px -5px rgba(77,124,15,0.1); }
-    [data-theme="sunset"] { --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; --shadow: 0 10px 30px -5px rgba(234,88,12,0.1); }
+    [data-theme="dark"] { --bg: #0f172a; --surface: rgba(30, 41, 59, 0.9); --text: #f8fafc; --text-muted: #94a3b8; --primary: #2dd4bf; --primary-light: #5eead4; --accent: #fbbf24; --border: rgba(255,255,255,0.1); --shadow: 0 10px 30px -5px rgba(0,0,0,0.5); }
+    [data-theme="royal"] { --bg: #f5f3ff; --surface: rgba(255, 255, 255, 0.9); --text: #4c1d95; --text-muted: #6d28d9; --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899; --border: rgba(124,58,237,0.1); }
+    [data-theme="golden"] { --bg: #fffbeb; --surface: rgba(255, 255, 255, 0.9); --text: #78350f; --text-muted: #b45309; --primary: #d97706; --primary-light: #f59e0b; --accent: #fbbf24; --border: rgba(217,119,6,0.15); }
+    [data-theme="olive"] { --bg: #f7fee7; --surface: rgba(255, 255, 255, 0.9); --text: #3f6212; --text-muted: #65a30d; --primary: #4d7c0f; --primary-light: #84cc16; --accent: #eab308; --border: rgba(77,124,15,0.15); }
+    [data-theme="sunset"] { --bg: #fff7ed; --surface: rgba(255, 255, 255, 0.9); --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; }
+    body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; }
 
-    /* ====== الهيدر ====== */
-    header { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
+    /* ====== شريط الإعلانات المتحرك ====== */
+    .marquee-bar { background: linear-gradient(90deg, var(--primary), var(--accent)); color: #fff; padding: 6px 0; font-weight: 600; font-size: 0.8rem; overflow: hidden; white-space: nowrap; }
+    .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    /* ====== الهيدر الزجاجي ====== */
+    header { position: sticky; top: 0; z-index: 100; background: var(--surface); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-bottom: 1px solid var(--border); padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
     .logo { font-weight: 800; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 5px; }
     .header-actions { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; justify-content: flex-end;}
     
@@ -45,25 +51,26 @@
     .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
     .btn-danger { background: #ef4444; color: #fff; }
     .btn-accent { background: var(--accent); color: #fff; }
-    .icon-btn { padding: 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1.1rem; }
+    .icon-btn { padding: 8px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1.1rem; display: none; /* يظهر فقط إذا كان قابلاً للتثبيت */ }
 
-    /* ====== السلايدر ====== */
-    .slider-container { position: relative; width: 100%; height: 25vh; min-height: 200px; overflow: hidden; background: #000; }
-    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
-    .slide.active { opacity: 1; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
-    .slide-content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
-    .slide-content h1 { font-size: 1.3rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+    /* ====== السلايدر المتحرك ====== */
+    .slider-container { position: relative; width: 100%; height: 30vh; min-height: 220px; overflow: hidden; background: #000; }
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out, transform 1.5s; transform: scale(1.1); }
+    .slide.active { opacity: 1; transform: scale(1); }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+    .slide-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
+    .slide-content h1 { font-size: 1.5rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.8); margin-bottom: 5px;}
+    .slide-content p { font-size: 0.9rem; opacity: 0.9; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
 
     /* ====== أزرار الأقسام ====== */
-    .main-tabs { display: flex; gap: 8px; padding: 10px 15px; max-width: 1200px; margin: -15px auto 10px; position: relative; z-index: 10; overflow-x: auto; }
-    .tab-btn { background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; color: var(--text); box-shadow: var(--shadow); }
-    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .main-tabs { display: flex; gap: 8px; padding: 10px 15px; max-width: 1200px; margin: -20px auto 10px; position: relative; z-index: 10; overflow-x: auto; }
+    .tab-btn { background: var(--surface); backdrop-filter: var(--glass); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; color: var(--text); box-shadow: var(--shadow); transition: all 0.3s; }
+    .tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; border-color: transparent; transform: translateY(-2px); }
 
     main { max-width: 1200px; margin: 0 auto; padding: 0 10px 80px; }
 
     /* ====== بطاقة البحث ====== */
-    .filters-card { background: var(--surface); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
+    .filters-card { background: var(--surface); backdrop-filter: var(--glass); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
     .filters-title { font-size: 1rem; font-weight: 800; margin-bottom: 12px; color: var(--primary); text-align: center; }
     .filters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .filter-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px; }
@@ -72,30 +79,42 @@
 
     /* ====== البطاقات الأفقية 100% ====== */
     .cards-grid { display: flex; flex-direction: column; gap: 12px; }
-    /* تثبيت الأبعاد لمنع النزول لتحت */
-    .card { background: var(--surface); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 150px; width: 100%; }
+    
+    .card { background: var(--surface); backdrop-filter: var(--glass); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); min-height: 160px; width: 100%; transition: transform 0.3s; }
+    .card:hover { transform: translateY(-3px); }
     
     .card-img-wrapper { width: 35% !important; position: relative; flex-shrink: 0; }
     .card-img { width: 100%; height: 100%; object-fit: cover; }
-    .card-badge { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; color: #fff; }
-    .badge-offer { background: var(--primary); }
-    .badge-request { background: var(--accent); color: #000; }
+    .card-badge { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 800; color: #fff; backdrop-filter: blur(5px); }
+    .badge-offer { background: rgba(15, 118, 110, 0.9); }
+    .badge-request { background: rgba(245, 158, 11, 0.9); color: #000; }
     
     .card-body { width: 65% !important; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-    .card-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-meta { display: flex; gap: 6px; font-size: 0.7rem; color: var(--text-muted); flex-wrap: wrap; }
-    .card-price { font-weight: 800; color: var(--primary); font-size: 1rem; }
-    .card-actions { display: flex; gap: 5px; }
+    .card-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { display: flex; gap: 6px; font-size: 0.7rem; color: var(--text-muted); flex-wrap: wrap; margin-bottom: 5px; }
+    
+    /* تفاصيل السيارة في البطاقة */
+    .car-details { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
+    .car-details span { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
+
+    .card-price { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
+    .card-actions { display: flex; gap: 5px; margin-top: 5px; }
     .card-actions .btn { flex: 1; padding: 6px; font-size: 0.7rem; border-radius: 6px; }
 
+    /* ====== بطاقة المصمم في الرئيسية ====== */
+    .main-designer-card { background: linear-gradient(135deg, var(--surface), var(--bg)); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-top: 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; box-shadow: var(--shadow); }
+    .main-designer-card h4 { color: var(--primary); font-size: 1.1rem; margin-bottom: 5px; }
+    .main-designer-card p { color: var(--text-muted); font-size: 0.85rem; }
+
     /* ====== زر إضافة عرض عائم ====== */
-    .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; }
+    .fab { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; transition: transform 0.3s; }
+    .fab:hover { transform: scale(1.1) rotate(90deg); }
 
     /* ====== القائمة الجانبية ====== */
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); z-index: 199; display: none; }
     .sidebar-overlay.show { display: block; }
     
-    .sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: #1e293b; color: #f8fafc; z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
+    .sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: #1e293b; color: #f8fafc; z-index: 200; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.5); }
     .sidebar.open { right: 0; }
     .sidebar-header { padding: 20px; background: #0f172a; border-bottom: 1px solid #334155; }
     .sidebar-header h2 { font-size: 1.2rem; color: #2dd4bf; margin-bottom: 5px; }
@@ -128,16 +147,21 @@
     /* ====== المودالات ====== */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 300; display: none; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.show { display: flex; }
-    .modal { background: var(--surface); border-radius: var(--radius); padding: 20px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 700; font-size: 0.85rem; }
-    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; outline: none; }
+    .modal { background: var(--surface); backdrop-filter: var(--glass); border-radius: var(--radius); padding: 20px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; margin-bottom: 4px; font-weight: 700; font-size: 0.8rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 0.85rem; outline: none; }
     
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--surface); padding: 12px 20px; border-radius: 50px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.3s; font-size:0.85rem;}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="dark">
+
+  <!-- شريط إعلانات متحرك -->
+  <div class="marquee-bar">
+    <div class="marquee-content">مرحباً بكم في سوق اليمن المفتوح | أفضل العروض العقارية والسيارات | أضف عرضك الآن مجاناً</div>
+  </div>
 
   <header>
     <div class="logo"><span>🏛️</span> سوق اليمن</div>
@@ -149,13 +173,15 @@
       <button class="theme-btn" data-theme="olive" title="زيتوني"></button>
       <button class="theme-btn" data-theme="sunset" title="برتقالي"></button>
       <button class="btn btn-outline" id="loginBtn" style="padding: 6px 10px; font-size:0.75rem;">دخول</button>
-      <button class="icon-btn" id="menuBtn">☰</button>
+      <!-- زر التثبيت يظهر تلقائياً في الجوال -->
+      <button class="icon-btn" id="installBtn" style="background:var(--primary); color:#fff;" title="تثبيت التطبيق">⬇️</button>
+      <button class="icon-btn" id="menuBtn" style="display:block;">☰</button>
     </div>
   </header>
 
   <div class="slider-container">
-    <div class="slide active"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800"><div class="slide-content"><h1>سوق اليمن المفتوح</h1></div></div>
-    <div class="slide"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800"><div class="slide-content"><h1>عالم السيارات</h1></div></div>
+    <div class="slide active"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800"><div class="slide-content"><h1>سوق اليمن المفتوح</h1><p>كل ما تحتاجه في مكان واحد</p></div></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800"><div class="slide-content"><h1>عالم السيارات</h1><p>أحدث الموديلات وأفضل الأسعار</p></div></div>
   </div>
 
   <div class="main-tabs">
@@ -172,23 +198,15 @@
         <div class="filters-grid">
           <div class="filter-group">
             <label>المحافظة</label>
-            <select id="fGov" onchange="updateDistricts('fGov', 'fDist')">
-              <option value="">كل المحافظات</option>
-            </select>
+            <select id="fGov" onchange="updateDistricts('fGov', 'fDist')"><option value="">كل المحافظات</option></select>
           </div>
           <div class="filter-group">
             <label>المديرية</label>
-            <select id="fDist">
-              <option value="">كل المديريات</option>
-            </select>
+            <select id="fDist"><option value="">كل المديريات</option></select>
           </div>
           <div class="filter-group">
             <label>نوع الإعلان</label>
-            <select id="fType">
-              <option value="">عرض / طلب</option>
-              <option value="offer">عرض (متاح)</option>
-              <option value="request">طلب (مطلوب)</option>
-            </select>
+            <select id="fType"><option value="">الكل</option><option value="offer">عرض</option><option value="request">طلب</option></select>
           </div>
           <div class="filter-group">
             <label>بحث بالاسم</label>
@@ -209,23 +227,15 @@
         <div class="filters-grid">
           <div class="filter-group">
             <label>المحافظة</label>
-            <select id="eGov" onchange="updateDistricts('eGov', 'eDist')">
-              <option value="">كل المحافظات</option>
-            </select>
+            <select id="eGov" onchange="updateDistricts('eGov', 'eDist')"><option value="">كل المحافظات</option></select>
           </div>
           <div class="filter-group">
             <label>المديرية</label>
-            <select id="eDist">
-              <option value="">كل المديريات</option>
-            </select>
+            <select id="eDist"><option value="">كل المديريات</option></select>
           </div>
           <div class="filter-group">
             <label>نوع الإعلان</label>
-            <select id="eType">
-              <option value="">عرض / طلب</option>
-              <option value="offer">عرض (متاح)</option>
-              <option value="request">طلب (مطلوب)</option>
-            </select>
+            <select id="eType"><option value="">الكل</option><option value="offer">عرض</option><option value="request">طلب</option></select>
           </div>
           <div class="filter-group">
             <label>بحث بالاسم</label>
@@ -246,23 +256,15 @@
         <div class="filters-grid">
           <div class="filter-group">
             <label>المحافظة</label>
-            <select id="cGov" onchange="updateDistricts('cGov', 'cDist')">
-              <option value="">كل المحافظات</option>
-            </select>
+            <select id="cGov" onchange="updateDistricts('cGov', 'cDist')"><option value="">كل المحافظات</option></select>
           </div>
           <div class="filter-group">
             <label>المديرية</label>
-            <select id="cDist">
-              <option value="">كل المديريات</option>
-            </select>
+            <select id="cDist"><option value="">كل المديريات</option></select>
           </div>
           <div class="filter-group">
             <label>نوع الإعلان</label>
-            <select id="cType">
-              <option value="">عرض / طلب</option>
-              <option value="offer">عرض (متاح)</option>
-              <option value="request">طلب (مطلوب)</option>
-            </select>
+            <select id="cType"><option value="">الكل</option><option value="offer">عرض</option><option value="request">طلب</option></select>
           </div>
           <div class="filter-group">
             <label>بحث بالاسم</label>
@@ -274,6 +276,15 @@
         </div>
       </div>
       <div id="cards-cars" class="cards-grid"></div>
+    </div>
+
+    <!-- بطاقة المصمم في الرئيسية -->
+    <div class="main-designer-card">
+      <div>
+        <h4>م. نشوان البدري</h4>
+        <p>صاحب السوق والمصمم</p>
+      </div>
+      <a href="https://wa.me/967771713275" target="_blank" class="btn btn-accent" style="background:#25D366; color:#fff; text-decoration:none;">💬 واتساب</a>
     </div>
   </main>
 
@@ -374,11 +385,18 @@
         <div id="fields-realestate">
           <div class="form-group"><label>العقار</label><select id="addPropType"><option value="apartment">شقة</option><option value="house">بيت</option><option value="villa">فيلا</option><option value="land">أرض</option></select></div>
         </div>
+        
         <div id="fields-electronics" style="display:none;">
           <div class="form-group"><label>النوع</label><select id="addElecType"><option value="phone">هاتف</option><option value="laptop">لابتوب</option></select></div>
         </div>
+
+        <!-- حقول السيارة التفصيلية -->
         <div id="fields-cars" style="display:none;">
-          <div class="form-group"><label>الماركة</label><input type="text" id="addCarBrand"></div>
+          <div class="form-group"><label>الماركة والموديل</label><input type="text" id="addCarBrand" placeholder="مثال: تويوتا كامري 2020"></div>
+          <div class="form-group"><label>السرعة القصوى (كم/س)</label><input type="number" id="addCarSpeed" placeholder="مثال: 200"></div>
+          <div class="form-group"><label>الممشى (كم)</label><input type="number" id="addCarMileage" placeholder="مثال: 50000"></div>
+          <div class="form-group"><label>الحالة</label><select id="addCarCondition"><option value="new">جديد</option><option value="used">مستعمل</option></select></div>
+          <div class="form-group"><label>نوع الوقود</label><select id="addCarFuel"><option value="petrol">بنزين</option><option value="diesel">ديزل</option><option value="hybrid">هايبرد</option></select></div>
         </div>
 
         <div class="form-group"><label>رقم هاتفك للتواصل</label><input type="tel" id="addPhone" required></div>
@@ -481,7 +499,7 @@
         localStorage.setItem('theme', btn.dataset.theme);
       });
     });
-    document.body.dataset.theme = localStorage.getItem('theme') || 'light';
+    document.body.dataset.theme = localStorage.getItem('theme') || 'dark';
 
     window.toggleSidebar = () => {
       document.getElementById('sidebar').classList.toggle('open');
@@ -489,7 +507,6 @@
     };
     document.getElementById('menuBtn').onclick = toggleSidebar;
 
-    // دالة تحديث المديريات بناءً على المحافظة
     window.updateDistricts = (govId, distId) => {
       const gov = document.getElementById(govId).value;
       const distEl = document.getElementById(distId);
@@ -640,6 +657,10 @@
           data.elecType = document.getElementById('addElecType').value;
         } else {
           data.carBrand = document.getElementById('addCarBrand').value;
+          data.carSpeed = document.getElementById('addCarSpeed').value;
+          data.carMileage = document.getElementById('addCarMileage').value;
+          data.carCondition = document.getElementById('addCarCondition').value;
+          data.carFuel = document.getElementById('addCarFuel').value;
         }
 
         await addDoc(collection(db, 'items'), data);
@@ -678,11 +699,22 @@
       container.innerHTML = items.map(p => {
         let img = p.image || dummyImgs[category][0];
         let meta = '';
+        let carDetails = '';
+
         if(category === 'realestate') {
           const types = {apartment:'شقة', house:'بيت', villa:'فيلا', land:'أرض'};
           meta = `<span>📍 ${p.gov}</span><span>🏠 ${types[p.propType] || ''}</span>`;
         } else if(category === 'cars') {
-          meta = `<span>📍 ${p.gov}</span><span>🚗 ${p.carBrand || 'غير محدد'}</span>`;
+          meta = `<span>📍 ${p.gov}</span>`;
+          carDetails = `
+            <div class="car-details">
+              <span>🚗 ${p.carBrand || 'غير محدد'}</span>
+              <span>⚡ ${p.carSpeed || '0'} كم/س</span>
+              <span>🛣️ ${p.carMileage || '0'} كم</span>
+              <span>⚙️ ${p.carCondition === 'new' ? 'جديد' : 'مستعمل'}</span>
+              <span>⛽ ${p.carFuel === 'petrol' ? 'بنزين' : p.carFuel === 'diesel' ? 'ديزل' : 'هايبرد'}</span>
+            </div>
+          `;
         } else {
           meta = `<span>📍 ${p.gov}</span><span>📦 مستلزم</span>`;
         }
@@ -701,6 +733,7 @@
               <div>
                 <h3 class="card-title">${p.title}</h3>
                 <div class="card-meta">${meta}</div>
+                ${carDetails}
               </div>
               <div>
                 <div class="card-price">${Number(p.price).toLocaleString('ar-YE')} ريال</div>
@@ -835,7 +868,13 @@
           createdAt: serverTimestamp(), isDemo: true
         };
         if(cat==='realestate') { data.propType = 'apartment'; }
-        if(cat==='cars') { data.carBrand = 'تويوتا'; }
+        if(cat==='cars') { 
+          data.carBrand = 'تويوتا كامري 2020'; 
+          data.carSpeed = '220';
+          data.carMileage = '50000';
+          data.carCondition = 'used';
+          data.carFuel = 'petrol';
+        }
         
         await addDoc(collection(db, 'items'), data);
       }
@@ -862,7 +901,7 @@
         <p>1. من القائمة الجانبية اختر "حساب جديد".<br>2. اكتب اسمك الكامل، رقم جوالك، وكلمة مرور.<br>3. اضغط "إنشاء".</p>
         <hr style="margin:10px 0;">
         <p><strong>كيف تنشر إعلانك؟</strong></p>
-        <p>1. اضغط على زر (+) في الشاشة.<br>2. اختر نوع الإعلان (عرض: تبيع شيئاً، طلب: تبحث عن شيء).<br>3. املأ التفاصيل وأضف صورة إن أردت.</p>
+        <p>1. اضغط على زر (+) في الشاشة.<br>2. اختر نوع الإعلان (عرض أو طلب).<br>3. املأ التفاصيل وأضف صورة إن أردت.</p>
       ` }
     };
     window.showInfoPage = (key) => {
@@ -871,6 +910,32 @@
       openModal('infoModal');
       if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar();
     };
+
+    // تسجيل Service Worker لدعم التثبيت والعمل بدون إنترنت
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+
+    // إظهار زر التثبيت إذا كان المتصفح يدعم ذلك
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block'; 
+    });
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
 
     populateGovs();
     listenData();
