@@ -10,6 +10,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
+    /* ====== الثيمات ====== */
     :root {
       --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9;
       --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899;
@@ -17,6 +18,8 @@
       --radius: 14px; --font: 'Cairo', sans-serif; --transition: 0.3s ease;
     }
     [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --primary: #a78bfa; --primary-light: #c4b5fd; --accent: #f472b6; --border: #334155; --shadow: 0 8px 25px -5px rgba(0,0,0,0.5); }
+    [data-theme="golden_white"] { --bg: #fffbeb; --surface: #ffffff; --text: #78350f; --text-muted: #b45309; --primary: #d97706; --primary-light: #fbbf24; --accent: #f59e0b; --border: #fde68a; --shadow: 0 4px 15px -3px rgba(217,119,6,0.1); }
+    [data-theme="olive_white"] { --bg: #f7fee7; --surface: #ffffff; --text: #3f6212; --text-muted: #65a30d; --primary: #4d7c0f; --primary-light: #84cc16; --accent: #eab308; --border: #d9f99d; --shadow: 0 4px 15px -3px rgba(77,124,15,0.1); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
     body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; font-size: 13px; }
@@ -32,9 +35,11 @@
     .logo { font-weight: 800; font-size: 1rem; color: var(--primary); display: flex; align-items: center; gap: 4px; }
     .header-actions { display: flex; gap: 4px; align-items: center; }
     
-    .theme-btn { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; }
-    .theme-btn[data-theme="dark"] { background: #0f172a; }
+    .theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; }
     .theme-btn[data-theme="royal"] { background: #7c3aed; }
+    .theme-btn[data-theme="dark"] { background: #0f172a; }
+    .theme-btn[data-theme="golden_white"] { background: #d97706; }
+    .theme-btn[data-theme="olive_white"] { background: #4d7c0f; }
 
     .btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.7rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
     .btn-primary { background: var(--primary); color: #fff; }
@@ -43,18 +48,17 @@
     .btn-accent { background: var(--accent); color: #fff; }
     .icon-btn { padding: 6px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: 1rem; }
 
-    /* الصورة المتحركة (Slider) */
-    .slider-container { position: relative; width: 100%; height: 25vh; min-height: 180px; overflow: hidden; background: #000; }
-    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
-    .slide.active { opacity: 1; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
-    .slide-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
-    .slide-content h1 { font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    /* الصورة الرئيسية (Hero) */
+    .hero { position: relative; width: 100%; height: 35vh; min-height: 220px; overflow: hidden; background: #000; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+    .hero-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 15px; }
+    .hero-content h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .hero-content p { font-size: 0.8rem; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); line-height: 1.5; }
 
     /* شريط أحدث العروض */
     .latest-scroller { display: flex; gap: 8px; padding: 10px; overflow-x: auto; scrollbar-width: none; background: var(--surface); border-bottom: 1px solid var(--border); }
     .latest-scroller::-webkit-scrollbar { display: none; }
-    .latest-card { min-width: 100px; border: 1px solid var(--border); border-radius: 8px; padding: 5px; text-align: center; background: var(--bg); }
+    .latest-card { min-width: 110px; border: 1px solid var(--border); border-radius: 8px; padding: 5px; text-align: center; background: var(--bg); }
     .latest-card img { width: 100%; height: 50px; object-fit: cover; border-radius: 6px; margin-bottom: 3px; }
     .latest-card h4 { font-size: 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -76,7 +80,7 @@
     /* البطاقات (بطاقتين بجانب بعضهما) */
     .cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
     
-    .card { background: var(--surface); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 140px; width: 100%; transition: transform 0.2s; }
+    .card { background: var(--surface); border-radius: var(--radius); display: flex !important; flex-direction: row !important; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); height: 130px; width: 100%; transition: transform 0.2s; cursor: pointer; }
     .card:active { transform: scale(0.98); }
     
     .card-img-wrapper { width: 40% !important; position: relative; flex-shrink: 0; }
@@ -88,13 +92,7 @@
     .card-body { width: 60% !important; padding: 5px 7px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
     .card-title { font-size: 0.7rem; font-weight: 800; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .card-meta { display: flex; gap: 3px; font-size: 0.5rem; color: var(--text-muted); flex-wrap: wrap; }
-    
-    .item-details { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
-    .item-details span { background: var(--bg); padding: 1px 3px; border-radius: 3px; font-size: 0.45rem; color: var(--text-muted); font-weight: 600; }
-
     .card-price { font-weight: 800; color: var(--primary); font-size: 0.75rem; }
-    .card-actions { display: flex; gap: 4px; margin-top: 3px; }
-    .card-actions .btn { flex: 1; padding: 3px; font-size: 0.55rem; border-radius: 4px; }
 
     /* زر إضافة عرض عائم */
     .fab { position: fixed; bottom: 15px; left: 15px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; border: none; }
@@ -130,7 +128,7 @@
     .stat-card p { font-size: 0.7rem; color: var(--text-muted); }
 
     /* المودالات */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 10px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 300; display: none; align-items: center; justify-content: center; padding: 10px; }
     .modal-overlay.show { display: flex; }
     .modal { background: var(--surface); border-radius: var(--radius); padding: 15px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; }
     .form-group { margin-bottom: 8px; }
@@ -139,6 +137,26 @@
     
     .toast { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--surface); padding: 10px 15px; border-radius: 50px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.3s; font-size:0.75rem;}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* تفاصيل البطاقة (Detail Modal) */
+    #detailModal .modal { max-width: 450px; padding: 0; overflow: hidden; }
+    #detailModal .modal-header { position: relative; width: 100%; height: 200px; }
+    #detailModal .modal-header img { width: 100%; height: 100%; object-fit: cover; }
+    #detailModal .modal-header .close-btn { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1rem; }
+    #detailModal .modal-body { padding: 15px; }
+    #detailModal h2 { font-size: 1.2rem; margin-bottom: 5px; color: var(--primary); }
+    #detailModal .price { font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 15px; }
+    #detailModal .details-list { list-style: none; margin-bottom: 15px; }
+    #detailModal .details-list li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 8px 0; font-size: 0.85rem; }
+    #detailModal .details-list li span:first-child { color: var(--text-muted); }
+    #detailModal .details-list li span:last-child { font-weight: 700; }
+    #detailModal .modal-actions { display: flex; gap: 10px; }
+
+    /* بطاقة المصمم الرئيسية */
+    .main-designer { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 15px; margin-top: 20px; text-align: center; box-shadow: var(--shadow); }
+    .main-designer h3 { color: var(--primary); font-size: 1rem; margin-bottom: 5px; }
+    .main-designer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+    .main-designer a { background: #25D366; color: #fff; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.85rem; display: inline-block; }
   </style>
 </head>
 <body data-theme="royal">
@@ -152,18 +170,24 @@
     <div class="header-actions">
       <button class="theme-btn" data-theme="royal" title="ملكي"></button>
       <button class="theme-btn" data-theme="dark" title="داكن"></button>
+      <button class="theme-btn" data-theme="golden_white" title="ذهبي وأبيض"></button>
+      <button class="theme-btn" data-theme="olive_white" title="زيتوني وأبيض"></button>
       <button class="btn btn-outline" id="loginBtn" style="padding: 4px 8px; font-size:0.65rem;">دخول</button>
       <button class="icon-btn" id="menuBtn">☰</button>
     </div>
   </header>
 
-  <!-- إرجاع الصورة المتحركة (Slider) -->
-  <div class="slider-container">
-    <div class="slide active"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800"><div class="slide-content"><h1>عالم العقارات</h1></div></div>
-    <div class="slide"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800"><div class="slide-content"><h1>عالم السيارات</h1></div></div>
-    <div class="slide"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800"><div class="slide-content"><h1>عالم المستلزمات</h1></div></div>
+  <!-- صورة السوق الشاملة (Hero) -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000" alt="سوق شامل">
+    <div class="hero-content">
+      <h1>سوق اليمن المفتوح.. بوابتك للبيع والشراء</h1>
+      <p>كل ما تحتاجه في مكان واحد: عقارات، سيارات، وأجهزة إلكترونية. تصفح، تواصل، وأتمم صفقاتك بأمان.</p>
+      <button class="btn btn-primary" onclick="openAddModal()" style="border-radius:20px;">🚀 أضف إعلانك الآن</button>
+    </div>
   </div>
 
+  <!-- شريط أحدث العروض -->
   <div class="latest-scroller" id="latestItems"></div>
 
   <div class="main-tabs">
@@ -173,6 +197,7 @@
   </div>
 
   <main>
+    <!-- قسم العقارات -->
     <div id="section-realestate">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث</div>
@@ -201,6 +226,7 @@
       <div id="cards-realestate" class="cards-grid"></div>
     </div>
 
+    <!-- قسم المستلزمات -->
     <div id="section-electronics" style="display:none;">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث</div>
@@ -229,6 +255,7 @@
       <div id="cards-electronics" class="cards-grid"></div>
     </div>
 
+    <!-- قسم السيارات -->
     <div id="section-cars" style="display:none;">
       <div class="filters-card">
         <div class="filters-title">🔍 ابحث</div>
@@ -256,10 +283,18 @@
       </div>
       <div id="cards-cars" class="cards-grid"></div>
     </div>
+
+    <!-- بطاقة المصمم في الرئيسية -->
+    <div class="main-designer">
+      <h3>م. نشوان البدري</h3>
+      <p>صاحب السوق والمصمم والمطور للمنصة</p>
+      <a href="https://wa.me/967771713275" target="_blank">💬 تواصل عبر واتساب</a>
+    </div>
   </main>
 
   <button class="fab" onclick="openAddModal()">+</button>
 
+  <!-- القائمة الجانبية -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -274,12 +309,13 @@
       </div>
       
       <a href="#" onclick="openAddModal(); toggleSidebar();">➕ إضافة عرض / طلب</a>
-      <a href="#" onclick="showInfoPage('how')">ℹ️ شرح التسجيل والنشر</a>
+      <a href="#" onclick="showInfoPage('how_use')">ℹ️ شرح الاستخدام</a>
+      <a href="#" onclick="showInfoPage('how_add')">📝 طريقة إضافة عرض</a>
       <a href="#" onclick="showInfoPage('about')">🏛️ تحدث عنا</a>
       
       <div id="adminMenu" style="display:none;">
         <div class="divider"></div>
-        <a href="#" onclick="openAdminPanel(); toggleSidebar();" style="color:var(--accent);">👑 لوحة التحكم</a>
+        <a href="#" onclick="openAdminPanel(); toggleSidebar();" style="color:var(--accent); font-weight:bold;">👑 لوحة التحكم</a>
       </div>
       
       <div id="logoutMenu" style="display:none;">
@@ -294,6 +330,7 @@
     </div>
   </aside>
 
+  <!-- لوحة التحكم الإدارية -->
   <div id="adminPanel">
     <div class="admin-header">
       <h2 style="color:var(--primary); font-size:1rem;">لوحة التحكم</h2>
@@ -341,6 +378,7 @@
     </div>
   </div>
 
+  <!-- مودال إضافة عرض -->
   <div class="modal-overlay" id="addModal">
     <div class="modal">
       <h2 style="margin-bottom: 10px; color: var(--primary); text-align:center; font-size:1rem;">➕ إضافة إعلان</h2>
@@ -389,6 +427,7 @@
     </div>
   </div>
 
+  <!-- مودال تسجيل الدخول -->
   <div class="modal-overlay" id="authModal">
     <div class="modal">
       <h2 id="authTitle" style="margin-bottom: 10px; text-align:center; font-size:1rem;">🔐 دخول</h2>
@@ -408,6 +447,26 @@
     </div>
   </div>
 
+  <!-- مودال تفاصيل البطاقة (Detail Modal) -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal">
+      <div class="modal-header">
+        <img id="detailImg" src="">
+        <button class="close-btn" onclick="closeModal('detailModal')">✖</button>
+      </div>
+      <div class="modal-body">
+        <h2 id="detailTitle"></h2>
+        <div class="price" id="detailPrice"></div>
+        <ul class="details-list" id="detailList"></ul>
+        <div class="modal-actions">
+          <button class="btn btn-primary" style="flex:1;" onclick="handleDetailContact()">💬 تواصل عبر واتساب</button>
+          <button class="btn btn-danger" id="detailDeleteBtn" style="display:none;" onclick="deleteDetailItem()">🗑️ حذف</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال الصفحات والمعلومات -->
   <div class="modal-overlay" id="infoModal">
     <div class="modal">
       <h2 id="infoTitle" style="margin-bottom: 8px; color:var(--primary); font-size:1rem;"></h2>
@@ -436,7 +495,10 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // تم إزالة التحقق من رقم الهاتف الثابت، الآن نعتمد على قاعدة البيانات
+    // التحقق المباشر من بيانات المدير
+    const ADMIN_EMAIL = "sgeanashwan@gmail.com";
+    const ADMIN_PHONE = "771713275";
+
     let yemenData = {
       "أمانة العاصمة": ["صنعاء القديمة","شعوب","آزال","الصافية","السبعين"],
       "صنعاء": ["همدان","أرحب","نهم","بني حشيش","خولان"],
@@ -456,6 +518,7 @@
     let allData = [];
     let allUsers = [];
     let isAdmin = false;
+    let selectedItemId = null; // لحفظ معرف الإعلان المفتوح حالياً
     const toastEl = document.getElementById('toast');
 
     const dummyImgs = {
@@ -464,19 +527,10 @@
       cars: ["https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400", "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400"]
     };
 
-    // حماية من ثغرة XSS
     function escapeHTML(str) {
       if (!str) return '';
       return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
     }
-
-    let slideIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    setInterval(() => {
-      slides[slideIndex].classList.remove('active');
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add('active');
-    }, 4000);
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -550,7 +604,6 @@
         } else {
           if(!name) return showToast('ادخل اسمك');
           const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-          // حفظ البيانات باستخدام UID كمعرف أساسي (أكثر أماناً)
           await setDoc(doc(db, 'users', userCredential.user.uid), { name, phone: identifier, uid: userCredential.user.uid, role: 'user', email: email });
         }
         currentPhone = identifier.includes('@') ? identifier.split('@')[0] : identifier;
@@ -573,18 +626,26 @@
         document.getElementById('logoutMenu').style.display = 'block';
         document.getElementById('userGreeting').textContent = 'أهلاً، ' + phoneOrEmail;
         
-        // فحص صلاحية المدير من قاعدة البيانات
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists() && userDoc.data().role === 'admin') {
-            isAdmin = true;
-            document.getElementById('adminMenu').style.display = 'block';
-          } else {
+        // التحقق المباشر لفتح لوحة التحكم للمدير
+        if (user.email === ADMIN_EMAIL || phoneOrEmail === ADMIN_PHONE) {
+          isAdmin = true;
+          document.getElementById('adminMenu').style.display = 'block';
+        } else {
+          // التحقق من قاعدة البيانات للمشرفين
+          try {
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (userDoc.exists() && userDoc.data().role === 'admin') {
+              isAdmin = true;
+              document.getElementById('adminMenu').style.display = 'block';
+            } else {
+              isAdmin = false;
+              document.getElementById('adminMenu').style.display = 'none';
+            }
+          } catch(e) { 
             isAdmin = false;
             document.getElementById('adminMenu').style.display = 'none';
           }
-        } catch(e) { console.log("Error checking admin status"); }
-
+        }
       } else {
         isAdmin = false;
         btn.style.display = 'inline-flex';
@@ -683,7 +744,6 @@
         renderAll(); updateAdminStats(); renderLatestScroller();
       });
       
-      // لا نقرأ المستخدمين إلا إذا كان المدير
       if(isAdmin) {
         const uq = query(collection(db, 'users'));
         onSnapshot(uq, (snap) => {
@@ -693,15 +753,16 @@
       }
     }
 
-    // دالة تفعيل قراءة المستخدمين عند دخول المدير
+    // إعادة تشغيل البيانات عند تغير حالة المدير
     onAuthStateChanged(auth, (user) => {
       if(user) {
-        getDoc(doc(db, 'users', user.uid)).then(docSnap => {
-          if(docSnap.exists() && docSnap.data().role === 'admin') {
-            isAdmin = true;
-            listenData(); // نعيد تشغيل جلب البيانات لقراءة المستخدمين
-          }
-        });
+        if(user.email === ADMIN_EMAIL || user.email.startsWith(ADMIN_PHONE)) {
+           listenData(); 
+        } else {
+           getDoc(doc(db, 'users', user.uid)).then(docSnap => {
+              if(docSnap.exists() && docSnap.data().role === 'admin') listenData();
+           });
+        }
       }
     });
 
@@ -709,7 +770,7 @@
       const scroller = document.getElementById('latestItems');
       scroller.innerHTML = allData.slice(0, 10).map(p => {
         let img = p.image || dummyImgs[p.category][0];
-        return `<div class="latest-card" onclick="handleContact('${p.id}')">
+        return `<div class="latest-card" onclick="showDetails('${p.id}')">
           <img src="${img}">
           <h4>${escapeHTML(p.title)}</h4>
         </div>`;
@@ -731,26 +792,13 @@
       container.innerHTML = items.map(p => {
         let img = p.image || dummyImgs[category][0];
         let meta = '';
-        let details = '';
-
         if(category === 'realestate') {
           const types = {apartment:'شقة', house:'بيت', villa:'فيلا', land:'أرض'};
           meta = `<span>📍 ${p.gov}</span><span>🏠 ${types[p.propType] || ''}</span>`;
-          details = `<div class="item-details"><span>🛏️ ${p.rooms || '0'} غرف</span><span>📏 ${p.area || '0'} م²</span></div>`;
         } else if(category === 'cars') {
-          meta = `<span>📍 ${p.gov}</span>`;
-          details = `<div class="item-details">
-              <span>🚗 ${p.carBrand || 'غير محدد'}</span>
-              <span>🛣️ ${p.carMileage || '0'} كم</span>
-              <span>⚙️ ${p.carCondition === 'new' ? 'جديد' : 'مستعمل'}</span>
-            </div>`;
+          meta = `<span>📍 ${p.gov}</span><span>🚗 ${p.carBrand || ''}</span>`;
         } else {
-          meta = `<span>📍 ${p.gov}</span>`;
-          details = `<div class="item-details">
-              <span>📱 ${p.elecType || 'مستلزم'}</span>
-              <span>⚙️ ${p.elecCondition === 'new' ? 'جديد' : 'مستعمل'}</span>
-              <span>🔍 ${p.elecDefects === 'yes' ? 'يوجد عيوب' : 'لا عيوب'}</span>
-            </div>`;
+          meta = `<span>📍 ${p.gov}</span><span>📱 ${p.elecType || ''}</span>`;
         }
 
         const isOffer = p.postType !== 'request';
@@ -758,7 +806,7 @@
         const badgeText = isOffer ? 'عرض' : 'طلب';
 
         return `
-          <div class="card">
+          <div class="card" onclick="showDetails('${p.id}')">
             <div class="card-img-wrapper">
               <img class="card-img" src="${img}">
               <span class="card-badge ${badgeClass}">${badgeText}</span>
@@ -767,14 +815,8 @@
               <div>
                 <h3 class="card-title">${escapeHTML(p.title)}</h3>
                 <div class="card-meta">${meta}</div>
-                ${details}
               </div>
-              <div>
-                <div class="card-price">${Number(p.price).toLocaleString('ar-YE')} ريال</div>
-                <div class="card-actions">
-                  <button onclick="handleContact('${p.id}')" class="btn btn-primary">💬 تواصل</button>
-                </div>
-              </div>
+              <div class="card-price">${Number(p.price).toLocaleString('ar-YE')} ريال</div>
             </div>
           </div>
         `;
@@ -789,22 +831,73 @@
       });
     };
 
-    window.handleContact = (id) => {
-      if (!currentUser) { showToast('سجل الدخول أولاً'); openAuthModal('login'); return; }
+    // عرض تفاصيل البطاقة
+    window.showDetails = (id) => {
       const p = allData.find(x => x.id === id);
+      if(!p) return;
+      selectedItemId = id;
+
+      document.getElementById('detailImg').src = p.image || dummyImgs[p.category][0];
+      document.getElementById('detailTitle').innerText = p.title;
+      document.getElementById('detailPrice').innerText = `${Number(p.price).toLocaleString('ar-YE')} ريال`;
+      
+      let listHtml = `
+        <li><span>الموقع</span><span>${p.gov} - ${p.dist}</span></li>
+        <li><span>نوع الإعلان</span><span>${p.postType === 'request' ? 'طلب' : 'عرض'}</span></li>
+      `;
+
+      if(p.category === 'realestate') {
+        const types = {apartment:'شقة', house:'بيت', villa:'فيلا', land:'أرض'};
+        listHtml += `<li><span>نوع العقار</span><span>${types[p.propType] || ''}</span></li>`;
+        if(p.rooms) listHtml += `<li><span>عدد الغرف</span><span>${p.rooms} غرف</span></li>`;
+        if(p.area) listHtml += `<li><span>المساحة</span><span>${p.area} متر</span></li>`;
+      } else if(p.category === 'cars') {
+        listHtml += `<li><span>الماركة</span><span>${p.carBrand || 'غير محدد'}</span></li>`;
+        listHtml += `<li><span>الممشى</span><span>${p.carMileage || '0'} كم</span></li>`;
+        listHtml += `<li><span>الحالة</span><span>${p.carCondition === 'new' ? 'جديد' : 'مستعمل'}</span></li>`;
+        listHtml += `<li><span>الوقود</span><span>${p.carFuel === 'petrol' ? 'بنزين' : p.carFuel === 'diesel' ? 'ديزل' : 'هايبرد'}</span></li>`;
+      } else {
+        listHtml += `<li><span>النوع</span><span>${p.elecType || ''}</span></li>`;
+        listHtml += `<li><span>الحالة</span><span>${p.elecCondition === 'new' ? 'جديد' : 'مستعمل'}</span></li>`;
+        listHtml += `<li><span>عيوب</span><span>${p.elecDefects === 'yes' ? 'يوجد' : 'لا يوجد'}</span></li>`;
+      }
+
+      document.getElementById('detailList').innerHTML = listHtml;
+
+      // إظهار زر الحذف فقط لصاحب الإعلان أو المدير
+      if(currentUser && (currentUser.uid === p.ownerId || isAdmin)) {
+        document.getElementById('detailDeleteBtn').style.display = 'block';
+      } else {
+        document.getElementById('detailDeleteBtn').style.display = 'none';
+      }
+
+      openModal('detailModal');
+    };
+
+    window.handleDetailContact = () => {
+      if (!currentUser) { showToast('سجل الدخول أولاً'); closeModal('detailModal'); openAuthModal('login'); return; }
+      const p = allData.find(x => x.id === selectedItemId);
       if (p) window.open(`https://wa.me/967771713275?text=${encodeURIComponent(`مرحباً، مهتم بالإعلان: ${p.title}. رقم المعلن: ${p.phone}`)}`, '_blank');
+    };
+
+    window.deleteDetailItem = async () => {
+      if(!selectedItemId) return;
+      if(!confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
+      await deleteDoc(doc(db, 'items', selectedItemId));
+      closeModal('detailModal');
+      showToast('تم حذف الإعلان');
     };
 
     window.searchItems = (cat) => {
       if(cat === 'realestate') {
         const g = document.getElementById('fGov').value, d = document.getElementById('fDist').value, t = document.getElementById('fType').value, s = document.getElementById('fSearch').value.toLowerCase();
-        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s) || p.gov.toLowerCase().includes(s) || p.dist.toLowerCase().includes(s)));
+        renderSection('realestate', 'cards-realestate', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       } else if(cat === 'electronics') {
         const g = document.getElementById('eGov').value, d = document.getElementById('eDist').value, t = document.getElementById('eType').value, s = document.getElementById('eSearch').value.toLowerCase();
-        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s) || p.gov.toLowerCase().includes(s) || p.dist.toLowerCase().includes(s)));
+        renderSection('electronics', 'cards-electronics', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       } else {
         const g = document.getElementById('cGov').value, d = document.getElementById('cDist').value, t = document.getElementById('cType').value, s = document.getElementById('cSearch').value.toLowerCase();
-        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s) || p.gov.toLowerCase().includes(s) || p.dist.toLowerCase().includes(s)));
+        renderSection('cars', 'cards-cars', p => (!g||p.gov===g) && (!d||p.dist===d) && (!t||p.postType===t) && (!s||p.title.toLowerCase().includes(s)));
       }
     };
 
@@ -882,15 +975,15 @@
     };
 
     window.deleteUser = async (id) => {
-      if(!confirm('حذف سجل هذا المستخدم من قاعدة البيانات؟ (ملاحظة: لن يحذف حسابه من Firebase Auth بدون سيرفر)')) return;
+      if(!confirm('حذف هذا المستخدم نهائياً؟')) return;
       await deleteDoc(doc(db, 'users', id));
-      showToast('تم حذف سجل المستخدم');
+      showToast('تم حذف المستخدم');
     };
 
     window.makeAdmin = async (id) => {
       if(!confirm('ترقية هذا المستخدم لمشرف؟')) return;
       await setDoc(doc(db, 'users', id), { role: 'admin' }, { merge: true });
-      showToast('✅ تمت الترقية لمشرف. سيتمكن من دخول لوحة التحكم عند تسجيله القادم.');
+      showToast('✅ تمت الترقية لمشرف');
     };
 
     window.generateDummyData = async () => {
@@ -941,13 +1034,22 @@
     window.showToast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('show'); setTimeout(() => toastEl.classList.remove('show'), 3000); };
 
     const pages = {
-      about: { title: 'ℹ️ تحدث عنا', body: 'سوق اليمن المفتوح هو منصة إلكترونية متكاملة تجمع البائع والمشتري في مكان واحد.' },
-      how: { title: '📝 شرح التسجيل والنشر', body: `
-        <p><strong>كيف تسجل حسابك؟</strong></p>
-        <p>1. من القائمة الجانبية اختر "حساب جديد".<br>2. اكتب اسمك الكامل، رقم جوالك، وكلمة مرور.<br>3. اضغط "إنشاء".</p>
-        <hr style="margin:10px 0;">
+      about: { title: '🏛️ تحدث عنا', body: 'سوق اليمن المفتوح هو منصة إلكترونية متكاملة تجمع البائع والمشتري في مكان واحد. نهدف إلى تسهيل عمليات البيع والشراء للعقارات والسيارات والأجهزة الإلكترونية في جميع المحافظات اليمنية، بكل أمان وموثوقية.' },
+      how_use: { title: 'ℹ️ شرح الاستخدام', body: `
+        <p><strong>مرحباً بك في سوق اليمن!</strong></p>
+        <p>1. تصفح الأقسام من الأعلى (عقارات، مستلزمات، سيارات).<br>
+        2. استخدم الفلاتر للبحث عن ما تريد بدقة (المحافظة، المديرية، النوع).<br>
+        3. اضغط على أي إعلان لرؤية تفاصيله الكاملة.<br>
+        4. للتواصل مع البائع، يجب تسجيل الدخول أولاً، ثم اضغط على زر (تواصل عبر واتساب) ليتم تحويلك للمكتب الذي سيربطك بالبائع فوراً.</p>
+      ` },
+      how_add: { title: '📝 طريقة إضافة عرض', body: `
         <p><strong>كيف تنشر إعلانك؟</strong></p>
-        <p>1. اضغط على زر (+) في الشاشة.<br>2. اختر نوع الإعلان (عرض أو طلب).<br>3. املأ التفاصيل وأضف صورة إن أردت.</p>
+        <p>1. سجل حسابك من القائمة الجانبية.<br>
+        2. اضغط على زر (+) في الشاشة.<br>
+        3. اختر القسم ونوع الإعلان (عرض: تبيع شيئاً، طلب: تبحث عن شيء).<br>
+        4. املأ التفاصيل (السعر، الموقع، الوصف، وغيرها).<br>
+        5. أرفق صورة واضحة (اختياري).<br>
+        6. اضغط "نشر الإعلان" وسيظهر فوراً للجميع!</p>
       ` }
     };
     window.showInfoPage = (key) => {
