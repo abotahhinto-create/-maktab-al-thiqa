@@ -12,7 +12,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
-    /* ====== الثيمات ====== */
+    /* ====== الثيمات الخمسة ====== */
     :root {
       --bg: #f5f3ff; --surface: #ffffff; --text: #4c1d95; --text-muted: #6d28d9;
       --primary: #7c3aed; --primary-light: #a78bfa; --accent: #ec4899;
@@ -26,7 +26,6 @@
     [data-theme="sunset"] { --bg: #fff7ed; --surface: #ffffff; --text: #431407; --text-muted: #9a3412; --primary: #ea580c; --primary-light: #fb923c; --accent: #dc2626; --border: #fed7aa; --shadow: 0 8px 25px -5px rgba(234,88,12,0.15); --gradient: linear-gradient(135deg, #ea580c, #dc2626); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    /* تصغير الخطوط لتناسب التطبيق */
     html { font-size: 12px; } 
     body { background: var(--bg); color: var(--text); transition: all var(--transition); min-height: 100vh; overflow-x: hidden; }
 
@@ -120,26 +119,26 @@
     .sidebar-menu a:hover { background: var(--bg); color: var(--primary); }
     .sidebar-menu .divider { height: 1px; background: var(--border); margin: 6px 0; }
     
-    /* بطاقة المصمم في القائمة الجانبية (بسيطة) */
+    /* بطاقة المصمم في القائمة الجانبية */
     .side-designer { padding: 10px; border-top: 1px solid var(--border); text-align: center; }
     .side-designer h4 { font-size: 0.75rem; color: var(--text); }
     .side-designer a { display: block; background: #25D366; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; margin-top: 4px; }
 
-    /* ====== بطاقة المصمم الرئيسية (فخمة جداً) ====== */
+    /* ====== بطاقة المصمم الرئيسية (تتغير مع الثيم) ====== */
     .premium-designer-card { 
       position: relative; 
-      background: linear-gradient(135deg, #1e1b4b, #4c1d95, #7c3aed); 
+      background: var(--gradient); /* هنا السر، تستخدم متغير الثيم */
       border-radius: 20px; 
       padding: 20px; 
       margin-top: 30px; 
       overflow: hidden; 
-      box-shadow: 0 15px 35px rgba(124,58,237,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       border: 1px solid rgba(255,255,255,0.2);
       text-align: center;
     }
     .premium-designer-card::before {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(236,72,153,0.3) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
       animation: rotate 10s linear infinite; pointer-events: none;
     }
     @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -150,12 +149,12 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; z-index: 1;
     }
     .premium-designer-card h3 { color: #fff; font-size: 1.1rem; margin-bottom: 4px; position: relative; z-index: 1; }
-    .premium-designer-card p { color: #e9d5ff; font-size: 0.75rem; margin-bottom: 15px; position: relative; z-index: 1; }
+    .premium-designer-card p { color: rgba(255,255,255,0.8); font-size: 0.75rem; margin-bottom: 15px; position: relative; z-index: 1; }
     .premium-designer-card .wa-btn { 
-      background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; padding: 10px 20px; 
+      background: #25D366; color: #fff; padding: 10px 20px; 
       border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 0.85rem; 
       display: inline-flex; align-items: center; gap: 8px; position: relative; z-index: 1;
-      box-shadow: 0 5px 15px rgba(37,211,102,0.4); transition: transform 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s;
     }
     .premium-designer-card .wa-btn:hover { transform: scale(1.05); }
 
@@ -464,8 +463,8 @@
 
         <div class="form-group"><label>المحافظة</label><select id="addGov" required onchange="updateDistricts('addGov', 'addDist')"></select></div>
         <div class="form-group"><label>المديرية</label><select id="addDist" required></select></div>
-        <div class="form-group"><label>العنوان / التفاصيل</label><input type="text" id="addTitle" required></div>
-        <div class="form-group"><label>السعر (ريال)</label><input type="number" id="addPrice" required></div>
+        <div class="form-group"><label>العنوان / التفاصيل</label><input type="text" id="addTitle" required placeholder="مثال: بيت مستقل"></div>
+        <div class="form-group"><label>السعر (ريال)</label><input type="number" id="addPrice" required placeholder="مثال: 100000"></div>
         
         <div id="fields-realestate">
           <div class="form-group"><label>العقار</label><select id="addPropType"><option value="apartment">شقة</option><option value="house">بيت</option><option value="villa">فيلا</option><option value="land">أرض</option></select></div>
@@ -487,7 +486,7 @@
           <div class="form-group"><label>نوع الوقود</label><select id="addCarFuel"><option value="petrol">بنزين</option><option value="diesel">ديزل</option><option value="hybrid">هايبرد</option></select></div>
         </div>
 
-        <div class="form-group"><label>رقم هاتفك للتواصل</label><input type="tel" id="addPhone" required></div>
+        <div class="form-group"><label>رقم هاتفك للتواصل</label><input type="tel" id="addPhone" required placeholder="7xxxxxxxx"></div>
         <div class="form-group"><label>صورة (اختياري)</label><input type="file" id="addImage" accept="image/*"></div>
         
         <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">💾 نشر الإعلان</button>
@@ -834,6 +833,7 @@
         let imgText = file ? await imgToText(file) : '';
         const cat = document.getElementById('addCategory').value;
         
+        // هنا يتم تجميع البيانات، مع التأكد من قراءة الحقول بشكل صحيح
         const data = {
           category: cat, 
           postType: document.getElementById('addPostType').value,
@@ -868,7 +868,7 @@
         showToast('✅ تم النشر'); closeModal('addModal'); e.target.reset();
       } catch (err) { 
         if(err.code === 'permission-denied') showToast('❌ خطأ في الصلاحيات (Rules).');
-        else showToast('❌ حدث خطأ.'); 
+        else showToast('❌ حدث خطأ أثناء الحفظ.'); 
       } finally { btn.textContent = '💾 نشر الإعلان'; btn.disabled = false; }
     };
 
@@ -985,14 +985,12 @@
 
       document.getElementById('detailList').innerHTML = listHtml;
 
-      // إظهار زر الحذف
       if(currentUser && (currentUser.uid === p.ownerId || isAdmin)) {
         document.getElementById('detailDeleteBtn').style.display = 'block';
       } else {
         document.getElementById('detailDeleteBtn').style.display = 'none';
       }
 
-      // إظهار زر العقد للعقارات فقط
       if(p.category === 'realestate') {
         document.getElementById('detailContractBtn').style.display = 'block';
       } else {
@@ -1016,7 +1014,6 @@
       showToast('تم حذف الإعلان');
     };
 
-    // دالة توليد العقد
     window.generateContract = () => {
       const p = allData.find(x => x.id === selectedItemId);
       if(!p) return;
@@ -1034,7 +1031,6 @@
       const actionEl = document.getElementById('pdfActionText');
       const termsEl = document.getElementById('pdfTermsText');
 
-      // التغيير بناءً على نوع الطلب
       if (p.postType === 'offer') {
         titleEl.innerText = "عقد إيجار / بيع عقار - سوق اليمن";
         actionEl.innerText = "تمليك/إيجار";
